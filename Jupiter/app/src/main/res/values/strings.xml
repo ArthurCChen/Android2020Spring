@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">校园跑腿</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_login">Login Activity</string>
+    <string name="login">Login</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+
+    <string name="login_success">login success</string>
+    <string name="go">GO</string>
+</resources>

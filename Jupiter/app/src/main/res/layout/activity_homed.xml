@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#f2f2f2"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:visibility="gone"
+                android:clickable="true"
+                android:onClick="cpgl"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="#fff"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@mipmap/cpgl" />
+
+                <TextView
+                    android:layout_above="@+id/saoma"
+                    android:layout_alignLeft="@+id/person"
+                    android:textSize="17sp"
+                    android:gravity="center"
+                    android:textColor="#333"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:clickable="true"
+                android:onClick="ddgl"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="#fff"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@mipmap/ddgl" />
+
+                <TextView
+                    android:layout_above="@+id/saoma"
+                    android:layout_alignLeft="@+id/person"
+                    android:textSize="17sp"
+                    android:gravity="center"
+                    android:textColor="#333"
+                    android:text="下单"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:clickable="true"
+                android:onClick="zwgl"
+                android:visibility="gone"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="#fff"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@mipmap/zwgl" />
+
+                <TextView
+                    android:layout_above="@+id/saoma"
+                    android:layout_alignLeft="@+id/person"
+                    android:textSize="17sp"
+                    android:gravity="center"
+                    android:textColor="#333"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:clickable="true"
+                android:onClick="grxx"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="#fff"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@mipmap/grxx" />
+
+                <TextView
+                    android:layout_above="@+id/saoma"
+                    android:layout_alignLeft="@+id/person"
+                    android:textSize="17sp"
+                    android:gravity="center"
+                    android:textColor="#333"
+                    android:text="接单"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

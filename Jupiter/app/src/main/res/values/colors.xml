@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorBackground">#00cccc</color>
+    <color name="colorTrifling">#ccffff</color>
+    <color name="colorText">#000000</color>
+    <color name="colorHint">#c5c5c5</color>
+    <color name="jupiterchain">#00cccc</color>
+    <color name="action_bar_bg">#B3EBE9E6</color>
+</resources>

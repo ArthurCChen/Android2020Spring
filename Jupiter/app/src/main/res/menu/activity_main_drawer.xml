@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_overview"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Overview" />
+        <item
+            android:id="@+id/nav_transfer_token"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Transfer stardust" />
+        <item
+            android:id="@+id/nav_receive_token"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Receive token" />
+        <item
+            android:id="@+id/nav_digital_asset"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Digital asset" />
+
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Login" />
+
+
+    </group>
+
+    <item android:title="Consensus unit">
+        <menu>
+            <item
+                android:id="@+id/nav_join_cu"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Join CU" />
+            <item
+                android:id="@+id/nav_cu_management"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="CU management" />
+        </menu>
+    </item>
+
+</menu>
