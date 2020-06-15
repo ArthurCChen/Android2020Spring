@@ -22,12 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <RadioButton
-            android:id="@+id/rb_sj"
-            android:textColor="#fff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
     </RadioGroup>
 
     <FrameLayout
@@ -353,6 +347,32 @@
                         <EditText
                             android:textSize="13sp"
                             android:textColor="#f0f7f4"
+                            android:hint="邮箱"
+                            android:id="@+id/et_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:background="@drawable/selector_bg_edit_2"
+                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                            android:paddingBottom="2dp"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:paddingStart="50dp"
+                    android:paddingEnd="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <com.google.android.material.textfield.TextInputLayout
+
+                        android:textColorHint="#f0f7f4"
+                        android:theme="@style/TextLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:textSize="13sp"
+                            android:textColor="#f0f7f4"
                             android:hint="姓名"
                             android:id="@+id/xs_et_xm"
                             android:layout_width="match_parent"
@@ -430,6 +450,12 @@
                     android:textColor="#00CCCC"
                     >
                 </Button>
+
+                <RadioButton
+                    android:id="@+id/rb_sj"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

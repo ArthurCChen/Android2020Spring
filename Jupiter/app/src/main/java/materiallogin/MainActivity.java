@@ -28,6 +28,11 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import cn.leancloud.AVObject;
+import cn.leancloud.AVQuery;
+import cn.leancloud.AVUser;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 // 登陆页面
 public class MainActivity extends AppCompatActivity {
@@ -99,53 +104,39 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (rbSx.isChecked()) {
-                    BmobQuery<BmobStudent> query = new BmobQuery<>();
-                    query.addWhereEqualTo("username",un)
-                            .addWhereEqualTo("password",pw)
-                            .findObjects(MainActivity.this, new FindListener<BmobStudent>() {
-                                @Override
-                                public void onSuccess(List<BmobStudent> list) {
-                                    if(list!=null && list.size() > 0){
-                                        sp.WriteName(un);
-                                        SPUtils.init(MainActivity.this);
-                                        sp.WriteGender(list.get(0).getUsername());
-                                        Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                                        SPUtils.putString("sName", list.get(0).getName());
-                                        SPUtils.putString("username", list.get(0).getUsername());
-                                        startActivity(new Intent(MainActivity.this,UserActivity.class));
-                                        finish();
-                                    }
-                                }
+                AVQuery<AVObject> query = new AVQuery<>(AVOUser.tablename);
+                query.whereEqualTo("username", un);
+                query.whereEqualTo("password", pw);
+                query.findInBackground().subscribe(new Observer<List<AVObject>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-                                @Override
-                                public void onError(int i, String s) {
-                                    Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                } else {
-                    BmobQuery<BmobShangjia> query = new BmobQuery<>();
-                    query.addWhereEqualTo("username",un)
-                            .addWhereEqualTo("password",pw)
-                            .findObjects(MainActivity.this, new FindListener<BmobShangjia>() {
-                                @Override
-                                public void onSuccess(List<BmobShangjia> list) {
-                                    if(list!=null && list.size() > 0){
-                                        sp.WriteName(un);
-                                        sp.WriteGender(list.get(0).getUsername());
-                                        Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(MainActivity.this,ShangjiaActivity.class));
-                                        finish();
-                                    }
-                                }
+                    }
 
-                                @Override
-                                public void onError(int i, String s) {
-                                    Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-                break;
+                    @Override
+                    public void onNext(List<AVObject> avObjects) {
+                        if(avObjects!=null && avObjects.size() > 0){
+//                            sp.WriteName(un);
+//                            SPUtils.init(MainActivity.this);
+                            Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+//                            SPUtils.putString("username", avObjects.get(0).getString("username"));
+                            startActivity(new Intent(MainActivity.this, UserActivity.class));
+                            finish();
+                        }else{
+                            Toast.makeText(MainActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
         }
     }
 }
