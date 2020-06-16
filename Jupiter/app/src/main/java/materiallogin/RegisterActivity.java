@@ -30,6 +30,9 @@ import butterknife.InjectView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.leancloud.AVObject;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 // 注册页面
 public class RegisterActivity extends AppCompatActivity {
@@ -51,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etSjdh;
     private EditText etFr;
     private EditText etQybh;
+    private EditText etEmail;
     private Button btGo;
 
     // 确定按钮事件
@@ -119,58 +123,43 @@ public class RegisterActivity extends AppCompatActivity {
             final String xm = xsEtXm.getText().toString();
             final String bj = xsEtBj.getText().toString();
             final String sushe = xsEtSushe.getText().toString();
+            final String email = etEmail.getText().toString();
             if (TextUtils.isEmpty(username)
                     || TextUtils.isEmpty(password)
                     || TextUtils.isEmpty(xh)
                     || TextUtils.isEmpty(xm)
                     || TextUtils.isEmpty(bj)
+                    || TextUtils.isEmpty(email)
                     || TextUtils.isEmpty(sushe)) {
                 Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
                 return;
             }
-            BmobQuery<BmobStudent> query = new BmobQuery<>();
-            query.addWhereEqualTo("username", username)
-                    .findObjects(this, new FindListener<BmobStudent>() {
-                        @Override
-                        public void onSuccess(final List<BmobStudent> list) {
-                            if (list != null && list.size() > 0) {
-                                Toast.makeText(RegisterActivity.this, "手机号已经存在，请修改手机号", Toast.LENGTH_SHORT).show();
-                            } else {
-                                final BmobStudent student = new BmobStudent();
-                                student.setUsername(username);
-                                student.setPassword(password);
-                                student.setClassName(bj);
-                                student.setName(xm);
-                                student.setStudentId(xh);
-                                student.setSusheName(sushe);
-                                student.save(RegisterActivity.this, new SaveListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        SPutil s = new SPutil(RegisterActivity.this);
-                                        s.WriteName(username);
-                                        startActivity(new Intent(RegisterActivity.this, UserActivity.class));
-                                        SPUtils.init(RegisterActivity.this);
-                                        SPUtils.putString("sName", student.getName());
-                                        SPUtils.putString("username", student.getUsername());
-                                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    }
+            final AVOUser user = new AVOUser(username, password, email, xh, xm, bj, sushe);
+            user.saveInBackground().subscribe(new Observer<AVObject>() {
+                @Override
+                public void onSubscribe(Disposable d) {
 
-                                    @Override
-                                    public void onFailure(int i, String s) {
-                                        Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        }
+                }
 
-                        @Override
-                        public void onError(int i, String s) {
-                            Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                @Override
+                public void onNext(AVObject avObject) {
+//                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    if (MainActivity.mainActivity != null)
+//                        MainActivity.mainActivity.finish();
+//                    finish();
+                }
 
+                @Override
+                public void onError(Throwable e) {
+                    Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                }
 
+                @Override
+                public void onComplete() {
+
+                }
+            });
         }
     }
 

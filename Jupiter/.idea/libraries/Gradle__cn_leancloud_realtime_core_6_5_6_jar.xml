@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: cn.leancloud:realtime-core:6.5.6@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.leancloud/realtime-core/6.5.6/5e42e2791f3030653b57175d62ef6f3a4da4bb0a/realtime-core-6.5.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.leancloud/realtime-core/6.5.6/9ac0783c544ec0298ae4ba4817e39071edbe3abc/realtime-core-6.5.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.leancloud/realtime-core/6.5.6/e2598b285e22a1f880eaccb58cd39933207646f4/realtime-core-6.5.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
