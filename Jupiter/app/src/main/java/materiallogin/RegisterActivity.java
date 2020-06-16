@@ -188,6 +188,7 @@ public class RegisterActivity extends AppCompatActivity {
         etSjdh = (EditText) findViewById(R.id.et_sjdh);
         etFr = (EditText) findViewById(R.id.et_fr);
         etQybh = (EditText) findViewById(R.id.et_qybh);
+        etEmail = (EditText) findViewById(R.id.et_email);
         btGo = (Button) findViewById(R.id.bt_go);
 
         xsCvAdd = (CardView) findViewById(R.id.xs_cv_add);
