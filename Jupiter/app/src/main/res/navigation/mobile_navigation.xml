@@ -3,28 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_wanted">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_wanted"
         android:name="materiallogin.ui.home.HomeFragment"
         android:label="@string/title_wanted"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_wanted" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_accepted"
         android:name="materiallogin.ui.dashboard.DashboardFragment"
         android:label="@string/title_accepted"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_wanted" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_issued"
         android:name="materiallogin.ui.notifications.NotificationsFragment"
         android:label="@string/title_issued"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_wanted" />
     <fragment
-        android:id="@+id/fragmentWanted2"
+        android:id="@+id/navigation_me"
         android:name="com.ust.jupiter.jupiter.FragmentWanted"
-        android:label="fragment_wanted"
+        android:label="@string/title_me"
         tools:layout="@layout/fragment_wanted" />
 </navigation>
