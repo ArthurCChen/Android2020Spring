@@ -15,7 +15,14 @@
     <string name="login_success">login success</string>
     <string name="go">GO</string>
     <string name="title_activity_bottom_menu">BottomMenu</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_wanted">需求总览</string>
+    <string name="title_accepted">我接受的</string>
+    <string name="title_issued">我发布的</string>
+    <string name="title_me">我的主页</string>
+
+    <!-- contentDescriptor -->
+    <string name="add_descriptor">发布新需求</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

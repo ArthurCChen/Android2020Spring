@@ -8,18 +8,23 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="materiallogin.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_wanted"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="materiallogin.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_accepted"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="materiallogin.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_issued"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/fragmentWanted2"
+        android:name="com.ust.jupiter.jupiter.FragmentWanted"
+        android:label="fragment_wanted"
+        tools:layout="@layout/fragment_wanted" />
 </navigation>
