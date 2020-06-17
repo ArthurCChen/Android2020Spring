@@ -46,4 +46,7 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.24'
     implementation files('libs')
     implementation files('libs/bmob-sdk-3.4.6.jar')
+    implementation 'androidx.navigation:navigation-fragment:2.0.0'
+    implementation 'androidx.navigation:navigation-ui:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }
