@@ -1,4 +1,4 @@
-package materiallogin.ui.home;
+package materiallogin.ui.accepted;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,23 +14,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-public class HomeFragment extends Fragment {
+public class AcceptedFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private AcceptedViewModel acceptedViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        acceptedViewModel =
+                ViewModelProviders.of(this).get(AcceptedViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_accepted, container, false);
+        final TextView textView = root.findViewById(R.id.text_accepted);
+        acceptedViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
-
         return root;
     }
 }

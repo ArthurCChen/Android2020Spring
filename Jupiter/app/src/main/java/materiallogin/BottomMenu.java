@@ -2,10 +2,8 @@ package materiallogin;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ust.jupiter.jupiter.FragmentWanted;
 import com.ust.jupiter.jupiter.R;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -15,15 +13,27 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import materiallogin.ui.dashboard.DashboardFragment;
-import materiallogin.ui.home.HomeFragment;
-import materiallogin.ui.notifications.NotificationsFragment;
+import materiallogin.ui.issued.IssuedFragment;
+import materiallogin.ui.accepted.AcceptedFragment;
+import materiallogin.ui.wanted.WantedFragment;
+import materiallogin.ui.me.MeFragment;
 
 public class BottomMenu extends AppCompatActivity {
+
+    WantedFragment wantedFragment;
+    AcceptedFragment acceptedFragment;
+    MeFragment meFragment;
+    IssuedFragment issuedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        wantedFragment = new WantedFragment();
+        acceptedFragment = new AcceptedFragment();
+        meFragment = new MeFragment();
+        issuedFragment = new IssuedFragment();
+
         setContentView(R.layout.activity_bottom_menu);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -36,32 +46,32 @@ public class BottomMenu extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.navigation_wanted:
-                        loadFragment(new HomeFragment());
-                        return true;
-                    case R.id.navigation_accepted:
-                        loadFragment(new DashboardFragment());
-                        return true;
-                    case R.id.navigation_issued:
-                        loadFragment(new NotificationsFragment());
-                        return true;
-                    case R.id.navigation_me:
-                        loadFragment(new FragmentWanted());
-                        return true;
-
-                }
-                return false;
-            }
-        });
+//        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                switch (menuItem.getItemId()){
+//                    case R.id.navigation_wanted:
+//                        loadFragment(wantedFragment);
+//                        return true;
+//                    case R.id.navigation_accepted:
+//                        loadFragment(acceptedFragment);
+//                        return true;
+//                    case R.id.navigation_issued:
+//                        loadFragment(issuedFragment);
+//                        return true;
+//                    case R.id.navigation_me:
+//                        loadFragment(meFragment);
+//                        return true;
+//
+//                }
+//                return false;
+//            }
+//        });
     }
 
     public void loadFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
+        transaction.replace(R.id.nav_host_fragment, fragment);
         transaction.commit();
     }
 
