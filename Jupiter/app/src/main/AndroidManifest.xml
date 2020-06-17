@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/tab_color" />
+            android:resource="@drawable/tab_color" />
 
         <activity
             android:name="materiallogin.BottomMenu"

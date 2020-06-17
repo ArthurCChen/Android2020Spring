@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 //                            SPUtils.init(MainActivity.this);
                             Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
 //                            SPUtils.putString("username", avObjects.get(0).getString("username"));
-                            startActivity(new Intent(MainActivity.this, UserActivity.class));
+                            startActivity(new Intent(MainActivity.this, BottomMenu.class));
                             finish();
                         }else{
                             Toast.makeText(MainActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();
