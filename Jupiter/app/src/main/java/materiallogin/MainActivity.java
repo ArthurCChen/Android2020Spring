@@ -66,14 +66,10 @@ public class MainActivity extends AppCompatActivity {
         SPutil sp = new SPutil(this);
         String name = sp.ReadName();
         SPUtils.init(this);
-        if(!TextUtils.isEmpty(name)) {
-            if (name.startsWith("xs-")){
-                startActivity(new Intent(this, UserActivity.class));
-            }else{
-                startActivity(new Intent(this,UserActivity.class));
-            }
-            finish();
-        }
+//        if(!TextUtils.isEmpty(name)) {
+//            startActivity(new Intent(this, UserActivity.class));
+//            finish();
+//        }
     }
 
     // 加号和叉号点击事件
