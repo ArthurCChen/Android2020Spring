@@ -86,16 +86,16 @@ public class RegisterActivity extends AppCompatActivity {
             public void onNext(AVUser user) {
                 // 注册成功
                 System.out.println("注册成功。objectId：" + user.getObjectId());
-                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                AVUser.requestEmailVerifyInBackground(email).blockingSubscribe();
+                Toast.makeText(RegisterActivity.this, "已发送验证邮件", Toast.LENGTH_SHORT).show();
             }
             public void onError(Throwable e) {
-                Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "该邮件已注册账号", Toast.LENGTH_SHORT).show();
             }
             public void onComplete() {}
         });
 
-        AVUser.requestEmailVerifyInBackground(email).blockingSubscribe();
-        Toast.makeText(this, "已发送验证邮件", Toast.LENGTH_SHORT).show();
+
     }
 
     // 确定按钮事件
@@ -180,6 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "请先验证邮箱", Toast.LENGTH_SHORT).show();
             return;
         }
+        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
         //这里跳转到内部界面
 
             //以下是原实现，AVObject类

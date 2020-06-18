@@ -14,8 +14,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bf647f1c-d5e5-42e3-a738-d80788a41e1f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/materiallogin/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/materiallogin/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/materiallogin/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/materiallogin/RegisterActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
