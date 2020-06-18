@@ -105,39 +105,55 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                AVQuery<AVObject> query = new AVQuery<>(AVOUser.tablename);
-                query.whereEqualTo("username", un);
-                query.whereEqualTo("password", pw);
-                query.findInBackground().subscribe(new Observer<List<AVObject>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
+                AVUser.logIn(un, pw).subscribe(new Observer<AVUser>() {
+                    public void onSubscribe(Disposable disposable) {}
+                    public void onNext(AVUser user) {
+                        // 登录成功
+                        Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, UserActivity.class));
+                        finish();
                     }
-
-                    @Override
-                    public void onNext(List<AVObject> avObjects) {
-                        if(avObjects!=null && avObjects.size() > 0){
-//                            sp.WriteName(un);
-//                            SPUtils.init(MainActivity.this);
-                            Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-//                            SPUtils.putString("username", avObjects.get(0).getString("username"));
-                            startActivity(new Intent(MainActivity.this, UserActivity.class));
-                            finish();
-                        }else{
-                            Toast.makeText(MainActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                        // 登录失败（可能是密码错误）
+                        Toast.makeText(MainActivity.this, "账号密码/网络错误", Toast.LENGTH_SHORT).show();
                     }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
+                    public void onComplete() {}
                 });
+                //下面是对于AVObject类型的“条件查询方法登录”
+//                AVQuery<AVObject> query = new AVQuery<>(AVOUser.tablename);
+//                query.whereEqualTo("username", un);
+//                query.whereEqualTo("password", pw);
+//                query.findInBackground().subscribe(new Observer<List<AVObject>>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<AVObject> avObjects) {
+//                        if(avObjects!=null && avObjects.size() > 0){
+////                            sp.WriteName(un);
+////                            SPUtils.init(MainActivity.this);
+//                            Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+////                            SPUtils.putString("username", avObjects.get(0).getString("username"));
+//                            startActivity(new Intent(MainActivity.this, UserActivity.class));
+//                            finish();
+//                        }else{
+//                            Toast.makeText(MainActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
         }
     }
 }
