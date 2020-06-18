@@ -226,7 +226,7 @@ public class BottomMenu extends AppCompatActivity {
             }
         });
         alertDialog = builder.create();
-        builder.show();
+        alertDialog.show();
     }
 
 }
