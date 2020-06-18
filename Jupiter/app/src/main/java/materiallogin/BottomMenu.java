@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +23,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import cn.bmob.v3.listener.SaveListener;
+import cn.leancloud.AVObject;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import materiallogin.ui.issued.IssuedFragment;
 import materiallogin.ui.accepted.AcceptedFragment;
 import materiallogin.ui.wanted.WantedFragment;
@@ -101,8 +110,9 @@ public class BottomMenu extends AppCompatActivity {
         final EditText deadline = (EditText) layout.findViewById(R.id.deadline);
         final EditText wanted_number = (EditText) layout.findViewById(R.id.wanted_number);
         final EditText reward = (EditText) layout.findViewById(R.id.reward);
-        final TextView cancel = (TextView) layout.findViewById(R.id.cancel);
-        final TextView save = (TextView) layout.findViewById(R.id.save);
+        final Button cancel = (Button) layout.findViewById(R.id.cancel);
+        final Button save = (Button) layout.findViewById(R.id.save);
+        final Spinner demand_type = (Spinner) layout.findViewById(R.id.service_type);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,107 +126,107 @@ public class BottomMenu extends AppCompatActivity {
             public void onClick(View v) {
 
                 boolean has_error = false;
-                String content = "";
+                String error_content = "";
+
+                final String title = demand_title.getText().toString();
+                final String content = demand_content.getText().toString();
+                // should make a query to get the username
+                final String username = "username";
+                final String end_time = deadline.getText().toString();
+                final String type = demand_type.getSelectedItem().toString();
 
                 // check title and content
-                if (demand_title.getText().toString().equals("") || demand_content.getText().toString().equals("")) {
+                if (title.equals("") || content.equals("")) {
                     if (demand_title.getText().toString().equals("")) {
-                        content = "请输入标题。";
+                        error_content = "请输入标题。";
                     }
                     else {
-                        content = "请输入内容。";
+                        error_content = "请输入内容。";
                     }
                     has_error = true;
                 }
                 int participants_number = 0;
                 float reward_number = 0;
+                int days = 0;
                 // check wanted_number
                 try {
                     participants_number = Integer.parseInt(wanted_number.getText().toString());
                 } catch (Exception e) {
-                    content = "需求人数至少为一个人。";
+                    error_content = "需求人数至少为一个人。";
                     has_error = true;
                 }
-                if (participants_number > 0) {
-                    content = "需求人数至少为一个人。";
+                if (participants_number <= 0) {
+                    error_content = "需求人数至少为一个人。";
                     has_error = true;
                 }
                 // check reward
                 try {
                     reward_number = Float.parseFloat(reward.getText().toString());
                 } catch (Exception e) {
-                    content = "你需要承诺报酬。";
+                    error_content = "你需要承诺报酬。";
+                    has_error = true;
+                }
+                // check time
+                try {
+                    days = Integer.parseInt(end_time);
+                } catch (Exception e) {
+                    error_content = "请输入一个合理的天数。";
+                    has_error = true;
+                }
+                if (days <= 0) {
+                    error_content = "任务至少持续一天。";
                     has_error = true;
                 }
 
                 if (has_error) {
                     new AlertDialog.Builder(BottomMenu.this)
                             .setTitle("提示")
-                            .setMessage(content)
+                            .setMessage(error_content)
                             .setPositiveButton("确定", null)
                             .show();
                 }
 
-                new AlertDialog.Builder(BottomMenu.this)
-                        .setTitle("提示")
-                        .setMessage("是否确认支付¥" + reward.getText().toString() + "？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                String kddh2 = demand_title.getText().toString();
-                                String kdgs3 = demand_content.getText().toString();
-                                String qqdz4 = wanted_number.getText().toString();
-                                String swdzs = deadline.getText().toString();
-                                String fy5 = reward.getText().toString();
-                                if (TextUtils.isEmpty(fy5)
-                                        || TextUtils.isEmpty(kddh2)
-                                        || TextUtils.isEmpty(swdzs)
-                                        || TextUtils.isEmpty(kdgs3)
-                                        || TextUtils.isEmpty(qqdz4)) {
-                                    Toast.makeText(BottomMenu.this, "请填写完整信息", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                BmobExpress express = new BmobExpress();
-                                if (pick_up_package.isChecked()) {
-                                    express.setType("快递");
-                                }
-                                if (used_goods.isChecked()) {
-                                    express.setType("外卖");
-                                }
-                                if (participant_hiring.isChecked()) {
-                                    express.setType("商品");
-                                }
-                                express.setKddh(kddh2);
-                                express.setKdgs(kdgs3);
-                                express.setQwdz(swdzs);
-                                express.setFbgs(new SPutil(BottomMenu.this).ReadName());
-                                express.setQqdz(qqdz4);
-                                express.setPrice(Integer.parseInt(fy5));
-                                express.setStu("");
-                                express.setStatus("待接单");
-                                express.save(BottomMenu.this, new SaveListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        initData();
-                                        Toast.makeText(BottomMenu.this, "发布成功", Toast.LENGTH_SHORT).show();
-                                        if (alertDialog != null)
-                                            alertDialog.dismiss();
-                                    }
 
-                                    @Override
-                                    public void onFailure(int i, String s) {
-                                        Toast.makeText(BottomMenu.this, "网络错误", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        })
-                        .setNegativeButton("取消", null)
-                        .show();
+                final AVODemand demand = new AVODemand();
+                demand.setContent(content);
+                demand.setTitle(title);
+                demand.setUsername(username);
+                demand.setDemand_state("inactive");
+                demand.setWanted_number(participants_number);
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DATE, days);
+                demand.setEnd_time(c.getTime());
+                demand.setReward(reward_number);
+                demand.setType(type);
+
+                demand.saveInBackground().subscribe(new Observer<AVObject>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(AVObject avObject) {
+                        Toast.makeText(BottomMenu.this, "发布成功", Toast.LENGTH_SHORT).show();
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println(e.getMessage());
+                        Toast.makeText(BottomMenu.this, "网络错误", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
             }
         });
+        alertDialog = builder.create();
+        builder.show();
     }
-
-    private void initData(){}
-
 
 }

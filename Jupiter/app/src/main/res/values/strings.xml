@@ -48,7 +48,7 @@
     <string name="demand_title">需求标题</string>
     <string name="demand_content">需求内容</string>
     <string name="wanted_number">需求人数</string>
-    <string name="deadline">截止时间</string>
+    <string name="deadline">任务时长</string>
     <string name="reward">报酬金额</string>
     <string name="issue">发布</string>
 </resources>

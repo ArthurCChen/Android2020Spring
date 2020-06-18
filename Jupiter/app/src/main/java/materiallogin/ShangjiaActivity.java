@@ -163,7 +163,6 @@ public class ShangjiaActivity extends AppCompatActivity {
         builder.setView(layout);
         SPutil s = new SPutil(this);
         kddh = (EditText) layout.findViewById(R.id.demand_title);
-        kdgs = (EditText) layout.findViewById(R.id.kdgs);
         swdz = (EditText) layout.findViewById(R.id.deadline);
         qsdz = (EditText) layout.findViewById(R.id.wanted_number);
         t1 = (TextView) layout.findViewById(R.id.tip1);
