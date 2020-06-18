@@ -6,7 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 //import androidx.appcompat.widget.CardView;
@@ -26,11 +26,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVQuery;
-import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.inject(this);
-        rg = (RadioGroup) findViewById(R.id.rg);
+        rg = (RadioGroup) findViewById(R.id.service_type);
         rbSx = (RadioButton) findViewById(R.id.rb_sx);
         rbSj = (RadioButton) findViewById(R.id.rb_sj);
         mainActivity = this;

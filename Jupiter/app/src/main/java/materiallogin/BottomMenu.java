@@ -1,16 +1,12 @@
 package materiallogin;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,20 +96,11 @@ public class BottomMenu extends AppCompatActivity {
         final View layout = inflater.inflate(R.layout.dialog_input_table, null);
         builder.setView(layout);
         final SPutil s = new SPutil(this);
-        final TextView gsmc = (TextView) layout.findViewById(R.id.gsmc);
-        final EditText kddh = (EditText) layout.findViewById(R.id.kddh);
-        final EditText kdgs = (EditText) layout.findViewById(R.id.kdgs);
-        final EditText swdz = (EditText) layout.findViewById(R.id.swdz);
-        final EditText qsdz = (EditText) layout.findViewById(R.id.qsdz);
-        final TextView t1 = (TextView) layout.findViewById(R.id.tip1);
-        final TextView t2 = (TextView) layout.findViewById(R.id.tip2);
-        final RadioGroup rg = (RadioGroup) layout.findViewById(R.id.rg);
-        final RadioButton rbKd = (RadioButton) layout.findViewById(R.id.rb_kd);
-        final RadioButton rbWm = (RadioButton) layout.findViewById(R.id.rb_wm);
-        final RadioButton rbSp = (RadioButton) layout.findViewById(R.id.rb_sp);
-        final EditText fy = (EditText) layout.findViewById(R.id.fy);
-        gsmc.setText(s.ReadGender());
-        rbKd.setChecked(true);
+        final EditText demand_title = (EditText) layout.findViewById(R.id.demand_title);
+        final EditText demand_content = (EditText) layout.findViewById(R.id.demand_content);
+        final EditText deadline = (EditText) layout.findViewById(R.id.deadline);
+        final EditText wanted_number = (EditText) layout.findViewById(R.id.wanted_number);
+        final EditText reward = (EditText) layout.findViewById(R.id.reward);
         final TextView cancel = (TextView) layout.findViewById(R.id.cancel);
         final TextView save = (TextView) layout.findViewById(R.id.save);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -124,42 +111,63 @@ public class BottomMenu extends AppCompatActivity {
                     alertDialog.dismiss();
             }
         });
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                int id = radioGroup.getCheckedRadioButtonId();
-                if (id == R.id.rb_wm) {
-                    t1.setText("外卖名称");
-                    t2.setText("配送公司");
-                    kddh.setHint("如：西红柿盖饭");
-                    kdgs.setHint("如：美团外卖");
-                } else if (id == R.id.rb_kd) {
-                    t1.setText("快递单号");
-                    t2.setText("快递公司");
-                    kddh.setHint("如：1234567890");
-                    kdgs.setHint("如：顺丰快递");
-                } else {
-                    t1.setText("商品名称");
-                    t2.setText("商品备注");
-                    kddh.setHint("如：牙膏");
-                    kdgs.setHint("如：炫齿白牌子");
-                }
-            }
-        });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                boolean has_error = false;
+                String content = "";
+
+                // check title and content
+                if (demand_title.getText().toString().equals("") || demand_content.getText().toString().equals("")) {
+                    if (demand_title.getText().toString().equals("")) {
+                        content = "请输入标题。";
+                    }
+                    else {
+                        content = "请输入内容。";
+                    }
+                    has_error = true;
+                }
+                int participants_number = 0;
+                float reward_number = 0;
+                // check wanted_number
+                try {
+                    participants_number = Integer.parseInt(wanted_number.getText().toString());
+                } catch (Exception e) {
+                    content = "需求人数至少为一个人。";
+                    has_error = true;
+                }
+                if (participants_number > 0) {
+                    content = "需求人数至少为一个人。";
+                    has_error = true;
+                }
+                // check reward
+                try {
+                    reward_number = Float.parseFloat(reward.getText().toString());
+                } catch (Exception e) {
+                    content = "你需要承诺报酬。";
+                    has_error = true;
+                }
+
+                if (has_error) {
+                    new AlertDialog.Builder(BottomMenu.this)
+                            .setTitle("提示")
+                            .setMessage(content)
+                            .setPositiveButton("确定", null)
+                            .show();
+                }
+
                 new AlertDialog.Builder(BottomMenu.this)
                         .setTitle("提示")
-                        .setMessage("是否确认支付¥" + fy.getText().toString() + "？")
+                        .setMessage("是否确认支付¥" + reward.getText().toString() + "？")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                String kddh2 = kddh.getText().toString();
-                                String kdgs3 = kdgs.getText().toString();
-                                String qqdz4 = qsdz.getText().toString();
-                                String swdzs = swdz.getText().toString();
-                                String fy5 = fy.getText().toString();
+                                String kddh2 = demand_title.getText().toString();
+                                String kdgs3 = demand_content.getText().toString();
+                                String qqdz4 = wanted_number.getText().toString();
+                                String swdzs = deadline.getText().toString();
+                                String fy5 = reward.getText().toString();
                                 if (TextUtils.isEmpty(fy5)
                                         || TextUtils.isEmpty(kddh2)
                                         || TextUtils.isEmpty(swdzs)
@@ -169,13 +177,13 @@ public class BottomMenu extends AppCompatActivity {
                                     return;
                                 }
                                 BmobExpress express = new BmobExpress();
-                                if (rbKd.isChecked()) {
+                                if (pick_up_package.isChecked()) {
                                     express.setType("快递");
                                 }
-                                if (rbWm.isChecked()) {
+                                if (used_goods.isChecked()) {
                                     express.setType("外卖");
                                 }
-                                if (rbSp.isChecked()) {
+                                if (participant_hiring.isChecked()) {
                                     express.setType("商品");
                                 }
                                 express.setKddh(kddh2);
@@ -206,8 +214,6 @@ public class BottomMenu extends AppCompatActivity {
                         .show();
             }
         });
-        alertDialog = builder.create();
-        alertDialog = builder.show();
     }
 
     private void initData(){}

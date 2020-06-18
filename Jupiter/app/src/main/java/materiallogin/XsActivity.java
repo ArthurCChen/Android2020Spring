@@ -41,7 +41,7 @@ public class XsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xs);
         listView = (ListView) findViewById(R.id.list);
-        rg = (RadioGroup) findViewById(R.id.rg);
+        rg = (RadioGroup) findViewById(R.id.service_type);
         rb1 = (RadioButton) findViewById(R.id.rb_1);
         rb2 = (RadioButton) findViewById(R.id.rb_2);
         rb3 = (RadioButton) findViewById(R.id.rb_3);

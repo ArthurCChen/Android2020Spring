@@ -179,7 +179,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.inject(this);
 
-        rg = (RadioGroup) findViewById(R.id.rg);
+        rg = (RadioGroup) findViewById(R.id.service_type);
         rbSx = (RadioButton) findViewById(R.id.rb_sx);
         rbSj = (RadioButton) findViewById(R.id.rb_sj);
         etUsername = (EditText) findViewById(R.id.et_username);
