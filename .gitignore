@@ -2,3 +2,4 @@ Jupiter/app/build
 .gradle
 Jupiter/build
 Jupiter/.idea
+*.iml

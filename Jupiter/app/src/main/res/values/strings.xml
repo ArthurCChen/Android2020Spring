@@ -20,6 +20,7 @@
     <string name="title_issued">我发布的</string>
     <string name="title_me">我的主页</string>
 
+    <string name="search_hint">搜索需求</string>
     <!-- contentDescriptor -->
     <string name="add_descriptor">发布新需求</string>
 

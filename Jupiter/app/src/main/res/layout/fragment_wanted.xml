@@ -6,6 +6,24 @@
     android:layout_height="match_parent"
     tools:context="materiallogin.ui.wanted.WantedFragment">
 
+    <com.arlib.floatingsearchview.FloatingSearchView
+        android:id="@+id/floating_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:floatingSearch_searchBarMarginTop="@dimen/search_view_insert"
+        app:floatingSearch_searchBarMarginLeft="@dimen/search_view_insert"
+        app:floatingSearch_searchBarMarginRight="@dimen/search_view_insert"
+        app:floatingSearch_searchHint="@string/search_hint"
+        app:floatingSearch_suggestionsListAnimDuration="250"
+        app:floatingSearch_showSearchKey="true"
+        app:floatingSearch_leftActionMode="showSearch"
+        app:floatingSearch_close_search_on_keyboard_dismiss="true"
+
+        />
+
     <TextView
         android:id="@+id/text_wanted"
         android:layout_width="match_parent"
