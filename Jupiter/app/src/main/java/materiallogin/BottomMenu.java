@@ -42,6 +42,7 @@ public class BottomMenu extends AppCompatActivity {
     AcceptedFragment acceptedFragment;
     MeFragment meFragment;
     IssuedFragment issuedFragment;
+    String username_from_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class BottomMenu extends AppCompatActivity {
         acceptedFragment = new AcceptedFragment();
         meFragment = new MeFragment();
         issuedFragment = new IssuedFragment();
+        username_from_intent = getIntent().getStringExtra("username");
 
         setContentView(R.layout.activity_bottom_menu);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -130,8 +132,7 @@ public class BottomMenu extends AppCompatActivity {
 
                 final String title = demand_title.getText().toString();
                 final String content = demand_content.getText().toString();
-                // should make a query to get the username
-                final String username = "username";
+                final String username = username_from_intent;
                 final String end_time = deadline.getText().toString();
                 final String type = demand_type.getSelectedItem().toString();
 

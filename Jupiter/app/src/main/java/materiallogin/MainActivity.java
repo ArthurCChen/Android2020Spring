@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
         SPutil sp = new SPutil(this);
         String name = sp.ReadName();
         SPUtils.init(this);
-        if(!TextUtils.isEmpty(name)) {
-            if (name.startsWith("xs-")){
-                startActivity(new Intent(this, UserActivity.class));
-            }else{
-                startActivity(new Intent(this,UserActivity.class));
-            }
-            finish();
-        }
+//        if(!TextUtils.isEmpty(name)) {
+//            if (name.startsWith("xs-")){
+//                startActivity(new Intent(this, UserActivity.class));
+//            }else{
+//                startActivity(new Intent(this,UserActivity.class));
+//            }
+//            finish();
+//        }
     }
 
     // 加号和叉号点击事件
@@ -111,7 +111,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onNext(AVUser user) {
                         // 登录成功
                         Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, UserActivity.class));
+                        Intent intent = new Intent(MainActivity.this, BottomMenu.class);
+                        intent.putExtra("username", un);
+                        startActivity(intent);
                         finish();
                     }
                     public void onError(Throwable e) {

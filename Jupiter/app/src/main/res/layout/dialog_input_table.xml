@@ -139,6 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:hint="单位：天"
                 android:inputType="number" />
 
         </LinearLayout>
