@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category">
+        <item>全部</item>
+        <item>帮取快递</item>
+        <item>信息求问</item>
+        <item>二手交易</item>
+        <item>其他劳务</item>
+        <item>实验被试</item>
+    </string-array>
+
+    <string-array name="sorting">
+        <item>无</item>
+        <item>创建日期</item>
+        <item>金额</item>
+        <item>截止日期</item>
+    </string-array>
+</resources>
