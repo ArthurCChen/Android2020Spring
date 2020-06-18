@@ -52,6 +52,52 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etEmail;
     private Button btGo;
 
+    // 发送验证邮件按钮事件
+    public void validation(View view) {
+        final String username = edit_email.getText().toString();
+        final String nickname = edit_nickname.getText().toString();
+        final String password = this.password.getText().toString();
+        final String realname = edit_realname.getText().toString();
+        final String telephone = edit_telephone.getText().toString();
+        final String address = edit_address.getText().toString();
+        final String email = edit_email.getText().toString();
+        if (TextUtils.isEmpty(username)
+                || TextUtils.isEmpty(password)
+                || TextUtils.isEmpty(nickname)
+                || TextUtils.isEmpty(realname)
+                || TextUtils.isEmpty(telephone)
+                || TextUtils.isEmpty(email)
+                || TextUtils.isEmpty(address)) {
+            Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //为完成邮箱检验，我们使用AVUser类
+        final AVUser user = new AVUser();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.put("nickname",nickname);
+        user.put("realname",realname);
+        user.put("telephone",telephone);
+        user.put("address",address);
+        //创建一个为验证的用户
+        user.signUpInBackground().subscribe(new Observer<AVUser>() {
+            public void onSubscribe(Disposable disposable) {}
+            public void onNext(AVUser user) {
+                // 注册成功
+                System.out.println("注册成功。objectId：" + user.getObjectId());
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+            }
+            public void onError(Throwable e) {
+                Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+            }
+            public void onComplete() {}
+        });
+
+        AVUser.requestEmailVerifyInBackground(email).blockingSubscribe();
+        Toast.makeText(this, "已发送验证邮件", Toast.LENGTH_SHORT).show();
+    }
+
     // 确定按钮事件
     public void next(View view) {
 //        if (rbSj.isChecked()) {
@@ -129,29 +175,13 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
-            //为完成邮箱检验，我们使用AVUser类
         final AVUser user = new AVUser();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.put("nickname",nickname);
-        user.put("realname",realname);
-        user.put("telephone",telephone);
-        user.put("address",address);
-        user.signUpInBackground().subscribe(new Observer<AVUser>() {
-            public void onSubscribe(Disposable disposable) {}
-            public void onNext(AVUser user) {
-                // 注册成功
-                System.out.println("注册成功。objectId：" + user.getObjectId());
-                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-            }
-            public void onError(Throwable e) {
-                    Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                }
-            public void onComplete() {}
-        });
+        if (!user.getBoolean("emailVerified")) {
+            Toast.makeText(this, "请先验证邮箱", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        //这里跳转到内部界面
+
             //以下是原实现，AVObject类
 //            final AVOUser user = new AVOUser(username, password, email, xh, xm, bj, sushe);
 //            user.saveInBackground().subscribe(new Observer<AVObject>() {
@@ -191,6 +221,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edit_address;
     private Button btGo2;
 
+    private Button btFinish;
+
     // onCreate生命周期，做初始化的
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +249,7 @@ public class RegisterActivity extends AppCompatActivity {
         edit_telephone = (EditText) findViewById(R.id.logon_opt_tel);
         edit_address = (EditText) findViewById(R.id.logon_opt_room);
         btGo2 = (Button) findViewById(R.id.bt_go_2);
+        btFinish = (Button) findViewById(R.id.bt_finish);
 
         rbSj.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

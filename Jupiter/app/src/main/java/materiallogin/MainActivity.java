@@ -29,6 +29,7 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.leancloud.AVObject;
+import cn.leancloud.AVUser;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import io.reactivex.Observer;
@@ -47,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.fab)
     FloatingActionButton fab;
 
-    private RadioGroup rg;
-    private RadioButton rbSx;
-    private RadioButton rbSj;
+//    private RadioGroup rg;
+//    private RadioButton rbSx;
+//    private RadioButton rbSj;
 
     public static MainActivity mainActivity;
 
@@ -59,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.inject(this);
-        rg = (RadioGroup) findViewById(R.id.rg);
-        rbSx = (RadioButton) findViewById(R.id.rb_sx);
-        rbSj = (RadioButton) findViewById(R.id.rb_sj);
+//        rg = (RadioGroup) findViewById(R.id.rg);
+//        rbSx = (RadioButton) findViewById(R.id.rb_sx);
+//        rbSj = (RadioButton) findViewById(R.id.rb_sj);
         mainActivity = this;
         SPutil sp = new SPutil(this);
         String name = sp.ReadName();
