@@ -9,6 +9,8 @@ Jupiter/local.properties
 Jupiter/.signing/
 
 Jupiter/.idea/
+Jupiter/.idea/libraries/
+Jupiter/.idea/caches/
 Jupiter/*.iml
 *.iml
 # OS-specific files
