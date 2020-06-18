@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Jupiter/app/build
 Jupiter/.gradle/
 Jupiter/build
@@ -18,4 +19,26 @@ Jupiter/._*
 Jupiter/.Spotlight-V100
 Jupiter/.Trashes
 Jupiter/ehthumbs.db
+=======
+Jupiter/app/build
+Jupiter/.gradle/
+Jupiter/build
+
+Jupiter/com_crashlytics_export_strings.xml
+
+Jupiter/local.properties
+
+Jupiter/.signing/
+
+Jupiter/.idea/
+Jupiter/*.iml
+*.iml
+# OS-specific files
+Jupiter/.DS_Store
+Jupiter/.DS_Store?
+Jupiter/._*
+Jupiter/.Spotlight-V100
+Jupiter/.Trashes
+Jupiter/ehthumbs.db
+>>>>>>> origin/wanted_to_merge
 Jupiter/Thumbs.db
