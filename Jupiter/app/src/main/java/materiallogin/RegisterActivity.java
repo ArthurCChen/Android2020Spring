@@ -2,7 +2,6 @@ package materiallogin;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,14 +22,9 @@ import android.widget.Toast;
 
 import com.ust.jupiter.jupiter.R;
 
-import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
-import cn.leancloud.AVObject;
+import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -39,11 +33,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     @InjectView(R.id.fab)
     FloatingActionButton fab;
-    @InjectView(R.id.cv_add)
+
+    @InjectView(R.id.xs_cv_add)
     CardView cvAdd;
 
-    @InjectView(R.id.et_username)
-    EditText editText;
+//    @InjectView(R.id.et_username)
+//    EditText editText;
 
     private RadioGroup rg;
     private RadioButton rbSx;
@@ -59,117 +54,141 @@ public class RegisterActivity extends AppCompatActivity {
 
     // 确定按钮事件
     public void next(View view) {
-        if (rbSj.isChecked()) {
-            final String username = etUsername.getText().toString();
-            final String password = etPassword.getText().toString();
-            final String sjmx = etSjmx.getText().toString();
-            final String sjdh = etSjdh.getText().toString();
-            final String fr = etFr.getText().toString();
-            final String qybh = etQybh.getText().toString();
-            if (TextUtils.isEmpty(username)
-                    || TextUtils.isEmpty(password)
-                    || TextUtils.isEmpty(sjmx)
-                    || TextUtils.isEmpty(sjdh)
-                    || TextUtils.isEmpty(fr)
-                    || TextUtils.isEmpty(qybh)) {
-                Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
-                return;
+//        if (rbSj.isChecked()) {
+//            final String username = etUsername.getText().toString();
+//            final String password = etPassword.getText().toString();
+//            final String sjmx = etSjmx.getText().toString();
+//            final String sjdh = etSjdh.getText().toString();
+//            final String fr = etFr.getText().toString();
+//            final String qybh = etQybh.getText().toString();
+//            if (TextUtils.isEmpty(username)
+//                    || TextUtils.isEmpty(password)
+//                    || TextUtils.isEmpty(sjmx)
+//                    || TextUtils.isEmpty(sjdh)
+//                    || TextUtils.isEmpty(fr)
+//                    || TextUtils.isEmpty(qybh)) {
+//                Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            BmobQuery<BmobShangjia> query = new BmobQuery<>();
+//            query.addWhereEqualTo("username", username)
+//                    .findObjects(this, new FindListener<BmobShangjia>() {
+//                        @Override
+//                        public void onSuccess(List<BmobShangjia> list) {
+//                            if (list != null && list.size() > 0) {
+//                                Toast.makeText(RegisterActivity.this, "手机号已经存在，请修改手机号", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                BmobShangjia shangjia = new BmobShangjia();
+//                                shangjia.setUsername(username);
+//                                shangjia.setPassword(password);
+//                                shangjia.setQybh(qybh);
+//                                shangjia.setSjdh(sjdh);
+//                                shangjia.setSjfr(fr);
+//                                shangjia.setSjmc(sjmx);
+//                                shangjia.save(RegisterActivity.this, new SaveListener() {
+//                                    @Override
+//                                    public void onSuccess() {
+//                                        SPutil s = new SPutil(RegisterActivity.this);
+//                                        s.WriteName(username);
+//                                        s.WriteGender(username);
+//                                        startActivity(new Intent(RegisterActivity.this, ShangjiaActivity.class));
+//                                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                                        if (MainActivity.mainActivity != null)
+//                                            MainActivity.mainActivity.finish();
+//                                        finish();
+//                                    }
+//
+//                                    @Override
+//                                    public void onFailure(int i, String s) {
+//                                        Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onError(int i, String s) {
+//                            Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//        } else { 下方行缩进-1
+        final String username = edit_email.getText().toString();
+        final String nickname = edit_nickname.getText().toString();
+        final String password = this.password.getText().toString();
+        final String realname = edit_realname.getText().toString();
+        final String telephone = edit_telephone.getText().toString();
+        final String address = edit_address.getText().toString();
+        final String email = edit_email.getText().toString();
+        if (TextUtils.isEmpty(username)
+                || TextUtils.isEmpty(password)
+                || TextUtils.isEmpty(nickname)
+                || TextUtils.isEmpty(realname)
+                || TextUtils.isEmpty(telephone)
+                || TextUtils.isEmpty(email)
+                || TextUtils.isEmpty(address)) {
+            Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+            //为完成邮箱检验，我们使用AVUser类
+        final AVUser user = new AVUser();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.put("nickname",nickname);
+        user.put("realname",realname);
+        user.put("telephone",telephone);
+        user.put("address",address);
+        user.signUpInBackground().subscribe(new Observer<AVUser>() {
+            public void onSubscribe(Disposable disposable) {}
+            public void onNext(AVUser user) {
+                // 注册成功
+                System.out.println("注册成功。objectId：" + user.getObjectId());
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
             }
-            BmobQuery<BmobShangjia> query = new BmobQuery<>();
-            query.addWhereEqualTo("username", username)
-                    .findObjects(this, new FindListener<BmobShangjia>() {
-                        @Override
-                        public void onSuccess(List<BmobShangjia> list) {
-                            if (list != null && list.size() > 0) {
-                                Toast.makeText(RegisterActivity.this, "手机号已经存在，请修改手机号", Toast.LENGTH_SHORT).show();
-                            } else {
-                                BmobShangjia shangjia = new BmobShangjia();
-                                shangjia.setUsername(username);
-                                shangjia.setPassword(password);
-                                shangjia.setQybh(qybh);
-                                shangjia.setSjdh(sjdh);
-                                shangjia.setSjfr(fr);
-                                shangjia.setSjmc(sjmx);
-                                shangjia.save(RegisterActivity.this, new SaveListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        SPutil s = new SPutil(RegisterActivity.this);
-                                        s.WriteName(username);
-                                        s.WriteGender(username);
-                                        startActivity(new Intent(RegisterActivity.this, ShangjiaActivity.class));
-                                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                                        if (MainActivity.mainActivity != null)
-                                            MainActivity.mainActivity.finish();
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onFailure(int i, String s) {
-                                        Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onError(int i, String s) {
-                            Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        } else {
-            final String username = xsEtUsername.getText().toString();
-            final String password = xsEtPassword.getText().toString();
-            final String xh = xsEtXh.getText().toString();
-            final String xm = xsEtXm.getText().toString();
-            final String bj = xsEtBj.getText().toString();
-            final String sushe = xsEtSushe.getText().toString();
-            final String email = etEmail.getText().toString();
-            if (TextUtils.isEmpty(username)
-                    || TextUtils.isEmpty(password)
-                    || TextUtils.isEmpty(xh)
-                    || TextUtils.isEmpty(xm)
-                    || TextUtils.isEmpty(bj)
-                    || TextUtils.isEmpty(email)
-                    || TextUtils.isEmpty(sushe)) {
-                Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            final AVOUser user = new AVOUser(username, password, email, xh, xm, bj, sushe);
-            user.saveInBackground().subscribe(new Observer<AVObject>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-
-                }
-
-                @Override
-                public void onNext(AVObject avObject) {
-//                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-//                    if (MainActivity.mainActivity != null)
-//                        MainActivity.mainActivity.finish();
-//                    finish();
-                }
-
-                @Override
-                public void onError(Throwable e) {
+            public void onError(Throwable e) {
                     Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
                 }
-
-                @Override
-                public void onComplete() {
-
-                }
-            });
-        }
+            public void onComplete() {}
+        });
+            //以下是原实现，AVObject类
+//            final AVOUser user = new AVOUser(username, password, email, xh, xm, bj, sushe);
+//            user.saveInBackground().subscribe(new Observer<AVObject>() {
+//                @Override
+//                public void onSubscribe(Disposable d) {
+//
+//                }
+//
+//                @Override
+//                public void onNext(AVObject avObject) {
+////                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+//                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+////                    if (MainActivity.mainActivity != null)
+////                        MainActivity.mainActivity.finish();
+////                    finish();
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//                    Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//
+//                }
+//            });
+//        }这里是商家/学生选项else的后括号
     }
 
     private CardView xsCvAdd;
-    private EditText xsEtUsername;
-    private EditText xsEtPassword;
-    private EditText xsEtXh;
-    private EditText xsEtXm;
-    private EditText xsEtBj;
-    private EditText xsEtSushe;
+    private EditText edit_email;
+    private EditText edit_nickname;
+    private EditText password;
+    private EditText edit_realname;
+    private EditText edit_telephone;
+    private EditText edit_address;
     private Button btGo2;
 
     // onCreate生命周期，做初始化的
@@ -182,21 +201,21 @@ public class RegisterActivity extends AppCompatActivity {
         rg = (RadioGroup) findViewById(R.id.rg);
         rbSx = (RadioButton) findViewById(R.id.rb_sx);
         rbSj = (RadioButton) findViewById(R.id.rb_sj);
-        etUsername = (EditText) findViewById(R.id.et_username);
-        etPassword = (EditText) findViewById(R.id.et_password);
-        etSjmx = (EditText) findViewById(R.id.et_sjmx);
-        etSjdh = (EditText) findViewById(R.id.et_sjdh);
-        etFr = (EditText) findViewById(R.id.et_fr);
-        etQybh = (EditText) findViewById(R.id.et_qybh);
+//        etUsername = (EditText) findViewById(R.id.et_username);
+//        etPassword = (EditText) findViewById(R.id.et_password);
+//        etSjmx = (EditText) findViewById(R.id.et_sjmx);
+//        etSjdh = (EditText) findViewById(R.id.et_sjdh);
+//        etFr = (EditText) findViewById(R.id.et_fr);
+//        etQybh = (EditText) findViewById(R.id.et_qybh);
         btGo = (Button) findViewById(R.id.bt_go);
 
         xsCvAdd = (CardView) findViewById(R.id.xs_cv_add);
-        xsEtUsername = (EditText) findViewById(R.id.xs_et_username);
-        xsEtPassword = (EditText) findViewById(R.id.xs_et_password);
-        xsEtXh = (EditText) findViewById(R.id.xs_et_xh);
-        xsEtXm = (EditText) findViewById(R.id.xs_et_xm);
-        xsEtBj = (EditText) findViewById(R.id.xs_et_bj);
-        xsEtSushe = (EditText) findViewById(R.id.xs_et_sushe);
+        edit_email = (EditText) findViewById(R.id.logon_email);
+        edit_nickname = (EditText) findViewById(R.id.logon_nickname);
+        password = (EditText) findViewById(R.id.logon_password);
+        edit_realname = (EditText) findViewById(R.id.logon_opt_name);
+        edit_telephone = (EditText) findViewById(R.id.logon_opt_tel);
+        edit_address = (EditText) findViewById(R.id.logon_opt_room);
         btGo2 = (Button) findViewById(R.id.bt_go_2);
 
         rbSj.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

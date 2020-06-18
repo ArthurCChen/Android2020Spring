@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 final String un = etUsername.getText().toString();
                 final String pw = etPassword.getText().toString();
                 if(TextUtils.isEmpty(un)){
-                    Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(TextUtils.isEmpty(pw)){
