@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
 public class WantedFragment extends Fragment {
 
     private WantedViewModel wantedViewModel;
+    private ViewPager viewPager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +32,9 @@ public class WantedFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        viewPager = (ViewPager) inflater.inflate(R.id.wants_pager, null);
+
 
         return root;
     }

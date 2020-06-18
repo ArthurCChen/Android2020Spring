@@ -7,6 +7,7 @@
     tools:context="materiallogin.ui.wanted.WantedFragment">
 
     <LinearLayout
+        android:id="@+id/want_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="112dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,6 +39,7 @@
             app:floatingSearch_backgroundColor="@color/background"/>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -96,7 +98,20 @@
         </LinearLayout>
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipChildren="false"
+        android:layerType="software"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/want_linear_layout">
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/wants_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
     <TextView
         android:id="@+id/text_wanted"
         android:layout_width="match_parent"
