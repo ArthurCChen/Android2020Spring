@@ -20,7 +20,25 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     public ArrayList<String> moneys;
     int pages;
 
-    public WantPagerAdapter(FragmentManager fm,
+    public WantPagerAdapter(FragmentManager fm){
+        super(fm);
+        pages = 0;
+        types = new ArrayList<>();
+        titles = new ArrayList<>();
+        contents = new ArrayList<>();
+        moneys = new ArrayList<>();
+    }
+
+    /**
+     * @deprecated
+     * @param fm
+     * @param pages
+     * @param types
+     * @param titles
+     * @param contents
+     * @param moneys
+     */
+    private WantPagerAdapter(FragmentManager fm,
                             int pages,
                             ArrayList<String> types,
             ArrayList<String> titles,
