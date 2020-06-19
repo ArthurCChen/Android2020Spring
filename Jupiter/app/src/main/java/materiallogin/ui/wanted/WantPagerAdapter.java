@@ -5,11 +5,13 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 
 public class WantPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -66,6 +68,10 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
                 new ArrayList<String>(moneys.subList(start, end)));
     }
 
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return PagerAdapter.POSITION_NONE;
+    }
 
     @Nullable
     @Override

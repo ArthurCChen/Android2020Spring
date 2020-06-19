@@ -62,6 +62,7 @@
                 android:layout_margin="10dp">
 
                 <Spinner
+                    android:id="@+id/want_type_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:entries="@array/category"
@@ -88,6 +89,7 @@
                 android:spinnerMode="dropdown">
 
                 <Spinner
+                    android:id="@+id/want_sort_spinner"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:entries="@array/sorting"

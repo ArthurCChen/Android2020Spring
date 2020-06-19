@@ -7,6 +7,8 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ust.jupiter.jupiter.R;
@@ -31,21 +33,19 @@ public class WantedFragment extends Fragment {
     int currentPosition;
     int curLoadPages;
 
-    private ArrayList<String> mTitles;
-    private ArrayList<String> mMoneys;
-    private ArrayList<String> mTypes;
-    private ArrayList<String> mContents;
-
     private Context mContext;
+    private String curCategory = "";
+    private String curSort = "";
 
     private void clearLists(){
+        pagerAdapter.contents = new ArrayList<>();
+        pagerAdapter.titles = new ArrayList<>();
+        pagerAdapter.moneys = new ArrayList<>();
+        pagerAdapter.types = new ArrayList<>();
+        pagerAdapter.items = 0;
         items = 0;
         curLoadPages = 0;
         currentPosition = 0;
-        mContents = new ArrayList<>();
-        mMoneys = new ArrayList<>();
-        mTitles = new ArrayList<>();
-        mTypes = new ArrayList<>();
     }
 
     @Override
@@ -62,17 +62,42 @@ public class WantedFragment extends Fragment {
 
         viewPager  = (ViewPager) root.findViewById(R.id.wants_pager);
 
-        clearLists();
+        // Spinner
+        final Spinner mSpinner = root.findViewById(R.id.want_type_spinner);
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                curCategory = (String)mSpinner.getItemAtPosition(position);
+                initNewQuery();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        final Spinner spinner2 = root.findViewById(R.id.want_sort_spinner);
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                curSort = (String)spinner2.getItemAtPosition(position);
+                initNewQuery();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         pagerAdapter = new WantPagerAdapter(getChildFragmentManager());
-        boolean succes = newQuery(2);//一开始加载两页,之后一页
+        initNewQuery();
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -89,16 +114,12 @@ public class WantedFragment extends Fragment {
 
                 }
                 currentPosition = position;
-
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
-
-
         return root;
     }
 
@@ -115,6 +136,11 @@ public class WantedFragment extends Fragment {
         pagerAdapter.contents.addAll(newContents);
         pagerAdapter.items = items;
         curLoadPages += 1;
+    }
+
+    private boolean initNewQuery(){
+        clearLists();
+        return newQuery(1);
     }
 
     private boolean newQuery(int pags){
@@ -154,6 +180,7 @@ public class WantedFragment extends Fragment {
 
     private void queryNewPages(int pages, final CountDownLatch latch){
         AVQuery<AVObject> query = new AVQuery<>("demand");
+        limitedQuery(query);
         query.limit(GridWantAdapter.pageMaxCnt * pages);
         query.skip(curLoadPages * GridWantAdapter.pageMaxCnt);
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
@@ -195,6 +222,7 @@ public class WantedFragment extends Fragment {
 
     private void queryTotalNum(final CountDownLatch latch){
         AVQuery<AVObject> query = new AVQuery<>("demand");
+        limitedQuery(query);
         query.countInBackground().subscribe(
                 new Observer<Integer>() {
                     @Override
@@ -219,5 +247,22 @@ public class WantedFragment extends Fragment {
                     }
                 }
         );
+    }
+
+    void limitedQuery(AVQuery<AVObject> query){
+        if (curCategory.equals(getResources().getString(R.string.type_ask)) ||
+            curCategory.equals(getResources().getString(R.string.type_other)) ||
+            curCategory.equals(getResources().getString(R.string.type_experiment)) ||
+            curCategory.equals(getResources().getString(R.string.type_express)) ||
+            curCategory.equals(getResources().getString(R.string.type_deal))){
+            query.whereEqualTo("type", curCategory);
+        }
+        if(curSort.equals(getResources().getString(R.string.sort_begin_date))){
+            query.orderByAscending("createdAt");
+        }else if(curSort.equals(getResources().getString(R.string.sort_money))){
+            query.orderByAscending("reward");
+        }else if(curSort.equals(getResources().getString(R.string.sort_end_date))){
+            query.orderByAscending("end_time");
+        }
     }
 }
