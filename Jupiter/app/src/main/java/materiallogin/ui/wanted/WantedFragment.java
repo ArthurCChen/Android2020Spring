@@ -23,7 +23,6 @@ import androidx.viewpager.widget.ViewPager;
 
 public class WantedFragment extends Fragment {
 
-    private WantedViewModel wantedViewModel;
     private ViewPager viewPager;
     private WantPagerAdapter pagerAdapter;
     int currentPosition;
@@ -37,8 +36,6 @@ public class WantedFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        wantedViewModel =
-                ViewModelProviders.of(this).get(WantedViewModel.class);
         View root = inflater.inflate(R.layout.fragment_wanted, container, false);
 
 
