@@ -115,7 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/want_pager_header"
-
+                android:background="@color/thu_purple"
+                android:textColor = "#FFFFFF"
                 />
         </androidx.viewpager.widget.ViewPager>
 

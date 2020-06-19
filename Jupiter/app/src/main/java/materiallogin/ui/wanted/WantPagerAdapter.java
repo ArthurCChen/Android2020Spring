@@ -3,6 +3,7 @@ package materiallogin.ui.wanted;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -22,6 +23,12 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
         return SimpleFragment.newInstance(items.get(position));
     }
 
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return "第" + String.valueOf(position) + "页";
+    }
 
     @Override
     public int getCount() {
