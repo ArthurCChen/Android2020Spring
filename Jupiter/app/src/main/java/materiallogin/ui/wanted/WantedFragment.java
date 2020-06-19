@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.ust.jupiter.jupiter.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,14 +51,33 @@ public class WantedFragment extends Fragment {
 
         viewPager  = (ViewPager) root.findViewById(R.id.wants_pager);
 //        viewPager = (ViewPager) inflater.inflate(R.layout.fragment_wants_list, container, false);
-        List<Integer> mItems = Arrays.asList(
-                getResources().getColor(R.color.colorAccent),
-                getResources().getColor(R.color.black),
-                getResources().getColor(R.color.colorPrimaryDark),
-                getResources().getColor(R.color.colorPrimary));
-        currentSize = mItems.size();
+        ArrayList<String> mTypes = new ArrayList<String>(Arrays.asList(
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other)
+                ));
+
+        ArrayList<String> mTitles = new ArrayList<String>(Arrays.asList(
+                "1","2","3","4","5", "6", "7"
+        ));
+
+        ArrayList<String> mContents = new ArrayList<String>(Arrays.asList(
+                "1","2","3","4", "5", "6", "7"
+        ));
+
+        ArrayList<String> mMoneys = new ArrayList<String>(Arrays.asList(
+                "1","2","3","4", "5", "6", "7"
+        ));
+
+        currentSize = mTypes.size();
         currentPosition = 0;
-        pagerAdapter = new WantPagerAdapter(getChildFragmentManager(), mItems);
+        pagerAdapter = new WantPagerAdapter(getChildFragmentManager(),
+                mTypes, mTitles, mContents, mMoneys
+                );
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(-1);
 

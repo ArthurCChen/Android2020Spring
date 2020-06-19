@@ -1,5 +1,7 @@
 package materiallogin.ui.wanted;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,17 +12,37 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class WantPagerAdapter extends FragmentStatePagerAdapter {
-    private List<Integer> items;
 
-    public WantPagerAdapter(FragmentManager fm, List<Integer> colors) {
+
+    ArrayList<String> types;
+    ArrayList<String> titles;
+    ArrayList<String> contents;
+    ArrayList<String> moneys;
+
+    public WantPagerAdapter(FragmentManager fm,
+                            ArrayList<String> types,
+            ArrayList<String> titles,
+            ArrayList<String> contents,
+            ArrayList<String> moneys) {
         super(fm);
-        items = colors;
+        this.types = types;
+        this.titles = titles;
+        this.contents = contents;
+        this.moneys = moneys;
     }
 
     @Override
     public Fragment getItem(int position) {
 
-        return SimpleFragment.newInstance(items.get(position));
+        int start = GridWantAdapter.pageMaxCnt * position;
+        int end = Math.min(start + GridWantAdapter.pageMaxCnt, titles.size());
+
+        return SimpleFragment.newInstance(
+                end - start,
+                new ArrayList<String>(types.subList(start, end)),
+                new ArrayList<String>(titles.subList(start, end)),
+                new ArrayList<String>(contents.subList(start, end)),
+                new ArrayList<String>(moneys.subList(start, end)));
     }
 
 
@@ -32,6 +54,7 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return items.size();
+        int size = titles.size();
+        return (size == 0)? 1: (size - 1) / GridWantAdapter.pageMaxCnt + 1;
     }
 }
