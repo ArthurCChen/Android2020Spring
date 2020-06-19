@@ -40,13 +40,6 @@ public class WantedFragment extends Fragment {
         wantedViewModel =
                 ViewModelProviders.of(this).get(WantedViewModel.class);
         View root = inflater.inflate(R.layout.fragment_wanted, container, false);
-        final TextView textView = root.findViewById(R.id.text_wanted);
-        wantedViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
 
         viewPager  = (ViewPager) root.findViewById(R.id.wants_pager);
@@ -79,7 +72,7 @@ public class WantedFragment extends Fragment {
                 mTypes, mTitles, mContents, mMoneys
                 );
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(-1);
+        viewPager.setOffscreenPageLimit(1);
 
         return root;
     }

@@ -7,5 +7,5 @@
     <dimen name="search_view_insert">5dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="want_image_size">175dp</dimen>
+    <dimen name="want_image_size">190dp</dimen>
 </resources>
