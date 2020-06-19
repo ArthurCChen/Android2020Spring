@@ -51,28 +51,52 @@ public class WantedFragment extends Fragment {
                 getResources().getString(R.string.type_other),
                 getResources().getString(R.string.type_other),
                 getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
+                getResources().getString(R.string.type_other),
                 getResources().getString(R.string.type_other)
+
                 ));
 
         ArrayList<String> mTitles = new ArrayList<String>(Arrays.asList(
-                "1","2","3","4","5", "6", "7"
+                "1","2","3","4","5", "6", "1","2","3","4","5", "6"
         ));
 
         ArrayList<String> mContents = new ArrayList<String>(Arrays.asList(
-                "1","2","3","4", "5", "6", "7"
+                "1","2","3","4", "5", "6", "1","2","3","4","5", "6"
         ));
 
         ArrayList<String> mMoneys = new ArrayList<String>(Arrays.asList(
-                "1","2","3","4", "5", "6", "7"
+                "1","2","3","4", "5", "6", "1","2","3","4","5", "6"
         ));
 
         currentSize = mTypes.size();
         currentPosition = 0;
         pagerAdapter = new WantPagerAdapter(getChildFragmentManager(),
+                3,
                 mTypes, mTitles, mContents, mMoneys
                 );
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == pagerAdapter.getCount()){
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         return root;
     }

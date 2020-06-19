@@ -18,13 +18,16 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     ArrayList<String> titles;
     ArrayList<String> contents;
     ArrayList<String> moneys;
+    int pages;
 
     public WantPagerAdapter(FragmentManager fm,
+                            int pages,
                             ArrayList<String> types,
             ArrayList<String> titles,
             ArrayList<String> contents,
             ArrayList<String> moneys) {
         super(fm);
+        this.pages = pages;
         this.types = types;
         this.titles = titles;
         this.contents = contents;
@@ -35,7 +38,7 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
 
         int start = GridWantAdapter.pageMaxCnt * position;
-        int end = Math.min(start + GridWantAdapter.pageMaxCnt, titles.size());
+        int end = Math.min(start + GridWantAdapter.pageMaxCnt, pages * GridWantAdapter.pageMaxCnt);
 
         return SimpleFragment.newInstance(
                 end - start,
@@ -54,7 +57,6 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        int size = titles.size();
-        return (size == 0)? 1: (size - 1) / GridWantAdapter.pageMaxCnt + 1;
+        return pages;
     }
 }
