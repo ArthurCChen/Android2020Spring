@@ -1,5 +1,6 @@
 package materiallogin.ui.wanted;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,6 +36,8 @@ public class WantedFragment extends Fragment {
     private ArrayList<String> mTypes;
     private ArrayList<String> mContents;
 
+    private Context mContext;
+
     private void clearLists(){
         items = 0;
         curLoadPages = 0;
@@ -48,6 +51,7 @@ public class WantedFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.mContext = getActivity();
         setRetainInstance(true);
     }
 
@@ -177,9 +181,8 @@ public class WantedFragment extends Fragment {
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(getActivity(),"网络错误", Toast.LENGTH_SHORT);
+                Toast.makeText(mContext,"网络错误", Toast.LENGTH_SHORT).show();
                 latch.countDown();
-                Thread.currentThread().interrupt();
 
             }
 
@@ -207,9 +210,8 @@ public class WantedFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(getActivity(),"网络错误", Toast.LENGTH_SHORT);
+                        Toast.makeText(mContext,"网络错误", Toast.LENGTH_SHORT).show();
                         latch.countDown();
-                        Thread.currentThread().interrupt();
                     }
 
                     @Override
