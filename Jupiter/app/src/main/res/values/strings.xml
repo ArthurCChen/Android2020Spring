@@ -52,4 +52,6 @@
     <string name="deadline">任务时长</string>
     <string name="reward">报酬金额</string>
     <string name="issue">发布</string>
+
+    <!-- demand detail -->
 </resources>

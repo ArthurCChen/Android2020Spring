@@ -1,16 +1,13 @@
 package materiallogin;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,9 +22,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.util.Calendar;
-import java.util.Date;
 
-import cn.bmob.v3.listener.SaveListener;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import cn.leancloud.AVObject;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -188,7 +185,7 @@ public class BottomMenu extends AppCompatActivity {
                 }
 
 
-                final AVODemand demand = new AVODemand();
+                final AVDemand demand = new AVDemand();
                 demand.setContent(content);
                 demand.setTitle(title);
                 demand.setUsername(username);
@@ -229,5 +226,6 @@ public class BottomMenu extends AppCompatActivity {
         alertDialog = builder.create();
         alertDialog.show();
     }
+
 
 }
