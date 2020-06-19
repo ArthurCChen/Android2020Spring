@@ -18,11 +18,11 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     public ArrayList<String> titles;
     public ArrayList<String> contents;
     public ArrayList<String> moneys;
-    int pages;
+    int items;
 
     public WantPagerAdapter(FragmentManager fm){
         super(fm);
-        pages = 0;
+        items = 0;
         types = new ArrayList<>();
         titles = new ArrayList<>();
         contents = new ArrayList<>();
@@ -32,20 +32,20 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     /**
      * @deprecated
      * @param fm
-     * @param pages
+     * @param items
      * @param types
      * @param titles
      * @param contents
      * @param moneys
      */
     private WantPagerAdapter(FragmentManager fm,
-                            int pages,
+                            int items,
                             ArrayList<String> types,
             ArrayList<String> titles,
             ArrayList<String> contents,
             ArrayList<String> moneys) {
         super(fm);
-        this.pages = pages;
+        this.items = items;
         this.types = types;
         this.titles = titles;
         this.contents = contents;
@@ -56,7 +56,7 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
 
         int start = GridWantAdapter.pageMaxCnt * position;
-        int end = Math.min(start + GridWantAdapter.pageMaxCnt, pages * GridWantAdapter.pageMaxCnt);
+        int end = Math.min(start + GridWantAdapter.pageMaxCnt, items);
 
         return SimpleFragment.newInstance(
                 end - start,
@@ -75,6 +75,6 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return pages;
+        return items == 0? 0: (items + 5) / GridWantAdapter.pageMaxCnt;
     }
 }

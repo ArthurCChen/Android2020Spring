@@ -11,10 +11,8 @@ import android.widget.Toast;
 import com.ust.jupiter.jupiter.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.logging.LogRecord;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +36,7 @@ public class WantedFragment extends Fragment {
     private ArrayList<String> mContents;
 
     private void clearLists(){
-        pages = 0;
+        items = 0;
         curLoadPages = 0;
         currentPosition = 0;
         mContents = new ArrayList<>();
@@ -60,42 +58,11 @@ public class WantedFragment extends Fragment {
 
         viewPager  = (ViewPager) root.findViewById(R.id.wants_pager);
 
-//        final ArrayList<String> mTypes = new ArrayList<String>(Arrays.asList(
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other),
-//                getResources().getString(R.string.type_other)
-//
-//                ));
-//
-//        final ArrayList<String> mTitles = new ArrayList<String>(Arrays.asList(
-//                "1","2","3","4","5", "6", "1","2","3","4","5", "6"
-//        ));
-//
-//        final ArrayList<String> mContents = new ArrayList<String>(Arrays.asList(
-//                "1","2","3","4", "5", "6", "1","2","3","4","5", "6"
-//        ));
-//
-//        final ArrayList<String> mMoneys = new ArrayList<String>(Arrays.asList(
-//                "1","2","3","4", "5", "6", "1","2","3","4","5", "6"
-//        ));
-
         clearLists();
 
-//        pagerAdapter = new WantPagerAdapter(getChildFragmentManager(),
-//                3,
-//                mTypes, mTitles, mContents, mMoneys
-//                );
+
         pagerAdapter = new WantPagerAdapter(getChildFragmentManager());
-        boolean succes = newQuery();
+        boolean succes = newQuery(2);//一开始加载两页,之后一页
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -108,7 +75,7 @@ public class WantedFragment extends Fragment {
             public void onPageSelected(int position) {
                 if(position == curLoadPages){
                     //出bug
-                    boolean success = newQuery();
+                    boolean success = newQuery(1);
                     if(!success) {
                         viewPager.setCurrentItem(position - 1);
                         return;
@@ -131,7 +98,7 @@ public class WantedFragment extends Fragment {
         return root;
     }
 
-    private int pages;
+    private int items;
     private ArrayList<String> newTitles;
     private ArrayList<String> newTypes;
     private ArrayList<String> newMoneys;
@@ -142,16 +109,16 @@ public class WantedFragment extends Fragment {
         pagerAdapter.titles.addAll(newTitles);
         pagerAdapter.moneys.addAll(newMoneys);
         pagerAdapter.contents.addAll(newContents);
-        pagerAdapter.pages = pages;
+        pagerAdapter.items = items;
         curLoadPages += 1;
     }
 
-    private boolean newQuery(){
+    private boolean newQuery(int pags){
         final CountDownLatch latch = new CountDownLatch(2);
 
         queryTotalNum(latch);
 
-        queryNewPages(latch);
+        queryNewPages(items, latch);
 
         final Handler handler = new mHandler();
         new Thread(new Runnable() {
@@ -181,9 +148,9 @@ public class WantedFragment extends Fragment {
         }
     }
 
-    private void queryNewPages(final CountDownLatch latch){
+    private void queryNewPages(int pages, final CountDownLatch latch){
         AVQuery<AVObject> query = new AVQuery<>("demand");
-        query.limit(GridWantAdapter.pageMaxCnt);
+        query.limit(GridWantAdapter.pageMaxCnt * pages);
         query.skip(curLoadPages * GridWantAdapter.pageMaxCnt);
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             @Override
@@ -202,7 +169,7 @@ public class WantedFragment extends Fragment {
                 for (AVObject avObject : avObjects){
                     newContents.add((String)avObject.getString("content"));
                     newTypes.add((String)avObject.getString("type"));
-                    newMoneys.add((String)avObject.getString("reward"));
+                    newMoneys.add(String.valueOf(avObject.getNumber("reward")));
                     newTitles.add((String)avObject.getString("title"));
                 }
                 latch.countDown();
@@ -234,7 +201,7 @@ public class WantedFragment extends Fragment {
 
                     @Override
                     public void onNext(Integer integer) {
-                        pages =  (integer==0)? 0 : (integer + 5) / GridWantAdapter.pageMaxCnt;
+                        items =  integer;
                         latch.countDown();
                     }
 
