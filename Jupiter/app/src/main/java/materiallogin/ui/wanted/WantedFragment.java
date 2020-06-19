@@ -14,6 +14,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
@@ -23,8 +24,15 @@ public class WantedFragment extends Fragment {
 
     private WantedViewModel wantedViewModel;
     private ViewPager viewPager;
+    private PagerAdapter pagerAdapter;
     int currentPosition;
     int currentSize ;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,33 +53,13 @@ public class WantedFragment extends Fragment {
         List<Integer> mItems = Arrays.asList(
                 getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.black),
+                getResources().getColor(R.color.colorPrimaryDark),
                 getResources().getColor(R.color.colorPrimary));
         currentSize = mItems.size();
         currentPosition = 0;
-        PagerAdapter pagerAdapter = new WantPagerAdapter(getChildFragmentManager(), mItems);
+        pagerAdapter = new WantPagerAdapter(getChildFragmentManager(), mItems);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(mItems.size());
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentPosition = position;
-                if(position == currentSize + 1){
-                    currentPosition = 1;
-                }else if(position == 0){
-                    currentPosition = currentSize;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                viewPager.setCurrentItem(currentPosition, false);
-            }
-        });
+        viewPager.setOffscreenPageLimit(-1);
 
         return root;
     }

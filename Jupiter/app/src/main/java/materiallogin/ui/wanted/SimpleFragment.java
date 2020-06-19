@@ -20,10 +20,24 @@ public class SimpleFragment extends Fragment {
     private int color;
 
     public SimpleFragment() {
+        System.out.println("fuck you android");
     }
 
-    @SuppressLint("ValidFragment")
-    public SimpleFragment(int color) {
+    public static SimpleFragment newInstance(int color){
+        SimpleFragment simpleFragment = new SimpleFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", color);
+        simpleFragment.setArguments(args);
+        return simpleFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        color = getArguments().getInt("someInt", 0);
+    }
+
+    public void setColor(int color) {
         this.color = color;
     }
 
