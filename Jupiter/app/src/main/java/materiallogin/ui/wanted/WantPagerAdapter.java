@@ -14,10 +14,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 public class WantPagerAdapter extends FragmentStatePagerAdapter {
 
 
-    ArrayList<String> types;
-    ArrayList<String> titles;
-    ArrayList<String> contents;
-    ArrayList<String> moneys;
+    public ArrayList<String> types;
+    public ArrayList<String> titles;
+    public ArrayList<String> contents;
+    public ArrayList<String> moneys;
     int pages;
 
     public WantPagerAdapter(FragmentManager fm,

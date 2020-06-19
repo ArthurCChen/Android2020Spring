@@ -25,7 +25,7 @@ public class WantedFragment extends Fragment {
 
     private WantedViewModel wantedViewModel;
     private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
+    private WantPagerAdapter pagerAdapter;
     int currentPosition;
     int currentSize ;
 
@@ -44,7 +44,7 @@ public class WantedFragment extends Fragment {
 
         viewPager  = (ViewPager) root.findViewById(R.id.wants_pager);
 //        viewPager = (ViewPager) inflater.inflate(R.layout.fragment_wants_list, container, false);
-        ArrayList<String> mTypes = new ArrayList<String>(Arrays.asList(
+        final ArrayList<String> mTypes = new ArrayList<String>(Arrays.asList(
                 getResources().getString(R.string.type_other),
                 getResources().getString(R.string.type_other),
                 getResources().getString(R.string.type_other),
@@ -60,19 +60,19 @@ public class WantedFragment extends Fragment {
 
                 ));
 
-        ArrayList<String> mTitles = new ArrayList<String>(Arrays.asList(
+        final ArrayList<String> mTitles = new ArrayList<String>(Arrays.asList(
                 "1","2","3","4","5", "6", "1","2","3","4","5", "6"
         ));
 
-        ArrayList<String> mContents = new ArrayList<String>(Arrays.asList(
+        final ArrayList<String> mContents = new ArrayList<String>(Arrays.asList(
                 "1","2","3","4", "5", "6", "1","2","3","4","5", "6"
         ));
 
-        ArrayList<String> mMoneys = new ArrayList<String>(Arrays.asList(
+        final ArrayList<String> mMoneys = new ArrayList<String>(Arrays.asList(
                 "1","2","3","4", "5", "6", "1","2","3","4","5", "6"
         ));
 
-        currentSize = mTypes.size();
+        currentSize = 1;
         currentPosition = 0;
         pagerAdapter = new WantPagerAdapter(getChildFragmentManager(),
                 3,
@@ -88,8 +88,16 @@ public class WantedFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                if(position == pagerAdapter.getCount()){
+                if(position == currentSize){
+
+                    pagerAdapter.types.addAll(mTypes);
+                    pagerAdapter.titles.addAll(mTitles);
+                    pagerAdapter.moneys.addAll(mMoneys);
+                    pagerAdapter.contents.addAll(mContents);
+                    currentSize += 1;
                 }
+                currentPosition = position;
+
             }
 
             @Override
