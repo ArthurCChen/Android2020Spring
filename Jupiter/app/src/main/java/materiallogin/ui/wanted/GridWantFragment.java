@@ -1,4 +1,4 @@
-package materiallogin;
+package materiallogin.ui.wanted;
 
 
 import android.os.Bundle;
