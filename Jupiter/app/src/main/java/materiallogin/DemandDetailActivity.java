@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.thu.qinghuaquan.R;
@@ -98,11 +99,11 @@ public class DemandDetailActivity extends AppCompatActivity {
     }
 
     private void get_user_and_then_set_content(AVObject demand) {
-//        AVUser currentUser = AVUser.getCurrentUser();
-//        String email = (String) currentUser.getServerData().get("email");
+        AVUser currentUser = AVUser.getCurrentUser();
+        String email = (String) currentUser.getServerData().get("email");
         // to accelerate debug process
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
-        String email = "lisiyu201695@gmail.com";
+//        String email = "lisiyu201695@gmail.com";
         AVQuery<AVObject> query = new AVQuery<>("demand_relationship");
         query.whereEqualTo("demand", demand);
         query.whereEqualTo("enroller_id", email);
@@ -129,11 +130,11 @@ public class DemandDetailActivity extends AppCompatActivity {
     private void set_content(AVObject demand, AVObject relationship) {
         String hint = "";
 
-//        AVUser currentUser = AVUser.getCurrentUser();
-//        String email = (String) currentUser.getServerData().get("email");
+        AVUser currentUser = AVUser.getCurrentUser();
+        String email = (String) currentUser.getServerData().get("email");
         // to accelerate debug process
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
-        String email = "lisiyu201695@gmail.com";
+//        String email = "lisiyu201695@gmail.com";
         String role = "viewer";
         if (demand.getString("username").equals(email)) {
             role = "issuer";
@@ -166,6 +167,9 @@ public class DemandDetailActivity extends AppCompatActivity {
                     hint = "不能修改/删除提醒：\n已有人向您发起了接单请求，为保障用户权益，不允许修改或删除，谢谢合作！";
                     left_button.setVisibility(View.GONE);
                     right_button.setVisibility(View.GONE);
+                    recyclerView = (RecyclerView) findViewById(R.id.application_list);
+                    layoutManager = new LinearLayoutManager(this);
+                    recyclerView.setLayoutManager(layoutManager);
                     break;
                 case "done":
                     hint = "当前任务已经完成！";
