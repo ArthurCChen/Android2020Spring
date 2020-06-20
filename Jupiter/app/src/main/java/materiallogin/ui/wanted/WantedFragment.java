@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
@@ -25,8 +26,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 import cn.leancloud.AVObject;
-import cn.leancloud.AVQuery;
-import cn.leancloud.query.AVQueryResult;
 import cn.leancloud.search.AVSearchQuery;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -36,6 +35,7 @@ public class WantedFragment extends Fragment {
     private ViewPager viewPager;
     private WantPagerAdapter pagerAdapter;
     private PagerTabStrip tabStrip;
+
 
     int currentPosition;
     int curLoadPages;
@@ -214,9 +214,11 @@ public class WantedFragment extends Fragment {
             super.handleMessage(msg);
             if(items == 0) {
                 tabStrip.setVisibility(View.INVISIBLE);
+
                 return;
             }else{
                 tabStrip.setVisibility(View.VISIBLE);
+
             }
             refreshAdapter();
             pagerAdapter.notifyDataSetChanged();

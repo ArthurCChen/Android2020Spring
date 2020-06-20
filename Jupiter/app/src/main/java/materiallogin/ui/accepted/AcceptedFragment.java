@@ -42,8 +42,10 @@ public class AcceptedFragment extends Fragment {
     ViewPager viewPager;
     WantPagerAdapter pagerAdapter;
     PagerTabStrip tabStrip;
+    private TextView suggestion;
     private Context mContext;
     AVSearchQuery query;
+
 
     private int items;
     private ArrayList<String> newTitles;
@@ -57,6 +59,7 @@ public class AcceptedFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_accepted, container, false);
         viewPager = root.findViewById(R.id.accept_pager);
+        suggestion = root.findViewById(R.id.suggestion);
         tabStrip = root.findViewById(R.id.want_pager_header);
         pagerAdapter = new WantPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
@@ -101,9 +104,12 @@ public class AcceptedFragment extends Fragment {
             super.handleMessage(msg);
             if(items == 0) {
                 tabStrip.setVisibility(View.INVISIBLE);
+                suggestion.setVisibility(View.VISIBLE);
+                suggestion.setText("目前还没有,来接受一个?");
                 return;
             }else{
                 tabStrip.setVisibility(View.VISIBLE);
+                suggestion.setVisibility(View.INVISIBLE);
             }
             refreshAdapter();
             pagerAdapter.notifyDataSetChanged();

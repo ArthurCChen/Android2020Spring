@@ -33,7 +33,9 @@ public class IssuedFragment extends Fragment {
     ViewPager viewPager;
     WantPagerAdapter pagerAdapter;
     PagerTabStrip tabStrip;
+    private TextView suggestion;
     private Context mContext;
+
 
     private int items;
     private ArrayList<String> newTitles;
@@ -48,6 +50,7 @@ public class IssuedFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_issued, container, false);
         viewPager = root.findViewById(R.id.issue_pager);
         tabStrip = root.findViewById(R.id.want_pager_header);
+        suggestion = root.findViewById(R.id.suggestion);
         pagerAdapter = new WantPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
@@ -91,8 +94,11 @@ public class IssuedFragment extends Fragment {
             super.handleMessage(msg);
             if(items == 0) {
                 tabStrip.setVisibility(View.INVISIBLE);
+                suggestion.setVisibility(View.VISIBLE);
+                suggestion.setText("目前还没有,来接受一个?");
             }else{
                 tabStrip.setVisibility(View.VISIBLE);
+                suggestion.setVisibility(View.INVISIBLE);
             }
             refreshAdapter();
             pagerAdapter.notifyDataSetChanged();
