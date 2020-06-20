@@ -11,7 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

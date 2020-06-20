@@ -54,7 +54,6 @@ public class ShangjiaActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.shangjia_home);
         listView = (ListView) findViewById(R.id.list);
-        rg2 = (RadioGroup) findViewById(R.id.rg);
         rb1 = (RadioButton) findViewById(R.id.rb1);
         rb2 = (RadioButton) findViewById(R.id.rb2);
         rb3 = (RadioButton) findViewById(R.id.rb3);
@@ -162,18 +161,8 @@ public class ShangjiaActivity extends AppCompatActivity {
         final View layout = inflater.inflate(R.layout.dialog_input_table, null);
         builder.setView(layout);
         SPutil s = new SPutil(this);
-        gsmc = (TextView) layout.findViewById(R.id.gsmc);
-        kddh = (EditText) layout.findViewById(R.id.kddh);
-        kdgs = (EditText) layout.findViewById(R.id.kdgs);
-        swdz = (EditText) layout.findViewById(R.id.swdz);
-        qsdz = (EditText) layout.findViewById(R.id.qsdz);
         t1 = (TextView) layout.findViewById(R.id.tip1);
         t2 = (TextView) layout.findViewById(R.id.tip2);
-        rg = (RadioGroup) layout.findViewById(R.id.rg);
-        rbKd = (RadioButton) layout.findViewById(R.id.rb_kd);
-        rbWm = (RadioButton) layout.findViewById(R.id.rb_wm);
-        rbSp = (RadioButton) layout.findViewById(R.id.rb_sp);
-        fy = (EditText) layout.findViewById(R.id.fy);
         gsmc.setText(s.ReadGender());
         rbKd.setChecked(true);
         cancel = (TextView) layout.findViewById(R.id.cancel);
@@ -189,22 +178,6 @@ public class ShangjiaActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int id = radioGroup.getCheckedRadioButtonId();
-                if (id == R.id.rb_wm) {
-                    t1.setText("外卖名称");
-                    t2.setText("配送公司");
-                    kddh.setHint("如：西红柿盖饭");
-                    kdgs.setHint("如：美团外卖");
-                } else if (id == R.id.rb_kd) {
-                    t1.setText("快递单号");
-                    t2.setText("快递公司");
-                    kddh.setHint("如：1234567890");
-                    kdgs.setHint("如：顺丰快递");
-                } else {
-                    t1.setText("商品名称");
-                    t2.setText("商品备注");
-                    kddh.setHint("如：牙膏");
-                    kdgs.setHint("如：炫齿白牌子");
-                }
             }
         });
         save.setOnClickListener(new View.OnClickListener() {
