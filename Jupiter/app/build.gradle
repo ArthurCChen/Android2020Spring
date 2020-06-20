@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.3"
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "com.ust.jupiter.jupiter"
+        applicationId "com.thu.tsinghuaquan"
         minSdkVersion 21
         targetSdkVersion 26
         multiDexEnabled true
@@ -23,6 +23,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     sourceSets {
         main.jniLibs.srcDirs = ['libs']
@@ -54,6 +58,5 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'com.github.arimorty:floatingsearchview:2.0.3'
-    implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 import java.util.ArrayList;
 

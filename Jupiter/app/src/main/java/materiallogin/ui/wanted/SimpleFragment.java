@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.GridView;
 
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 import java.util.ArrayList;
 

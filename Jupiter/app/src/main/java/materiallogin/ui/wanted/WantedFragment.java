@@ -7,9 +7,13 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.ust.jupiter.jupiter.R;
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.thu.qinghuaquan.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVQuery;
+import cn.leancloud.query.AVQueryResult;
+import cn.leancloud.search.AVSearchQuery;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -31,21 +37,21 @@ public class WantedFragment extends Fragment {
     int currentPosition;
     int curLoadPages;
 
-    private ArrayList<String> mTitles;
-    private ArrayList<String> mMoneys;
-    private ArrayList<String> mTypes;
-    private ArrayList<String> mContents;
-
     private Context mContext;
+    private String curCategory = "";
+    private String curSort = "";
+    private String curSearch = "";
 
     private void clearLists(){
+        pagerAdapter.contents = new ArrayList<>();
+        pagerAdapter.titles = new ArrayList<>();
+        pagerAdapter.moneys = new ArrayList<>();
+        pagerAdapter.types = new ArrayList<>();
+        pagerAdapter.items = 0;
         items = 0;
         curLoadPages = 0;
         currentPosition = 0;
-        mContents = new ArrayList<>();
-        mMoneys = new ArrayList<>();
-        mTitles = new ArrayList<>();
-        mTypes = new ArrayList<>();
+        pagerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -62,17 +68,57 @@ public class WantedFragment extends Fragment {
 
         viewPager  = (ViewPager) root.findViewById(R.id.wants_pager);
 
-        clearLists();
+        // Spinner
+        final Spinner mSpinner = root.findViewById(R.id.want_type_spinner);
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                curCategory = (String)mSpinner.getItemAtPosition(position);
+                initNewQuery();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        final Spinner spinner2 = root.findViewById(R.id.want_sort_spinner);
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                curSort = (String)spinner2.getItemAtPosition(position);
+                initNewQuery();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        final FloatingSearchView mSearchView = (FloatingSearchView)root.findViewById(R.id.floating_search_view);
+        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener(){
+
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(String currentQuery) {
+                curSearch = currentQuery;
+                initNewQuery();
+            }
+        });
 
         pagerAdapter = new WantPagerAdapter(getChildFragmentManager());
-        boolean succes = newQuery(2);//一开始加载两页,之后一页
+        initNewQuery();
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(1);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -89,16 +135,12 @@ public class WantedFragment extends Fragment {
 
                 }
                 currentPosition = position;
-
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
-
-
         return root;
     }
 
@@ -117,10 +159,18 @@ public class WantedFragment extends Fragment {
         curLoadPages += 1;
     }
 
-    private boolean newQuery(int pags){
-        final CountDownLatch latch = new CountDownLatch(2);
+    AVSearchQuery query;
 
-        queryTotalNum(latch);
+    private boolean initNewQuery(){
+        query = new AVSearchQuery();
+        query.setClassName("demand");
+        limitedQuery(query);
+        clearLists();
+        return newQuery(1);
+    }
+
+    private boolean newQuery(int pags){
+        final CountDownLatch latch = new CountDownLatch(1);
 
         queryNewPages(items, latch);
 
@@ -130,7 +180,8 @@ public class WantedFragment extends Fragment {
             public void run() {
                 try {
                     latch.await();
-                    refreshAdapter();
+                    items = query.getHits();
+//                    refreshAdapter();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -148,14 +199,15 @@ public class WantedFragment extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+            refreshAdapter();
             pagerAdapter.notifyDataSetChanged();
         }
     }
 
     private void queryNewPages(int pages, final CountDownLatch latch){
-        AVQuery<AVObject> query = new AVQuery<>("demand");
-        query.limit(GridWantAdapter.pageMaxCnt * pages);
-        query.skip(curLoadPages * GridWantAdapter.pageMaxCnt);
+        query.setLimit(GridWantAdapter.pageMaxCnt * pages);
+        query.setSkip(curLoadPages * GridWantAdapter.pageMaxCnt);
+        query.getHits();
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -193,31 +245,30 @@ public class WantedFragment extends Fragment {
         });
     }
 
-    private void queryTotalNum(final CountDownLatch latch){
-        AVQuery<AVObject> query = new AVQuery<>("demand");
-        query.countInBackground().subscribe(
-                new Observer<Integer>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Integer integer) {
-                        items =  integer;
-                        latch.countDown();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(mContext,"网络错误", Toast.LENGTH_SHORT).show();
-                        latch.countDown();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                }
-        );
+    void limitedQuery(AVSearchQuery query){
+        if (curCategory.equals(getResources().getString(R.string.type_ask)) ||
+            curCategory.equals(getResources().getString(R.string.type_other)) ||
+            curCategory.equals(getResources().getString(R.string.type_experiment)) ||
+            curCategory.equals(getResources().getString(R.string.type_express)) ||
+            curCategory.equals(getResources().getString(R.string.type_deal))) {
+            if (curSearch.length() != 0) {
+                query.setQueryString(String.format("\"%s\" AND type:\"%s\"", curSearch, curCategory));
+            }else{
+                query.setQueryString(String.format("type:\"%s\"", curCategory));
+            }
+        }else{
+            if (curSearch.length() != 0) {
+                query.setQueryString(String.format("\"%s\"", curSearch));
+            }else{
+                query.setQueryString("_exists_:title");
+            }
+        }
+        if(curSort.equals(getResources().getString(R.string.sort_begin_date))){
+            query.orderByAscending("createdAt");
+        }else if(curSort.equals(getResources().getString(R.string.sort_money))){
+            query.orderByAscending("reward");
+        }else if(curSort.equals(getResources().getString(R.string.sort_end_date))){
+            query.orderByAscending("end_time");
+        }
     }
 }

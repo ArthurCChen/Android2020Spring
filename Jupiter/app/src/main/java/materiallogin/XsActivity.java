@@ -11,7 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class XsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xs);
         listView = (ListView) findViewById(R.id.list);
-        rg = (RadioGroup) findViewById(R.id.service_type);
+        rg = (RadioGroup) findViewById(R.id.rg);
         rb1 = (RadioButton) findViewById(R.id.rb_1);
         rb2 = (RadioButton) findViewById(R.id.rb_2);
         rb3 = (RadioButton) findViewById(R.id.rb_3);
