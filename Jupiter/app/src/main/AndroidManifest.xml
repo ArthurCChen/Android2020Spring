@@ -19,11 +19,7 @@
         <activity
             android:name="materiallogin.BottomMenu"
             android:label="@string/title_activity_bottom_menu" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <uses-library
@@ -39,6 +35,11 @@
         <activity
             android:name="materiallogin.MainActivity"
             android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name="materiallogin.ChatsActivity" />
         <activity android:name="materiallogin.ChatActivity" />

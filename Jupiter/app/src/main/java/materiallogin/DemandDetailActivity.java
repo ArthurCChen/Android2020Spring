@@ -99,11 +99,11 @@ public class DemandDetailActivity extends AppCompatActivity {
     }
 
     private void get_user_and_then_set_content(AVObject demand) {
-//        AVUser currentUser = AVUser.getCurrentUser();
-//        String email = (String) currentUser.getServerData().get("email");
+        AVUser currentUser = AVUser.getCurrentUser();
+        String email = (String) currentUser.getServerData().get("email");
         // to accelerate debug process
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
-        String email = "lisiyu201695@gmail.com";
+//        String email = "lisiyu201695@gmail.com";
         AVQuery<AVObject> query = new AVQuery<>("demand_relationship");
         query.whereEqualTo("demand", demand);
         query.whereEqualTo("enroller_id", email);
@@ -130,11 +130,11 @@ public class DemandDetailActivity extends AppCompatActivity {
     private void set_content(AVObject demand, AVObject relationship) {
         String hint = "";
 
-//        AVUser currentUser = AVUser.getCurrentUser();
-//        String email = (String) currentUser.getServerData().get("email");
+        AVUser currentUser = AVUser.getCurrentUser();
+        String email = (String) currentUser.getServerData().get("email");
         // to accelerate debug process
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
-        String email = "lisiyu201695@gmail.com";
+//        String email = "lisiyu201695@gmail.com";
         String role = "viewer";
         if (demand.getString("username").equals(email)) {
             role = "issuer";
