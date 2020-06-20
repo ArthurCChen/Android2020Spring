@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.ust.jupiter.jupiter.R;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVQuery;
+import cn.leancloud.query.AVQueryResult;
+import cn.leancloud.search.AVSearchQuery;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -36,6 +40,7 @@ public class WantedFragment extends Fragment {
     private Context mContext;
     private String curCategory = "";
     private String curSort = "";
+    private String curSearch = "";
 
     private void clearLists(){
         pagerAdapter.contents = new ArrayList<>();
@@ -46,6 +51,7 @@ public class WantedFragment extends Fragment {
         items = 0;
         curLoadPages = 0;
         currentPosition = 0;
+        pagerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -88,6 +94,21 @@ public class WantedFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        final FloatingSearchView mSearchView = (FloatingSearchView)root.findViewById(R.id.floating_search_view);
+        mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener(){
+
+            @Override
+            public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
+
+            }
+
+            @Override
+            public void onSearchAction(String currentQuery) {
+                curSearch = currentQuery;
+                initNewQuery();
             }
         });
 
@@ -138,15 +159,18 @@ public class WantedFragment extends Fragment {
         curLoadPages += 1;
     }
 
+    AVSearchQuery query;
+
     private boolean initNewQuery(){
+        query = new AVSearchQuery();
+        query.setClassName("demand");
+        limitedQuery(query);
         clearLists();
         return newQuery(1);
     }
 
     private boolean newQuery(int pags){
-        final CountDownLatch latch = new CountDownLatch(2);
-
-        queryTotalNum(latch);
+        final CountDownLatch latch = new CountDownLatch(1);
 
         queryNewPages(items, latch);
 
@@ -156,7 +180,8 @@ public class WantedFragment extends Fragment {
             public void run() {
                 try {
                     latch.await();
-                    refreshAdapter();
+                    items = query.getHits();
+//                    refreshAdapter();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -174,15 +199,15 @@ public class WantedFragment extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+            refreshAdapter();
             pagerAdapter.notifyDataSetChanged();
         }
     }
 
     private void queryNewPages(int pages, final CountDownLatch latch){
-        AVQuery<AVObject> query = new AVQuery<>("demand");
-        limitedQuery(query);
-        query.limit(GridWantAdapter.pageMaxCnt * pages);
-        query.skip(curLoadPages * GridWantAdapter.pageMaxCnt);
+        query.setLimit(GridWantAdapter.pageMaxCnt * pages);
+        query.setSkip(curLoadPages * GridWantAdapter.pageMaxCnt);
+        query.getHits();
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -220,42 +245,23 @@ public class WantedFragment extends Fragment {
         });
     }
 
-    private void queryTotalNum(final CountDownLatch latch){
-        AVQuery<AVObject> query = new AVQuery<>("demand");
-        limitedQuery(query);
-        query.countInBackground().subscribe(
-                new Observer<Integer>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Integer integer) {
-                        items =  integer;
-                        latch.countDown();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(mContext,"网络错误", Toast.LENGTH_SHORT).show();
-                        latch.countDown();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                }
-        );
-    }
-
-    void limitedQuery(AVQuery<AVObject> query){
+    void limitedQuery(AVSearchQuery query){
         if (curCategory.equals(getResources().getString(R.string.type_ask)) ||
             curCategory.equals(getResources().getString(R.string.type_other)) ||
             curCategory.equals(getResources().getString(R.string.type_experiment)) ||
             curCategory.equals(getResources().getString(R.string.type_express)) ||
-            curCategory.equals(getResources().getString(R.string.type_deal))){
-            query.whereEqualTo("type", curCategory);
+            curCategory.equals(getResources().getString(R.string.type_deal))) {
+            if (curSearch.length() != 0) {
+                query.setQueryString(String.format("\"%s\" AND type:\"%s\"", curSearch, curCategory));
+            }else{
+                query.setQueryString(String.format("type:\"%s\"", curCategory));
+            }
+        }else{
+            if (curSearch.length() != 0) {
+                query.setQueryString(String.format("\"%s\"", curSearch));
+            }else{
+                query.setQueryString("_exists_:title");
+            }
         }
         if(curSort.equals(getResources().getString(R.string.sort_begin_date))){
             query.orderByAscending("createdAt");
