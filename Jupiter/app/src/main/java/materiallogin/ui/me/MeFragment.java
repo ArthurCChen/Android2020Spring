@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

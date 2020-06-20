@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ust.jupiter.jupiter">
+    package="com.thu.qinghuaquan">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -31,6 +31,7 @@
             android:theme="@style/Translucent" />
         <activity android:name="materiallogin.LoginSuccessActivity" />
         <activity android:name="materiallogin.RegSuccessActivity" />
+        <activity android:name="materiallogin.DemandDetailActivity" />
         <activity
             android:name="materiallogin.MainActivity"
             android:label="@string/app_name">

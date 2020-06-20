@@ -7,6 +7,7 @@
     tools:context="materiallogin.ui.wanted.WantedFragment">
 
     <LinearLayout
+        android:id="@+id/want_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="112dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,6 +39,7 @@
             app:floatingSearch_backgroundColor="@color/background"/>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -60,6 +62,7 @@
                 android:layout_margin="10dp">
 
                 <Spinner
+                    android:id="@+id/want_type_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:entries="@array/category"
@@ -86,6 +89,7 @@
                 android:spinnerMode="dropdown">
 
                 <Spinner
+                    android:id="@+id/want_sort_spinner"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:entries="@array/sorting"
@@ -96,17 +100,29 @@
         </LinearLayout>
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/text_wanted"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="bottom"
-        android:textSize="20sp"
+        android:layout_height="0dp"
+        android:clipChildren="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/want_linear_layout">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/wants_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.viewpager.widget.PagerTabStrip
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/want_pager_header"
+                android:background="@color/thu_purple"
+                android:textColor = "#FFFFFF"
+                />
+        </androidx.viewpager.widget.ViewPager>
+
+
+    </RelativeLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
