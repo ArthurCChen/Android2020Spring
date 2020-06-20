@@ -30,7 +30,7 @@ import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import materiallogin.AVODemand;
+import materiallogin.AVDemand;
 import materiallogin.BottomMenu;
 import materiallogin.MainActivity;
 import materiallogin.SPutil;
