@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

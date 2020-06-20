@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 import java.util.List;
 

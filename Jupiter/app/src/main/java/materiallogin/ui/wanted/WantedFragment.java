@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 import java.util.ArrayList;
 import java.util.List;

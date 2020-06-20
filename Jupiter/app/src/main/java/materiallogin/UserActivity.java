@@ -12,7 +12,7 @@ import android.view.View;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 public class UserActivity extends AppCompatActivity {
 

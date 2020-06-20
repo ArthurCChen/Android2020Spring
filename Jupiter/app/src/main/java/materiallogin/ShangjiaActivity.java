@@ -18,7 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 
 import java.util.ArrayList;
 import java.util.Iterator;
