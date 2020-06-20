@@ -39,19 +39,24 @@ public class AcceptedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent demand_page = new Intent(getActivity(), DemandDetailActivity.class);
-                AVDemand demand = new AVDemand();
-                demand_page.putExtra("title", "桃子滞销，帮帮老农");
-                demand_page.putExtra("content", "免费请你吃桃子");
-                demand_page.putExtra("demand_state", "inactive");
-                demand_page.putExtra("end_time", new Date().toString());
-                demand_page.putExtra("reward", 2.5f);
-                demand_page.putExtra("wanted_number", 15);
-                demand_page.putExtra("confirmed_number", 0);
-                demand_page.putExtra("nickname", "张三");
-                demand_page.putExtra("role", "issuer"); // issuer or taker(already applied) or viewer(not applied)
+//                demand_page.putExtra("title", "桃子滞销，帮帮老农");
+//                demand_page.putExtra("content", "免费请你吃桃子");
+//                demand_page.putExtra("demand_state", "inactive");
+//                demand_page.putExtra("end_time", new Date().toString());
+//                demand_page.putExtra("reward", 2.5f);
+//                demand_page.putExtra("wanted_number", 15);
+//                demand_page.putExtra("confirmed_number", 0);
+//                demand_page.putExtra("nickname", "张三");
+//                demand_page.putExtra("role", "issuer"); // issuer or taker(already applied) or viewer(not applied)
                 // 5 cases: pending_review_for_enroll_demand, accepted, rejected, done, pending_review_for_quit_demand, quitted
                 // valid only when role is taker
-                demand_page.putExtra("enroller_state", "accepted");
+//                demand_page.putExtra("enroller_state", "accepted");
+//                demand_page.putExtra("demand_id", 1);
+//                // the current user's username
+//                demand_page.putExtra("username", "test_user");
+//                // it can be the same as username, in case where role is issuer
+//                demand_page.putExtra("demander_id", "demander");
+                demand_page.putExtra("objectId", "5eedab998ebe65000884fad6");
                 startActivity(demand_page);
             }
         });
