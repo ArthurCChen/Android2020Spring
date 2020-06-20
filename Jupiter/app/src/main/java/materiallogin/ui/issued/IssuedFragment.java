@@ -91,7 +91,6 @@ public class IssuedFragment extends Fragment {
             super.handleMessage(msg);
             if(items == 0) {
                 tabStrip.setVisibility(View.INVISIBLE);
-                return;
             }else{
                 tabStrip.setVisibility(View.VISIBLE);
             }
@@ -131,7 +130,7 @@ public class IssuedFragment extends Fragment {
 
             @Override
             public void onError(Throwable e) {
-
+                latch.countDown();
             }
 
             @Override
