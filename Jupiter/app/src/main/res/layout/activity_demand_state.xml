@@ -40,13 +40,6 @@
                 android:layout_weight="2"
                 android:gravity="start|center_vertical" />
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:outlineAmbientShadowColor="#FFFFFF"
-                app:srcCompat="@drawable/btn_bg" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -104,26 +97,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView5">
 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_add_circle" />
-
-        <Space
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/demand_button_left"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
             android:layout_weight="1" />
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_dashboard_black_24dp" />
+        <Button
+            android:id="@+id/demand_button_right"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
