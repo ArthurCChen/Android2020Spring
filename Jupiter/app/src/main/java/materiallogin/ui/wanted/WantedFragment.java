@@ -161,7 +161,7 @@ public class WantedFragment extends Fragment {
 
     AVSearchQuery query;
 
-    private boolean initNewQuery(){
+    public boolean initNewQuery(){
         query = new AVSearchQuery();
         query.setClassName("demand");
         limitedQuery(query);
