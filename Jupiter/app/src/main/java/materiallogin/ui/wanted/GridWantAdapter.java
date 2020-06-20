@@ -20,6 +20,7 @@ public class GridWantAdapter extends BaseAdapter {
     ArrayList<String> titles;
     ArrayList<String> contents;
     ArrayList<String> moneys;
+    ArrayList<String> ids;
 
     public GridWantAdapter(
             Context context,
@@ -27,7 +28,8 @@ public class GridWantAdapter extends BaseAdapter {
             ArrayList<String> types,
             ArrayList<String> titles,
             ArrayList<String> contents,
-            ArrayList<String> moneys
+            ArrayList<String> moneys,
+            ArrayList<String> ids
     ){
         this.numbers = numbers;
         this.context = context;
@@ -35,6 +37,7 @@ public class GridWantAdapter extends BaseAdapter {
         this.titles = titles;
         this.contents = contents;
         this.moneys = moneys;
+        this.ids = ids;
     }
 
     @Override
@@ -64,7 +67,16 @@ public class GridWantAdapter extends BaseAdapter {
         String content = contents.get(position);
         String money = moneys.get(position);
         String type = types.get(position);
+        String id = ids.get(position);
         View view = convertView;
+
+        // TODO 打开 demand 的 onClick 入口
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(id);
+            }
+        });
 
         TextView tvTitle = (TextView) view.findViewById(R.id.title);
         TextView tvContent = (TextView) view.findViewById(R.id.content);

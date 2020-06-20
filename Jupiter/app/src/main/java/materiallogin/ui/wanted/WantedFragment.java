@@ -47,6 +47,7 @@ public class WantedFragment extends Fragment {
         pagerAdapter.titles = new ArrayList<>();
         pagerAdapter.moneys = new ArrayList<>();
         pagerAdapter.types = new ArrayList<>();
+        pagerAdapter.ids = new ArrayList<>();
         pagerAdapter.items = 0;
         items = 0;
         curLoadPages = 0;
@@ -149,12 +150,14 @@ public class WantedFragment extends Fragment {
     private ArrayList<String> newTypes;
     private ArrayList<String> newMoneys;
     private ArrayList<String> newContents;
+    private ArrayList<String> ids;
 
     private void refreshAdapter(){
         pagerAdapter.types.addAll(newTypes);
         pagerAdapter.titles.addAll(newTitles);
         pagerAdapter.moneys.addAll(newMoneys);
         pagerAdapter.contents.addAll(newContents);
+        pagerAdapter.ids.addAll(ids);
         pagerAdapter.items = items;
         curLoadPages += 1;
     }
@@ -222,11 +225,13 @@ public class WantedFragment extends Fragment {
                 newTypes = new ArrayList<>();
                 newMoneys = new ArrayList<>();
                 newContents = new ArrayList<>();
+                ids = new ArrayList<>();
                 for (AVObject avObject : avObjects){
                     newContents.add((String)avObject.getString("content"));
                     newTypes.add((String)avObject.getString("type"));
                     newMoneys.add(String.valueOf(avObject.getNumber("reward")));
                     newTitles.add((String)avObject.getString("title"));
+                    ids.add(avObject.getString("objectId"));
                 }
                 latch.countDown();
             }

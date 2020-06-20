@@ -20,6 +20,7 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     public ArrayList<String> titles;
     public ArrayList<String> contents;
     public ArrayList<String> moneys;
+    public ArrayList<String> ids;
     int items;
 
     public WantPagerAdapter(FragmentManager fm){
@@ -29,29 +30,7 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
         titles = new ArrayList<>();
         contents = new ArrayList<>();
         moneys = new ArrayList<>();
-    }
-
-    /**
-     * @deprecated
-     * @param fm
-     * @param items
-     * @param types
-     * @param titles
-     * @param contents
-     * @param moneys
-     */
-    private WantPagerAdapter(FragmentManager fm,
-                            int items,
-                            ArrayList<String> types,
-            ArrayList<String> titles,
-            ArrayList<String> contents,
-            ArrayList<String> moneys) {
-        super(fm);
-        this.items = items;
-        this.types = types;
-        this.titles = titles;
-        this.contents = contents;
-        this.moneys = moneys;
+        ids = new ArrayList<>();
     }
 
     @Override
@@ -65,7 +44,8 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
                 new ArrayList<String>(types.subList(start, end)),
                 new ArrayList<String>(titles.subList(start, end)),
                 new ArrayList<String>(contents.subList(start, end)),
-                new ArrayList<String>(moneys.subList(start, end)));
+                new ArrayList<String>(moneys.subList(start, end)),
+                new ArrayList<String>(ids.subList(start, end)));
     }
 
     @Override

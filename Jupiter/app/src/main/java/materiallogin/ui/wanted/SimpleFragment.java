@@ -29,12 +29,14 @@ public class SimpleFragment extends Fragment {
     ArrayList<String> titles;
     ArrayList<String> contents;
     ArrayList<String> moneys;
+    ArrayList<String> ids;
 
     static String NUMBERS = "numbers";
     static String TYPES = "types";
     static String TITLES = "titles";
     static String CONTENTS = "contents";
     static String MONEYS = "moneys";
+    static  String IDS = "ids";
 
     public SimpleFragment() {
         System.out.println("fuck you android");
@@ -44,7 +46,8 @@ public class SimpleFragment extends Fragment {
                                              ArrayList<String> types,
                                              ArrayList<String> titles,
                                              ArrayList<String> contents,
-                                             ArrayList<String> moneys){
+                                             ArrayList<String> moneys,
+                                             ArrayList<String> ids){
         SimpleFragment simpleFragment = new SimpleFragment();
         Bundle args = new Bundle();
         args.putInt(NUMBERS, numbers);
@@ -52,6 +55,7 @@ public class SimpleFragment extends Fragment {
         args.putStringArrayList(TITLES, titles);
         args.putStringArrayList(CONTENTS, contents);
         args.putStringArrayList(MONEYS, moneys);
+        args.putStringArrayList(IDS, ids);
         simpleFragment.setArguments(args);
         return simpleFragment;
     }
@@ -66,6 +70,7 @@ public class SimpleFragment extends Fragment {
         contents = args.getStringArrayList(CONTENTS);
         types = args.getStringArrayList(TYPES);
         moneys = args.getStringArrayList(MONEYS);
+        ids = args.getStringArrayList(IDS);
     }
 
     @Override
@@ -77,7 +82,8 @@ public class SimpleFragment extends Fragment {
                 types,
                 titles,
                 contents,
-                moneys));
+                moneys,
+                ids));
         init(savedInstanceState);
         return mRoot;
     }
