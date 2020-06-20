@@ -1,23 +1,21 @@
 package materiallogin;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ust.jupiter.jupiter.R;
+import com.thu.qinghuaquan.R;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,9 +23,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.util.Calendar;
-import java.util.Date;
 
-import cn.bmob.v3.listener.SaveListener;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import cn.leancloud.AVObject;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -43,7 +41,7 @@ public class BottomMenu extends AppCompatActivity {
     MeFragment meFragment;
     IssuedFragment issuedFragment;
     String username_from_intent;
-
+    BottomNavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +53,8 @@ public class BottomMenu extends AppCompatActivity {
         username_from_intent = getIntent().getStringExtra("username");
 
         setContentView(R.layout.activity_bottom_menu);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+
+        navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -66,27 +65,6 @@ public class BottomMenu extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-//        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                switch (menuItem.getItemId()){
-//                    case R.id.navigation_wanted:
-//                        loadFragment(wantedFragment);
-//                        return true;
-//                    case R.id.navigation_accepted:
-//                        loadFragment(acceptedFragment);
-//                        return true;
-//                    case R.id.navigation_issued:
-//                        loadFragment(issuedFragment);
-//                        return true;
-//                    case R.id.navigation_me:
-//                        loadFragment(meFragment);
-//                        return true;
-//
-//                }
-//                return false;
-//            }
-//        });
     }
 
     public void onCreateNewWant(@NonNull View view ){
@@ -123,6 +101,9 @@ public class BottomMenu extends AppCompatActivity {
                     alertDialog.dismiss();
             }
         });
+
+
+        final BottomMenu that = this;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +113,7 @@ public class BottomMenu extends AppCompatActivity {
 
                 final String title = demand_title.getText().toString();
                 final String content = demand_content.getText().toString();
-                final String username = username_from_intent;
+                final String username = "lisiyu201695@gmail.com";
                 final String end_time = deadline.getText().toString();
                 final String type = demand_type.getSelectedItem().toString();
 
@@ -188,7 +169,7 @@ public class BottomMenu extends AppCompatActivity {
                 }
 
 
-                final AVODemand demand = new AVODemand();
+                final AVDemand demand = new AVDemand();
                 demand.setContent(content);
                 demand.setTitle(title);
                 demand.setUsername(username);
@@ -209,9 +190,13 @@ public class BottomMenu extends AppCompatActivity {
                     @Override
                     public void onNext(AVObject avObject) {
                         Toast.makeText(BottomMenu.this, "发布成功", Toast.LENGTH_SHORT).show();
+
+                        navView.setSelectedItemId(navView.getMenu().getItem(0).getItemId());
                         if (alertDialog != null)
                             alertDialog.dismiss();
                     }
+
+
 
                     @Override
                     public void onError(Throwable e) {

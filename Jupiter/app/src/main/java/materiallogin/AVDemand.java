@@ -1,10 +1,12 @@
 package materiallogin;
 
+import android.content.Intent;
+
 import java.util.Date;
 
 import cn.leancloud.AVObject;
 
-public class AVODemand extends AVObject {
+public class AVDemand extends AVObject {
 
     private String title;
     private String content;
@@ -17,7 +19,7 @@ public class AVODemand extends AVObject {
 
     public static String tablename = "demand";
 
-    public AVODemand() {
+    public AVDemand() {
         super(tablename);
     }
 
