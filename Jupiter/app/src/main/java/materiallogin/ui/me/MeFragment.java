@@ -1,40 +1,20 @@
 package materiallogin.ui.me;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.thu.qinghuaquan.R;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
-import cn.leancloud.AVObject;
-import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import materiallogin.AVODemand;
-import materiallogin.BottomMenu;
-import materiallogin.MainActivity;
-import materiallogin.SPutil;
-import android.widget.Toast;
 
 public class MeFragment extends Fragment {
 
