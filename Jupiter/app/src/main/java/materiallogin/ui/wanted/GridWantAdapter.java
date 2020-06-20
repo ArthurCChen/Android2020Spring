@@ -1,6 +1,7 @@
 package materiallogin.ui.wanted;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import com.thu.qinghuaquan.R;
 
 import java.util.ArrayList;
+
+import materiallogin.DemandDetailActivity;
 
 public class GridWantAdapter extends BaseAdapter {
     public static int pageMaxCnt = 6;
@@ -74,7 +77,10 @@ public class GridWantAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, DemandDetailActivity.class);
+                intent.putExtra("objectId", id);
                 System.out.println(id);
+                context.startActivity(intent);
             }
         });
 
