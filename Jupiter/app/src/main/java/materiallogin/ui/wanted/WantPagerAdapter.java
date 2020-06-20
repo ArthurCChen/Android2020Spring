@@ -23,7 +23,7 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     public ArrayList<String> contents;
     public ArrayList<String> moneys;
     public ArrayList<String> ids;
-    int items;
+    public int items;
 
     public WantPagerAdapter(FragmentManager fm){
         super(fm);
