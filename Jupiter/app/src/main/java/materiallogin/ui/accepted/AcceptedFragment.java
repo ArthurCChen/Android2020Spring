@@ -25,12 +25,9 @@ import materiallogin.ui.issued.IssuedFragment;
 
 public class AcceptedFragment extends Fragment {
 
-    private AcceptedViewModel acceptedViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        acceptedViewModel =
-                ViewModelProviders.of(this).get(AcceptedViewModel.class);
         View root = inflater.inflate(R.layout.fragment_accepted, container, false);
 
         // test code, to provide an entrance for demand detail activity, delete when it's the time
@@ -56,13 +53,6 @@ public class AcceptedFragment extends Fragment {
             }
         });
 
-        final TextView textView = root.findViewById(R.id.text_accepted);
-        acceptedViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }

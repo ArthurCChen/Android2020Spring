@@ -22,6 +22,7 @@ import java.util.concurrent.CountDownLatch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVQuery;
@@ -34,6 +35,8 @@ public class WantedFragment extends Fragment {
 
     private ViewPager viewPager;
     private WantPagerAdapter pagerAdapter;
+    private PagerTabStrip tabStrip;
+
     int currentPosition;
     int curLoadPages;
 
@@ -69,6 +72,7 @@ public class WantedFragment extends Fragment {
 
         viewPager  = (ViewPager) root.findViewById(R.id.wants_pager);
 
+        tabStrip = root.findViewById(R.id.want_pager_header);
         // Spinner
         final Spinner mSpinner = root.findViewById(R.id.want_type_spinner);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -124,9 +128,10 @@ public class WantedFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
+
                 if(position == curLoadPages){
                     //出bug
-                    boolean success = newQuery(1);
+                    boolean success = newQuery(1, true);
                     if(!success) {
                         viewPager.setCurrentItem(position - 1);
                         return;
@@ -169,10 +174,15 @@ public class WantedFragment extends Fragment {
         query.setClassName("demand");
         limitedQuery(query);
         clearLists();
-        return newQuery(1);
+        return newQuery(2);
     }
 
-    private boolean newQuery(int pags){
+    private boolean newQuery(int pages){
+        return newQuery(pages, false);
+    }
+
+    private boolean newQuery(int pages, boolean toCheck){
+
         final CountDownLatch latch = new CountDownLatch(1);
 
         queryNewPages(items, latch);
@@ -202,6 +212,12 @@ public class WantedFragment extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+            if(items == 0) {
+                tabStrip.setVisibility(View.INVISIBLE);
+                return;
+            }else{
+                tabStrip.setVisibility(View.VISIBLE);
+            }
             refreshAdapter();
             pagerAdapter.notifyDataSetChanged();
         }
@@ -210,7 +226,6 @@ public class WantedFragment extends Fragment {
     private void queryNewPages(int pages, final CountDownLatch latch){
         query.setLimit(GridWantAdapter.pageMaxCnt * pages);
         query.setSkip(curLoadPages * GridWantAdapter.pageMaxCnt);
-        query.getHits();
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             @Override
             public void onSubscribe(Disposable d) {

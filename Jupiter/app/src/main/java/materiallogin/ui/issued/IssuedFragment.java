@@ -1,5 +1,6 @@
 package materiallogin.ui.issued;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,23 +14,26 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
+import materiallogin.ui.wanted.WantPagerAdapter;
 
 public class IssuedFragment extends Fragment {
 
-    private IssuedViewModel issuedViewModel;
+    ViewPager viewPager;
+    WantPagerAdapter pagerAdapter;
+    private Context mContext;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        issuedViewModel =
-                ViewModelProviders.of(this).get(IssuedViewModel.class);
         View root = inflater.inflate(R.layout.fragment_issued, container, false);
-        final TextView textView = root.findViewById(R.id.text_issued);
-        issuedViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        viewPager = root.findViewById(R.id.issue_pager);
+        pagerAdapter = new WantPagerAdapter(getChildFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(1);
+//        viewPager.addOnPageChangeListener();
         return root;
     }
+
+
 }

@@ -1,6 +1,8 @@
 package materiallogin.ui.wanted;
 
 import android.content.Context;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,4 +65,5 @@ public class WantPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return items == 0? 0: (items + 5) / GridWantAdapter.pageMaxCnt;
     }
+
 }
