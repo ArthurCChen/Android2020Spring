@@ -119,10 +119,9 @@ public class AcceptedFragment extends Fragment {
 
     private void queryPages(final CountDownLatch latch){
         String userAccount = (String) AVUser.getCurrentUser().getServerData().get("email");
-        final AVQuery<AVObject> innerQuery = new AVQuery<>("demand_relationship");
-        innerQuery.whereEqualTo("enroller_id", userAccount);
-
-        query = new AVQuery<>("demand");
+        query = new AVQuery<>("demand_relationship");
+        query.whereEqualTo("enroller_id", userAccount);
+        query.include("demand");
 
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             @Override
@@ -138,7 +137,8 @@ public class AcceptedFragment extends Fragment {
                 newMoneys = new ArrayList<>();
                 newContents = new ArrayList<>();
                 ids = new ArrayList<>();
-                for (AVObject avObject : avObjects){
+                for (AVObject ralation : avObjects){
+                    AVObject avObject = ralation.getAVObject("demand");
                     newContents.add((String)avObject.getString("content"));
                     newTypes.add((String)avObject.getString("type"));
                     newMoneys.add(String.valueOf(avObject.getNumber("reward")));
