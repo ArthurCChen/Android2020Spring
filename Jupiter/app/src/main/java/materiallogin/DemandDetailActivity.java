@@ -24,7 +24,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.thu.qinghuaquan.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -148,6 +150,12 @@ public class DemandDetailActivity extends AppCompatActivity {
                             push(v, demand);
                         }
                     });
+                    right_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            demand.delete();
+                        }
+                    });
                     break;
                 case "active":
                     hint = "不能修改/删除提醒：\n已有人向您发起了接单请求，为保障用户权益，不允许修改或删除，谢谢合作！";
@@ -164,6 +172,15 @@ public class DemandDetailActivity extends AppCompatActivity {
             }
         }
         else if (role.equals("taker")) {
+            // only this possibility... see the text set below
+            right_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    relationship.deleteInBackground().subscribe();
+                    Toast.makeText(DemandDetailActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
             switch (demand_state) {
                 case "active":
                     switch (relationship.getString("enroller_state")) {
@@ -231,6 +248,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                                 public void onNext(AVObject avObject) {
                                     Toast.makeText(DemandDetailActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
                                     set_hint("您的推出申请正在审核中，请稍加等候。");
+                                    right_button.setVisibility(View.GONE);
                                 }
                                 @Override
                                 public void onError(Throwable e) { }
@@ -283,7 +301,7 @@ public class DemandDetailActivity extends AppCompatActivity {
     AlertDialog alertDialog;
 
     public void push(View view, AVObject demand) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(DemandDetailActivity.this);
         final LayoutInflater inflater = getLayoutInflater();
         final View layout = inflater.inflate(R.layout.dialog_input_table, null);
         builder.setView(layout);
@@ -301,13 +319,12 @@ public class DemandDetailActivity extends AppCompatActivity {
         assert intent != null : "intent is null in demand detail activity";
         demand_title.setText(demand.getString("title"));
         demand_content.setText(demand.getString("content"));
-        wanted_number.setText(demand.getInt("wanted_number"));
+        wanted_number.setText(String.format("%s", demand.getInt("wanted_number")));
         reward.setText(String.format("%s", demand.getDouble("reward")));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (alertDialog != null)
                     alertDialog.dismiss();
             }
@@ -321,7 +338,6 @@ public class DemandDetailActivity extends AppCompatActivity {
 
                 final String title = demand_title.getText().toString();
                 final String content = demand_content.getText().toString();
-                final String username = intent.getStringExtra("username");
                 final String end_time = deadline.getText().toString();
                 final String type = demand_type.getSelectedItem().toString();
 
@@ -384,8 +400,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                 demand.put("end_time", c.getTime());
                 demand.put("reward", reward_number);
                 demand.put("type", type);
-
-                demand.save();
+                demand.saveInBackground().subscribe();
 
                 Toast.makeText(DemandDetailActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
                 if (alertDialog != null)

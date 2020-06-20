@@ -56,7 +56,7 @@ public class AcceptedFragment extends Fragment {
 //                demand_page.putExtra("username", "test_user");
 //                // it can be the same as username, in case where role is issuer
 //                demand_page.putExtra("demander_id", "demander");
-                demand_page.putExtra("objectId", "5eedab998ebe65000884fad6");
+                demand_page.putExtra("objectId", "5eec5cd68ebe650008845ca3");
                 startActivity(demand_page);
             }
         });
