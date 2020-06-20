@@ -1,7 +1,7 @@
 Jupiter/app/build
 Jupiter/.gradle/
 Jupiter/build
-
+Jupiter/app/release/
 Jupiter/com_crashlytics_export_strings.xml
 
 Jupiter/local.properties
