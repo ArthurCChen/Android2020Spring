@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.thu.qinghuaquan.R;
 
@@ -39,11 +40,15 @@ import materiallogin.ui.accepted.AcceptedFragment;
 
 public class DemandDetailActivity extends AppCompatActivity {
 
-    TextView demand_detail;
-    TextView demand_user;
-    TextView demand_hint;
-    Button left_button;
-    Button right_button;
+    private TextView demand_detail;
+    private TextView demand_user;
+    private TextView demand_hint;
+    private Button left_button;
+    private Button right_button;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @SuppressLint("Assert")
     @Override
@@ -99,7 +104,7 @@ public class DemandDetailActivity extends AppCompatActivity {
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
         String email = "lisiyu201695@gmail.com";
         AVQuery<AVObject> query = new AVQuery<>("demand_relationship");
-        query.whereEqualTo("demand_id", demand.getInt("demand_id"));
+        query.whereEqualTo("demand", demand);
         query.whereEqualTo("enroller_id", email);
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             public void onSubscribe(Disposable disposable) {}
@@ -231,7 +236,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AVObject relationship = new AVObject("demand_relationship");
-                    relationship.put("demand_id", demand.getInt("demand_id"));
+                    relationship.put("demand", demand);
                     relationship.put("demander_id", demand.getString("username"));
                     relationship.put("enroller_id", email);
                     relationship.put("enroller_state", "pending_review_for_enroll_demand");
