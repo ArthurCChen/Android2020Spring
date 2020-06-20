@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -27,6 +28,7 @@ import java.util.concurrent.CountDownLatch;
 import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 import cn.leancloud.AVObject;
+import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import cn.leancloud.search.AVSearchQuery;
 import io.reactivex.Observer;
@@ -44,7 +46,7 @@ public class AcceptedFragment extends Fragment {
     PagerTabStrip tabStrip;
     private TextView suggestion;
     private Context mContext;
-    AVSearchQuery query;
+    AVQuery<AVObject> query;
 
 
     private int items;
@@ -79,7 +81,6 @@ public class AcceptedFragment extends Fragment {
             public void run() {
                 try {
                     latch.await();
-                    items = query.getHits();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -117,10 +118,12 @@ public class AcceptedFragment extends Fragment {
     }
 
     private void queryPages(final CountDownLatch latch){
-        query = new AVSearchQuery();
         String userAccount = (String) AVUser.getCurrentUser().getServerData().get("email");
-        query.setQueryString(String.format("enroller_id:\"%s\"", userAccount));
-        query.setClassName("demand_relationship");
+        final AVQuery<AVObject> innerQuery = new AVQuery<>("demand_relationship");
+        innerQuery.whereEqualTo("enroller_id", userAccount);
+
+        query = new AVQuery<>("demand");
+
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -129,7 +132,7 @@ public class AcceptedFragment extends Fragment {
 
             @Override
             public void onNext(List<AVObject> avObjects) {
-                items = query.getHits();
+                items = avObjects.size();
                 newTitles = new ArrayList<>();
                 newTypes = new ArrayList<>();
                 newMoneys = new ArrayList<>();
