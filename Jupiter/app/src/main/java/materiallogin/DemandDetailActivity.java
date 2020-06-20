@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.thu.qinghuaquan.R;
@@ -166,6 +167,29 @@ public class DemandDetailActivity extends AppCompatActivity {
                     hint = "不能修改/删除提醒：\n已有人向您发起了接单请求，为保障用户权益，不允许修改或删除，谢谢合作！";
                     left_button.setVisibility(View.GONE);
                     right_button.setVisibility(View.GONE);
+
+                    recyclerView = (RecyclerView) findViewById(R.id.application_list);
+                    layoutManager = new LinearLayoutManager(this);
+                    recyclerView.setLayoutManager(layoutManager);
+                    // query the data
+                    AVQuery<AVObject> query = new AVQuery<>("demand_relationship");
+                    query.whereEqualTo("demand", demand);
+                    query.findInBackground().subscribe(new Observer<List<AVObject>>() {
+                        @Override
+                        public void onSubscribe(Disposable d) { }
+                        @Override
+                        public void onNext(List<AVObject> avObjects) {
+                            mAdapter = new ApplicationAdapter(avObjects);
+                            recyclerView.setAdapter(mAdapter);
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+                        @Override
+                        public void onComplete() { }
+                    });
+
                     break;
                 case "done":
                     hint = "当前任务已经完成！";
