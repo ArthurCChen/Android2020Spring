@@ -193,12 +193,12 @@ public class BottomMenu extends AppCompatActivity {
                     @Override
                     public void onNext(AVObject avObject) {
                         Toast.makeText(BottomMenu.this, "发布成功", Toast.LENGTH_SHORT).show();
-
+                        String demandId = String.valueOf(avObject.getNumber("demand_id"));
+                        PushService.subscribe(BottomMenu.this, avObject.getObjectId(), DemandDetailActivity.class);
                         navView.setSelectedItemId(navView.getMenu().getItem(0).getItemId());
                         if (alertDialog != null)
                             alertDialog.dismiss();
 
-                        PushService.subscribe(BottomMenu.this, String.valueOf(avObject.getNumber("demand_id")), DemandDetailActivity.class);
 
                     }
 

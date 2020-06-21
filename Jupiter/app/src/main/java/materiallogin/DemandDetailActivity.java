@@ -298,11 +298,11 @@ public class DemandDetailActivity extends AppCompatActivity {
                                 public void onSubscribe(Disposable d) { }
                                 @Override
                                 public void onNext(AVObject avObject) {
-                                    PushService.subscribe(DemandDetailActivity.this, demandId, DemandDetailActivity.class);
-                                    DetailObject detailObject = new DetailObject("新提交", objectId, "0");
+                                    PushService.subscribe(DemandDetailActivity.this, objectId, DemandDetailActivity.class);
+                                    DetailObject detailObject = new DetailObject("新申请", objectId, "0");
                                     String pushStr = JSON.toJSONString(detailObject);
                                     AVQuery pushQuery = AVInstallation.getQuery();
-                                    pushQuery.whereEqualTo("channels", demandId);
+                                    pushQuery.whereEqualTo("channels", objectId);
                                     AVPush push = new AVPush();
                                     push.setQuery(pushQuery);
                                     push.setMessage(pushStr);
