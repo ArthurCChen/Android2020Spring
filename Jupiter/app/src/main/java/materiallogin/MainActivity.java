@@ -101,16 +101,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_go:
                 final SPutil sp = new SPutil(MainActivity.this);
-                final String un = etUsername.getText().toString();
-                final String pw = etPassword.getText().toString();
-                if(TextUtils.isEmpty(un)){
-                    Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(pw)){
-                    Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                final String un = etUsername.getText().toString();
+//                final String pw = etPassword.getText().toString();
+                final String un = "chen-yn17@mails.tsinghua.edu.cn";
+                final String pw = "123";
+//                if(TextUtils.isEmpty(un)){
+//                    Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if(TextUtils.isEmpty(pw)){
+//                    Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
 
                 AVUser.logIn(un, pw).subscribe(new Observer<AVUser>() {
                     public void onSubscribe(Disposable disposable) {}
@@ -124,15 +126,18 @@ public class MainActivity extends AppCompatActivity {
 //                        startActivity(intent);
 //                        finish();
 
+//                        //这里的client即为当前用户的AVIMClient实例
+//                        AVIMClient client = AVIMClient.getInstance(user);
+//                        client.open( new AVIMClientCallback() {});
 
-                        //这里填写本人的clientId
                         LCChatKit.getInstance().open(un , new AVIMClientCallback() {
                             @Override
                             public void done(AVIMClient avimClient, AVIMException e) {
                                 if (null == e) {
                                     Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
                                     //这里填写对方clientId
-                                    intent.putExtra(LCIMConstants.PEER_ID, "Tom");
+                                    String peerClientId = "lisiyu201695@gmail.com";
+                                    intent.putExtra(LCIMConstants.PEER_ID, peerClientId);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();

@@ -572,6 +572,7 @@ public class LCIMConversationFragment extends Fragment {
    * @param message
    */
   public void sendMessage(AVIMMessage message, boolean addToList) {
+    fetchMessages();
     if (addToList) {
       itemAdapter.addMessage(message);
     }
@@ -598,6 +599,7 @@ public class LCIMConversationFragment extends Fragment {
         }
       }
     });
+    fetchMessages();
   }
 
   private boolean filterException(Exception e) {
