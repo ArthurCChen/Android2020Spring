@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_go:
                 final SPutil sp = new SPutil(MainActivity.this);
-                final String un = etUsername.getText().toString();
-                final String pw = etPassword.getText().toString();
+                final String un = "lisiyu201695@gmail.com";
+                final String pw = "123";
                 if(TextUtils.isEmpty(un)){
                     Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
                     return;
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (null == e) {
                                     Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
                                     //这里填写对方clientId
-                                    intent.putExtra(LCIMConstants.PEER_ID, "Tom");
+                                    intent.putExtra(LCIMConstants.PEER_ID, "chen-yn17@mails.tsinghua.edu.cn");
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
