@@ -19,6 +19,7 @@ import cn.leancloud.chatkit.cache.LCIMProfileCache;
 import cn.leancloud.chatkit.handler.LCIMClientEventHandler;
 import cn.leancloud.chatkit.handler.LCIMConversationHandler;
 import cn.leancloud.chatkit.handler.LCIMMessageHandler;
+import cn.leancloud.push.PushService;
 import cn.leancloud.utils.StringUtil;
 
 /**
@@ -56,7 +57,7 @@ public final class LCChatKit {
       throw new IllegalArgumentException("appKey can not be empty!");
     }
 
-    AVOSCloud.initialize(context.getApplicationContext(), appId, appKey, serverUrl);
+//    AVOSCloud.initialize(context.getApplicationContext(), appId, appKey, serverUrl);
 
     // 消息处理 handler
     AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new LCIMMessageHandler(context));
@@ -71,6 +72,7 @@ public final class LCChatKit {
 
     // 默认设置为离线消息仅推送数量
     AVIMOptions.getGlobalOptions().setUnreadNotificationEnabled(true);
+
   }
 
   /**

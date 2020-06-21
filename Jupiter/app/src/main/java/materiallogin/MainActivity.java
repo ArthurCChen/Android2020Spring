@@ -38,6 +38,7 @@ import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.im.v2.AVIMClient;
 import cn.leancloud.im.v2.AVIMException;
 import cn.leancloud.im.v2.callback.AVIMClientCallback;
+import cn.leancloud.push.PushService;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     CardView cv;
     @InjectView(R.id.fab)
     FloatingActionButton fab;
+
+
 
 //    private RadioGroup rg;
 //    private RadioButton rbSx;

@@ -12,6 +12,7 @@ import cn.leancloud.AVOSCloud;
 import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.im.AVIMOptions;
 
+import cn.leancloud.push.PushService;
 import materiallogin.CustomUserProvider;
 
 
@@ -26,8 +27,9 @@ public class App extends Application {
 //        Bmob.initialize(this,"18656acfe1e57560c20094eaaf425968");
         AVOSCloud.initialize(this,
                 "pfwsHNbdElTmkBxq8TJ3vSnQ-MdYXbMMI",
-                "7W0RtWNJkful7NQiBvTpB8HP");
-        AVIMOptions.getGlobalOptions().setDisableAutoLogin4Push(true);
+                "7W0RtWNJkful7NQiBvTpB8HP",
+                "https://console.leancloud.app");
+//        AVIMOptions.getGlobalOptions().setDisableAutoLogin4Push(true);
         AVOSCloud.setLogLevel(AVLogger.Level.DEBUG);
 //        Bmob.initialize(this, "3c7d0da1ed306e604f6be4b0958f606c");
 
@@ -35,7 +37,13 @@ public class App extends Application {
         LCChatKit.getInstance().init(getApplicationContext(),
                 "pfwsHNbdElTmkBxq8TJ3vSnQ-MdYXbMMI",
                 "7W0RtWNJkful7NQiBvTpB8HP",
+
                 "");                  //国际版不用域名，空着即可，用控制台的链接也不会出bug
+
+                "https://console.leancloud.app");//国际版不用域名，我查到论坛有人用这个访问控制台
+        PushService.setDefaultPushCallback(this, MainActivity.class);
+        PushService.setAutoWakeUp(true);
+
         sContext = getApplicationContext();
 
         SDKInitializer.initialize(this);
