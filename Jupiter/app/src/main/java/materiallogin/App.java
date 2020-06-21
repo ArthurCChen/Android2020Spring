@@ -1,11 +1,15 @@
 package materiallogin;
 
 import android.app.Application;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 
+import androidx.annotation.RequiresApi;
 import cn.bmob.v3.Bmob;
 import cn.leancloud.AVLogger;
 import cn.leancloud.AVOSCloud;
@@ -18,6 +22,7 @@ import materiallogin.CustomUserProvider;
 
 public class App extends Application {
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     // bmob初始化
     public void onCreate() {
@@ -38,9 +43,13 @@ public class App extends Application {
                 "pfwsHNbdElTmkBxq8TJ3vSnQ-MdYXbMMI",
                 "7W0RtWNJkful7NQiBvTpB8HP",
                 "https://console.leancloud.app");//国际版不用域名，我查到论坛有人用这个访问控制台
-        PushService.setDefaultPushCallback(this, MainActivity.class);
+        PushService.setDefaultPushCallback(this,  DemandDetailActivity.class);
         PushService.setAutoWakeUp(true);
-
+        PushService.createNotificationChannel(this, "enroll", "enroll",
+                "for enroll", NotificationManager.IMPORTANCE_DEFAULT, true,
+                Color.WHITE, false, null);
+        PushService.setDefaultChannelId(this, "enroll");
+        PushService.subscribe(this, "enroll", DemandDetailActivity.class);
         sContext = getApplicationContext();
 
         SDKInitializer.initialize(this);

@@ -68,8 +68,17 @@ public class DemandDetailActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         assert intent != null : "intent is null in demand detail activity";
-        String role = intent.getStringExtra("role");
-        assert role != null : "you forget to pass 'role' to intent";
+
+        String objectId;
+        String message = intent.getStringExtra("com.avoscloud.Data");
+        if(message != null){
+            objectId = intent.getStringExtra(message);
+        }else{
+            objectId = intent.getStringExtra("objectId");
+        }
+
+//        String role = intent.getStringExtra("role");
+//        assert role != null : "you forget to pass 'role' to intent";
 
         demand_detail = (TextView) findViewById(R.id.demand_description);
         demand_user = (TextView) findViewById(R.id.user_info);
@@ -77,7 +86,7 @@ public class DemandDetailActivity extends AppCompatActivity {
         left_button = (Button) findViewById(R.id.demand_button_left);
         right_button = (Button) findViewById(R.id.demand_button_right);
 
-        AVObject demand = AVObject.createWithoutData("demand", intent.getStringExtra("objectId"));
+        AVObject demand = AVObject.createWithoutData("demand", objectId);
         demand.fetchInBackground().subscribe(new Observer<AVObject>() {
             @Override
             public void onSubscribe(Disposable d) { }
