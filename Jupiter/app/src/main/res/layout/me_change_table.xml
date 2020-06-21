@@ -85,7 +85,7 @@
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/text_telephone"
+                android:id="@+id/text_telephone_change"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
