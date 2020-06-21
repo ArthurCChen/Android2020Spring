@@ -82,6 +82,8 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         if (p.getString("enroller_state").equals("accepted")) {
             holder.accpet.setOnClickListener(v -> {
                 // TODO: 2020621chat
+                p.getString("enroller_id");
+                p.getString("demander_id");
             });
         }
         else {
