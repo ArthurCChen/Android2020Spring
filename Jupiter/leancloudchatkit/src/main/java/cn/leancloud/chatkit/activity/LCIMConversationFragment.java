@@ -483,6 +483,7 @@ public class LCIMConversationFragment extends Fragment {
 
   private void dispatchLocateIntent() {
     //TODO 地理位置
+
     String serviceName = Context.LOCATION_SERVICE;
 // 调用getSystemService()方法来获取LocationManager对象
     LocationManager locationManager = (LocationManager) getContext().getSystemService(serviceName);
@@ -496,6 +497,10 @@ public class LCIMConversationFragment extends Fragment {
     }
     Location location = locationManager.getLastKnownLocation(provider);
 
+    if(location == null){
+      Toast.makeText(getContext(), "请打开定位", Toast.LENGTH_SHORT).show();
+      return;
+    }
     double lat = location.getLatitude();
 //获取经度
     double lng = location.getLongitude();
