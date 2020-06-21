@@ -64,7 +64,7 @@ public class App extends Application {
 
             @Override
             public void onNext(AVObject avObject) {
-
+                SPUtils.installation = AVInstallation.getCurrentInstallation();;
             }
 
             @Override
@@ -76,7 +76,7 @@ public class App extends Application {
             public void onComplete() {
 
             }
-        })
+        });
 
         SDKInitializer.initialize(this);
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.

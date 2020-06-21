@@ -120,7 +120,32 @@ public class MainActivity extends AppCompatActivity {
                     public void onNext(AVUser user) {
                         // 登录成功
                         Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                        if(SPUtils.installation != null) {
+                            AVObject todo = new AVObject("InsUser");
+                            todo.put("ins", SPUtils.installation);
+                            todo.put("user", user);
+                            todo.saveInBackground().subscribe(new Observer<AVObject>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
 
+                                }
+
+                                @Override
+                                public void onNext(AVObject avObject) {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    Toast.makeText(MainActivity.this, "推送初始化失败", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            });
+                        }
                         // 要回到原安排，恢复下面4行，注释再下面12行
                         Intent intent = new Intent(MainActivity.this, BottomMenu.class);
                         intent.putExtra("username", un);

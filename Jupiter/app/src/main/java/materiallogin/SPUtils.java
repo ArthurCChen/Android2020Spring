@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import cn.leancloud.AVInstallation;
+
 /**
  * must call init at your application level or equiv, before you use any other methods
  */
@@ -16,7 +18,7 @@ public class SPUtils {
 
     private static SharedPreferences sharedPreferences;
     private static SPUtils prefsInstance;
-
+    public static AVInstallation installation = null;
     private static final String preferencesName = "preferences";
     private static final String LENGTH = "_length";
 
