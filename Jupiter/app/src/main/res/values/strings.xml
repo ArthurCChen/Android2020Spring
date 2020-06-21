@@ -63,5 +63,6 @@
     <string name="reward">报酬金额</string>
     <string name="issue">发布</string>
 
-    <!-- demand detail -->
+    <string name="accept">接受</string>
+    <string name="reject">拒绝</string>
 </resources>
