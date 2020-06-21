@@ -15,10 +15,14 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 
 //报-11错误时候卸载应用重新安装就可以解决了
@@ -30,6 +34,10 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = getIntent().getExtras();
+        double latitude = bundle.getDouble("latitude");
+        double longitude = bundle.getDouble("longitude");
 
         setContentView(R.layout.activity_map);
 
@@ -54,6 +62,19 @@ public class MapActivity extends AppCompatActivity {
         mLocationClient.registerLocationListener(myLocationListener);
 //开启地图定位图层
         mLocationClient.start();
+
+        LatLng point = new LatLng(latitude, longitude);
+
+        BitmapDescriptor bitmap = BitmapDescriptorFactory
+                .fromResource(R.drawable.icon_marka);
+//构建MarkerOption，用于在地图上添加Marker
+        OverlayOptions markOption = new MarkerOptions()
+                .position(point)
+                .icon(bitmap);
+//在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(markOption);
+
+        getLocationByLL(latitude, longitude);
     }
     @Override
     protected void onResume() {
@@ -92,7 +113,7 @@ public class MapActivity extends AppCompatActivity {
                     .direction(location.getDirection()).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
             mBaiduMap.setMyLocationData(locData);
-            getLocationByLL(myLatitude, myLongitude);
+//            getLocationByLL(myLatitude, myLongitude);
         }
     }
 

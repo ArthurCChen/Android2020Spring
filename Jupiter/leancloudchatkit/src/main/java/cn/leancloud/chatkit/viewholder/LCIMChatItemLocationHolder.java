@@ -37,7 +37,12 @@ public class LCIMChatItemLocationHolder extends LCIMChatItemHolder {
       @Override
       public void onClick(View v) {
         //TODO play baiduMap
+        final AVIMLocationMessage locMsg = (AVIMLocationMessage) message;
+        double latitude = locMsg.getLocation().getLatitude();
+        double longitude = locMsg.getLocation().getLongitude();
         Intent locateIntent = new Intent(getContext(), MapActivity.class);
+        locateIntent.putExtra("latitude", latitude);
+        locateIntent.putExtra("longitude", longitude);
         getContext().startActivity(locateIntent);
 
         System.out.println("clicked map");
