@@ -1,9 +1,12 @@
 package cn.leancloud.chatkit.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.mappage.MapActivity;
 
 import cn.leancloud.im.v2.AVIMMessage;
 import cn.leancloud.im.v2.messages.AVIMLocationMessage;
@@ -34,6 +37,9 @@ public class LCIMChatItemLocationHolder extends LCIMChatItemHolder {
       @Override
       public void onClick(View v) {
         //TODO play baiduMap
+        Intent locateIntent = new Intent(getContext(), MapActivity.class);
+        getContext().startActivity(locateIntent);
+
         System.out.println("clicked map");
         LCIMLocationItemClickEvent event = new LCIMLocationItemClickEvent();
         event.message = message;

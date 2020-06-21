@@ -475,7 +475,7 @@ public class LCIMConversationFragment extends Fragment {
 
   private void dispatchLocateIntent(){
     //TODO 地理位置
-//    Intent locateIntent = new Intent(Intent)
+
 
     AVIMLocationMessage message = new AVIMLocationMessage();
     message.setLocation(new AVGeoPoint(0,0));

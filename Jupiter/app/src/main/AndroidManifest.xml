@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thu.qinghuaquan">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- 读取外置存储。如果开发者使用了so动态加载功能并且把so文件放在了外置存储区域，则需要申请该权限，否则不需要 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 写外置存储。如果开发者使用了离线地图，并且数据写在外置存储区域，则需要申请该权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,7 +25,9 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/tab_color" />
-
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="Qw6xRvehGNCvhTRV6xRTq2SXsWpzlkHH" />
         <activity
             android:name="materiallogin.BottomMenu"
             android:label="@string/title_activity_bottom_menu" >
@@ -47,7 +59,9 @@
         <activity android:name="materiallogin.ShangjiaActivity" />
         <activity android:name="materiallogin.ShangjiaFBActivity" />
         <activity android:name="materiallogin.ShangjiaPRActivity" />
-        <activity android:name="materiallogin.XsActivity" />
-    </application>
+
+        <service android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"/>    </application>
 
 </manifest>
