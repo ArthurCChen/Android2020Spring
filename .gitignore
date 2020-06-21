@@ -25,3 +25,11 @@ Jupiter/Thumbs.db
 Jupiter/app/release
 Jupiter/.project
 Jupiter/.settings
+Jupiter/leancloudchatkit/build
+*.so
+*.jar
+Jupiter/mappage/libs
+Jupiter/app/libs
+Jupiter/mappage/build
+
+Jupiter/mymap/.idea/workspace.xml
