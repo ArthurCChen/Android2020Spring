@@ -390,7 +390,9 @@ public class DemandDetailActivity extends AppCompatActivity {
                 demand.getString("content"), demand.getDouble("reward"),
                 demand.getInt("wanted_number"),
                 demand.getInt("confirmed_number"), demand.get("end_time").toString());
-        String user = String.format("<br><p>来自%s的请求</p>", demand.getString("username"));
+        String email_name = demand.getString("username");
+        String nickname = email_name.substring(0, email_name.indexOf('@'));
+        String user = String.format("<br><p>来自%s的请求</p>", nickname);
         hint = String.format("<br><p>%s<p>", hint);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             demand_detail.setText(Html.fromHtml(discription, Html.FROM_HTML_MODE_COMPACT));
