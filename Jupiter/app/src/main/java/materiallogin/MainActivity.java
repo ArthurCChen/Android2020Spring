@@ -119,28 +119,29 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
 
                         // 要回到原安排，恢复下面4行，注释再下面12行
-//                        Intent intent = new Intent(MainActivity.this, BottomMenu.class);
-//                        intent.putExtra("username", un);
-//                        startActivity(intent);
-//                        finish();
+                        Intent intent = new Intent(MainActivity.this, BottomMenu.class);
+                        intent.putExtra("username", un);
+                        startActivity(intent);
+                        finish();
 
 //                        //这里的client即为当前用户的AVIMClient实例
 //                        AVIMClient client = AVIMClient.getInstance(user);
 //                        client.open( new AVIMClientCallback() {});
 
-                        LCChatKit.getInstance().open(un , new AVIMClientCallback() {
-                            @Override
-                            public void done(AVIMClient avimClient, AVIMException e) {
-                                if (null == e) {
-                                    Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
-                                    //这里填写对方clientId
-                                    intent.putExtra(LCIMConstants.PEER_ID, "chen-yn17@mails.tsinghua.edu.cn");
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                        //下面是聊天窗口启动代码
+//                        LCChatKit.getInstance().open(un , new AVIMClientCallback() {
+//                            @Override
+//                            public void done(AVIMClient avimClient, AVIMException e) {
+//                                if (null == e) {
+//                                    Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
+//                                    //这里填写对方clientId
+//                                    intent.putExtra(LCIMConstants.PEER_ID, "chen-yn17@mails.tsinghua.edu.cn");
+//                                    startActivity(intent);
+//                                } else {
+//                                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
                     }
                     public void onError(Throwable e) {
                         // 登录失败（可能是密码错误）

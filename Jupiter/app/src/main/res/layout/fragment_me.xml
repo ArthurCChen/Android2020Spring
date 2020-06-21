@@ -59,7 +59,8 @@
                         android:layout_weight="1"
                         android:textSize="20sp" />
 
-                    <ImageView
+                    <Button
+                        android:id="@+id/bt_edit_me"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -67,7 +68,7 @@
                         android:contentDescription="@string/add_descriptor"
                         android:onClick="editMe"
                         android:padding="0dp"
-                        android:src="@drawable/ic_edit_me" />
+                        android:background="@drawable/ic_edit_me" />
 
                 </LinearLayout>
 
@@ -233,7 +234,7 @@
         <Button
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/bt_go_2"
+            android:id="@+id/bt_change_password"
             android:background="@drawable/bt_shape_2"
             android:stateListAnimator="@drawable/state_list_animator_z"
             android:layout_width="200dp"
@@ -247,7 +248,7 @@
         <Button
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/bt_go_3"
+            android:id="@+id/bt_logout"
             android:background="@drawable/bt_shape_2"
             android:stateListAnimator="@drawable/state_list_animator_z"
             android:layout_width="200dp"
