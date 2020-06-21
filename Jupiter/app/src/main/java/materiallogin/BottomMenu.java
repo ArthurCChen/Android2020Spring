@@ -114,10 +114,9 @@ public class BottomMenu extends AppCompatActivity {
 
                 final String title = demand_title.getText().toString();
                 final String content = demand_content.getText().toString();
-                final String username = "lisiyu201695@gmail.com";
+                final String username = (String) AVUser.getCurrentUser().getServerData().get("email");
                 final String end_time = deadline.getText().toString();
                 final String type = demand_type.getSelectedItem().toString();
-
                 // check title and content
                 if (title.equals("") || content.equals("")) {
                     if (demand_title.getText().toString().equals("")) {
