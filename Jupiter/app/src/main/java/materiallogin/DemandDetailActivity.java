@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.thu.qinghuaquan.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -174,6 +175,10 @@ public class DemandDetailActivity extends AppCompatActivity {
                     // query the data
                     AVQuery<AVObject> query = new AVQuery<>("demand_relationship");
                     query.whereEqualTo("demand", demand);
+                    List<String> states = new ArrayList<>();
+                    states.add("pending_review_for_enroll_demand");
+                    states.add("accepted");
+                    query.whereContainedIn("enroller_state", states);
                     query.findInBackground().subscribe(new Observer<List<AVObject>>() {
                         @Override
                         public void onSubscribe(Disposable d) { }
