@@ -17,26 +17,15 @@ import android.widget.Toast;
 import com.thu.qinghuaquan.R;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
-import butterknife.ButterKnife;
 import cn.leancloud.AVObject;
-import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import materiallogin.AVDemand;
 import materiallogin.BottomMenu;
-import materiallogin.MainActivity;
 import materiallogin.RegisterActivity;
-import materiallogin.SPutil;
-import android.widget.Toast;
 
 public class MeFragment extends Fragment {
 
@@ -134,26 +123,47 @@ public class MeFragment extends Fragment {
 
         btEditMe.setOnClickListener(new View.OnClickListener() {
             AlertDialog alertDialog = null;
+
+            View layout;
+            EditText textBrief = null;
+            EditText textTelephone = null;
+            EditText textRealname = null;
+            EditText textAddress = null;
+            Button cancelChange = null;
+            Button saveChange = null;
+            Spinner demand_type = null;
+
+            private void renew(AVUser user) {
+                textBrief.setText((String)user.getServerData().get("brief"));
+                textTelephone.setText((String)user.getServerData().get("telephone"));
+                textRealname.setText((String)user.getServerData().get("realname"));
+                textAddress.setText((String)user.getServerData().get("address"));
+            }
+
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final LayoutInflater inflater = getLayoutInflater();
-                final View layout = inflater.inflate(R.layout.me_change_table, null);
+                layout = inflater.inflate(R.layout.me_change_table, null);
                 builder.setView(layout);
-                final EditText textBrief = (EditText) layout.findViewById(R.id.text_brief);
-                final EditText textTelephone = (EditText) layout.findViewById(R.id.text_telephone);
-                final EditText textRealname = (EditText) layout.findViewById(R.id.text_realname);
-                final EditText textAddress = (EditText) layout.findViewById(R.id.text_address);
-                final Button cancelChange = (Button) layout.findViewById(R.id.cancel_change);
-                final Button saveChange = (Button) layout.findViewById(R.id.save_change);
-                final Spinner demand_type = (Spinner) layout.findViewById(R.id.service_type);
+                textBrief = (EditText) layout.findViewById(R.id.text_brief);
+                textTelephone = (EditText) layout.findViewById(R.id.text_telephone_change);
+                textRealname = (EditText) layout.findViewById(R.id.text_realname);
+                textAddress = (EditText) layout.findViewById(R.id.text_address);
+                cancelChange = (Button) layout.findViewById(R.id.cancel_change);
+                saveChange = (Button) layout.findViewById(R.id.save_change);
+                demand_type = (Spinner) layout.findViewById(R.id.service_type);
+
+                final AVUser user = AVUser.getCurrentUser();
+                renew(user);
+
                 cancelChange.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //关闭小弹窗
-                        Intent intent = new Intent(getActivity(), BottomMenu.class);
-                        intent.putExtra("username", email);
-                        startActivity(intent);
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                        alertDialog = null;
                     }
                 });
 
@@ -168,7 +178,6 @@ public class MeFragment extends Fragment {
                         final String telephone = textTelephone.getText().toString();
                         final String realname = textRealname.getText().toString();
                         final String address = textAddress.getText().toString();
-                        final AVUser user = new AVUser();
                         user.put("brief",brief);
                         user.put("telephone",telephone);
                         user.put("realname",realname);
@@ -181,12 +190,19 @@ public class MeFragment extends Fragment {
 
                             @Override
                             public void onNext(AVObject avObject) {
+                                Toast.makeText(getActivity(), "修改成功", Toast.LENGTH_SHORT).show();
                                 if (alertDialog != null)
                                     alertDialog.dismiss();
+                                alertDialog = null;
+                                renew(user);
                             }
 
                             @Override
                             public void onError(Throwable e) {
+                                Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
+                                if (alertDialog != null)
+                                    alertDialog.dismiss();
+                                alertDialog = null;
                                 System.out.println(e.getMessage());
                             }
 
@@ -195,8 +211,6 @@ public class MeFragment extends Fragment {
 
                             }
                         });
-                        alertDialog = builder.create();
-                        alertDialog.show();
                     }
                 });
 
@@ -217,16 +231,22 @@ public class MeFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 String textEmail = emailCheck.getText().toString();
-                                AVUser.requestPasswordResetInBackground(textEmail).blockingSubscribe();
+                                if (textEmail.equals(AVUser.getCurrentUser().getServerData().get("email"))) {
+                                    AVUser.requestPasswordResetInBackground(textEmail);
+                                    Toast.makeText(getActivity(), "邮件已发送", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(getActivity(), "邮箱输入错误", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         backMe.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 //关闭小弹窗
-                                Intent intent = new Intent(getActivity(), BottomMenu.class);
-                                intent.putExtra("username", email);
-                                startActivity(intent);
+                                if (alertDialog != null)
+                                    alertDialog.dismiss();
+                                alertDialog = null;
                             }
                         });
                         alertDialog = builder.create();
@@ -250,6 +270,8 @@ public class MeFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
+                alertDialog = builder.create();
+                alertDialog.show();
 
             }
 
