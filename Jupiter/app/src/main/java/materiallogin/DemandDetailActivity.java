@@ -60,7 +60,7 @@ public class DemandDetailActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
 
     private AVUser curUser;
-    private AVUser peerUser;
+    private String peerName;
     private String demandId;
 
     @SuppressLint("Assert")
@@ -113,10 +113,11 @@ public class DemandDetailActivity extends AppCompatActivity {
     private void get_user_and_then_set_content(AVObject demand) {
 
         curUser = AVUser.getCurrentUser();
-        demandId = demand.getString("demand_id");
+        demandId = String.valueOf(demand.getNumber("demand_id"));
         AVUser user = demand.getAVObject("demander");
+
         if(user != curUser)
-            peerUser = user;
+            peerName = user.getObjectId();
 
         String email = (String) curUser.getServerData().get("email");
         // to accelerate debug process
@@ -300,16 +301,21 @@ public class DemandDetailActivity extends AppCompatActivity {
                                 @Override
                                 public void onNext(AVObject avObject) {
 
-                                    AVIMMessage msg = new AVIMTextMessage();
-                                    msg.setContent(demandId);
-                                    SPUtils.getMe().createConversation(Arrays.asList("lisiyu201695@gmail.com"),
+                                    System.out.println(1);
+                                    AVIMTextMessage msg = new AVIMTextMessage();
+                                    System.out.println(2);
+                                    msg.setText(demandId);
+                                    System.out.println(3);
+                                    SPUtils.getMe().createConversation(Arrays.asList(peerName),
                                             null,
                                             new AVIMConversationCreatedCallback() {
                                                 @Override
                                                 public void done(AVIMConversation conversation, AVIMException e) {
+                                                    System.out.println(4);
                                                     conversation.sendMessage(msg, new AVIMConversationCallback() {
                                                         @Override
                                                         public void done(AVIMException e) {
+                                                            System.out.println(5);
                                                             Toast.makeText(DemandDetailActivity.this, "以提醒对方", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
@@ -320,7 +326,9 @@ public class DemandDetailActivity extends AppCompatActivity {
                                     right_button.setVisibility(View.GONE);
                                 }
                                 @Override
-                                public void onError(Throwable e) { }
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+                                }
                                 @Override
                                 public void onComplete() { }
                             });
