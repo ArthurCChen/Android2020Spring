@@ -73,6 +73,9 @@ import cn.leancloud.chatkit.utils.LCIMPathUtils;
 import cn.leancloud.chatkit.view.LCIMInputBottomBar;
 import cn.leancloud.types.AVGeoPoint;
 import de.greenrobot.event.EventBus;
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by wli on 15/8/27.
@@ -584,11 +587,54 @@ public class LCIMConversationFragment extends Fragment {
    * @param imagePath
    */
   protected void sendImage(String imagePath) {
-    try {
-      sendMessage(new AVIMImageMessage(imagePath));
-    } catch (IOException e) {
-      LCIMLogUtils.logException(e);
-    }
+    Luban.with(getContext())
+            .load(imagePath)
+            .ignoreBy(100)
+            .setTargetDir(getContext().getCacheDir().getAbsolutePath())
+            .filter(new CompressionPredicate() {
+              @Override
+              public boolean apply(String path) {
+                return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+              }
+            })
+            .setCompressListener(new OnCompressListener() {
+              @Override
+              public void onStart() {
+                // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                Toast.makeText(getContext(), "正在上传图片,请稍候", Toast.LENGTH_SHORT).show();
+              }
+
+              @Override
+              public void onSuccess(File file) {
+                // TODO 压缩成功后调用，返回压缩后的图片文件
+
+                try {
+                  //检测是否有写的权限
+                  int permission = ActivityCompat.checkSelfPermission(getActivity(),
+                          "android.permission.READ_EXTERNAL_STORAGE");
+                  String[] permissions = {"android.permission.READ_EXTERNAL_STORAGE"};
+                  if (permission != PackageManager.PERMISSION_GRANTED) {
+                    // 没有写的权限，去申请写的权限，会弹出对话框
+                    ActivityCompat.requestPermissions(getActivity(), permissions, 1);
+                  }
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+
+                try {
+                  sendMessage(new AVIMImageMessage(file.getPath()));
+                } catch (IOException e) {
+                  LCIMLogUtils.logException(e);
+                }
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                // TODO 当压缩过程出现问题时调用
+                Toast.makeText(getContext(), "上传失败", Toast.LENGTH_SHORT).show();
+              }
+            }).launch();
+
   }
 
   /**
