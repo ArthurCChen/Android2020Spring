@@ -29,7 +29,10 @@ public class App extends Application {
 //        Bmob.initialize(this, "3c7d0da1ed306e604f6be4b0958f606c");
 
         LCChatKit.getInstance().setProfileProvider(CustomUserProvider.getInstance());
-        LCChatKit.getInstance().init(getApplicationContext(), "pfwsHNbdElTmkBxq8TJ3vSnQ-MdYXbMMI", "7W0RtWNJkful7NQiBvTpB8HP", "https://dyrq8yfh.lc-cn-n1-shared.com");
+        LCChatKit.getInstance().init(getApplicationContext(),
+                "pfwsHNbdElTmkBxq8TJ3vSnQ-MdYXbMMI",
+                "7W0RtWNJkful7NQiBvTpB8HP",
+                "https://console.leancloud.app");//国际版不用域名，我查到论坛有人用这个访问控制台
         sContext = getApplicationContext();
     }
 }
