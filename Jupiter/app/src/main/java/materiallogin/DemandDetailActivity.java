@@ -25,9 +25,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.thu.qinghuaquan.R;
 
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,9 +35,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import cn.leancloud.AVInstallation;
 import cn.leancloud.AVObject;
+import cn.leancloud.AVPush;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
+import cn.leancloud.push.PushService;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import materiallogin.ui.accepted.AcceptedFragment;
@@ -53,6 +56,9 @@ public class DemandDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    private String demandId;
+    private  String objectId;
 
     @SuppressLint("Assert")
     @Override
@@ -117,6 +123,8 @@ public class DemandDetailActivity extends AppCompatActivity {
         // to accelerate debug process
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
 //        String email = "lisiyu201695@gmail.com";
+        objectId = demand.getString("objectId");
+        demandId = String.valueOf(demand.getNumber("demand_id"));
         AVQuery<AVObject> query = new AVQuery<>("demand_relationship");
         query.whereEqualTo("demand", demand);
         query.whereEqualTo("enroller_id", email);
@@ -290,6 +298,31 @@ public class DemandDetailActivity extends AppCompatActivity {
                                 public void onSubscribe(Disposable d) { }
                                 @Override
                                 public void onNext(AVObject avObject) {
+                                    PushService.subscribe(DemandDetailActivity.this, demandId, DemandDetailActivity.class);
+                                    DetailObject detailObject = new DetailObject("新提交", objectId, "0");
+                                    String pushStr = JSON.toJSONString(detailObject);
+                                    AVQuery pushQuery = AVInstallation.getQuery();
+                                    pushQuery.whereEqualTo("channels", pushStr);
+                                    AVPush push = new AVPush();
+                                    push.setQuery(pushQuery);
+                                    push.setMessage(pushStr);
+                                    push.setPushToAndroid(true);
+                                    push.sendInBackground().subscribe(new Observer<JSONObject>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+                                        }
+                                        @Override
+                                        public void onNext(JSONObject jsonObject) {
+                                            System.out.println("推送成功" + jsonObject);
+                                        }
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            System.out.println("推送失败，错误信息：" + e.getMessage());
+                                        }
+                                        @Override
+                                        public void onComplete() {
+                                        }
+                                    });
                                     Toast.makeText(DemandDetailActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
                                     set_hint("您的推出申请正在审核中，请稍加等候。");
                                     right_button.setVisibility(View.GONE);
