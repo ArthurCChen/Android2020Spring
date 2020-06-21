@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         // 登录成功
                         Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
 
-                        //要回到原安排，恢复下面4行，注释再下面12行
+                        // 要回到原安排，恢复下面4行，注释再下面12行
 //                        Intent intent = new Intent(MainActivity.this, BottomMenu.class);
 //                        intent.putExtra("username", un);
 //                        startActivity(intent);
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //这里填写本人的clientId
-                        LCChatKit.getInstance().open("Jerry", new AVIMClientCallback() {
+                        LCChatKit.getInstance().open(un , new AVIMClientCallback() {
                             @Override
                             public void done(AVIMClient avimClient, AVIMException e) {
                                 if (null == e) {
