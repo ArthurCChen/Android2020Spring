@@ -304,8 +304,8 @@ public class DemandDetailActivity extends AppCompatActivity {
                                     AVQuery pushQuery = AVInstallation.getQuery();
                                     pushQuery.whereEqualTo("channels", objectId);
                                     AVPush push = new AVPush();
+                                    push.setData((JSONObject)JSON.toJSON(detailObject));
                                     push.setQuery(pushQuery);
-                                    push.setMessage(pushStr);
                                     push.setPushToAndroid(true);
                                     push.sendInBackground().subscribe(new Observer<JSONObject>() {
                                         @Override
