@@ -13,19 +13,27 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.thu.qinghuaquan.R;
 
 import org.w3c.dom.Text;
 
 import java.util.List;
 
+import cn.leancloud.AVInstallation;
 import cn.leancloud.AVObject;
+import cn.leancloud.AVPush;
+import cn.leancloud.AVQuery;
 import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.chatkit.activity.LCIMConversationActivity;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.im.v2.AVIMClient;
 import cn.leancloud.im.v2.AVIMException;
 import cn.leancloud.im.v2.callback.AVIMClientCallback;
+import cn.leancloud.push.PushService;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.MyViewHolder> {
 
@@ -92,8 +100,33 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
                 // TODO: 2020621chat
                 String peer = p.getString("enroller_id");
                 String un = p.getString("demander_id");
-                String demand = p.getString("demand");
+                String demand = p.getAVObject("demand").getObjectId();
 
+                PushService.subscribe(App.getContext(), demand, DemandDetailActivity.class);
+                DetailObject detailObject = new DetailObject("开始聊天", demand, "1");
+                String pushStr = JSON.toJSONString(detailObject);
+                AVQuery pushQuery = AVInstallation.getQuery();
+                pushQuery.whereEqualTo("channels", demand);
+                AVPush push = new AVPush();
+                push.setData((JSONObject)JSON.toJSON(detailObject));
+                push.setQuery(pushQuery);
+                push.setPushToAndroid(true);
+                push.sendInBackground().subscribe(new Observer<JSONObject>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+                    @Override
+                    public void onNext(JSONObject jsonObject) {
+                        System.out.println("推送成功" + jsonObject);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("推送失败，错误信息：" + e.getMessage());
+                    }
+                    @Override
+                    public void onComplete() {
+                    }
+                });
 
 
                 //下面是聊天窗口启动代码

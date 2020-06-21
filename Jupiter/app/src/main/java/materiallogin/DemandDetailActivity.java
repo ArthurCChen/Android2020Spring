@@ -268,6 +268,33 @@ public class DemandDetailActivity extends AppCompatActivity {
                                     // TODO:2020622chat
                                     String un = relationship.getString("enroller_id");
                                     String peer = relationship.getString("demander_id");
+
+                                    PushService.subscribe(DemandDetailActivity.this, objectId, DemandDetailActivity.class);
+                                    DetailObject detailObject = new DetailObject("开始聊天", objectId, "1");
+                                    String pushStr = JSON.toJSONString(detailObject);
+                                    AVQuery pushQuery = AVInstallation.getQuery();
+                                    pushQuery.whereEqualTo("channels", objectId);
+                                    AVPush push = new AVPush();
+                                    push.setData((JSONObject)JSON.toJSON(detailObject));
+                                    push.setQuery(pushQuery);
+                                    push.setPushToAndroid(true);
+                                    push.sendInBackground().subscribe(new Observer<JSONObject>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+                                        }
+                                        @Override
+                                        public void onNext(JSONObject jsonObject) {
+                                            System.out.println("推送成功" + jsonObject);
+                                        }
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            System.out.println("推送失败，错误信息：" + e.getMessage());
+                                        }
+                                        @Override
+                                        public void onComplete() {
+                                        }
+                                    });
+
                                     LCChatKit.getInstance().open(un , new AVIMClientCallback() {
                                         @Override
                                         public void done(AVIMClient avimClient, AVIMException e) {
