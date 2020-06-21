@@ -262,6 +262,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                             hint = "您的申请已经通过，请按时完成~";
 //                            left_button.setVisibility(View.GONE);
                             left_button.setText("开始聊天");
+                            left_button.setVisibility(View.VISIBLE);
                             left_button.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
