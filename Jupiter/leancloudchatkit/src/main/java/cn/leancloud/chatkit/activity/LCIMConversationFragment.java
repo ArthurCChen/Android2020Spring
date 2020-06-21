@@ -1,22 +1,30 @@
 package cn.leancloud.chatkit.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.FileProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AlertDialog;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -135,7 +143,7 @@ public class LCIMConversationFragment extends Fragment {
                 if (null != list && list.size() > 0) {
                   itemAdapter.addMessageList(list);
                   itemAdapter.setDeliveredAndReadMark(imConversation.getLastDeliveredAt(),
-                    imConversation.getLastReadAt());
+                          imConversation.getLastReadAt());
                   itemAdapter.notifyDataSetChanged();
                   layoutManager.scrollToPositionWithOffset(list.size() - 1, 0);
                 }
@@ -175,12 +183,12 @@ public class LCIMConversationFragment extends Fragment {
   }
 
   @Override
-  public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.conv_menu, menu);
   }
 
   @Override
-  public boolean onOptionsItemSelected (MenuItem item) {
+  public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.menu_conv_setting) {
       Intent intent = new Intent(getActivity(), LCIMConversationDetailActivity.class);
       intent.putExtra(LCIMConstants.CONVERSATION_ID, imConversation.getConversationId());
@@ -228,7 +236,7 @@ public class LCIMConversationFragment extends Fragment {
           itemAdapter.setMessageList(messageList);
           recyclerView.setAdapter(itemAdapter);
           itemAdapter.setDeliveredAndReadMark(imConversation.getLastDeliveredAt(),
-            imConversation.getLastReadAt());
+                  imConversation.getLastReadAt());
           itemAdapter.notifyDataSetChanged();
           scrollToBottom();
           clearUnreadConut();
@@ -255,7 +263,7 @@ public class LCIMConversationFragment extends Fragment {
    */
   public void onEvent(LCIMIMTypeMessageEvent messageEvent) {
     if (null != imConversation && null != messageEvent &&
-      imConversation.getConversationId().equals(messageEvent.conversation.getConversationId())) {
+            imConversation.getConversationId().equals(messageEvent.conversation.getConversationId())) {
       System.out.println("currentConv unreadCount=" + imConversation.getUnreadMessagesCount());
       if (imConversation.getUnreadMessagesCount() > 0) {
         paddingNewMessage(imConversation);
@@ -272,9 +280,9 @@ public class LCIMConversationFragment extends Fragment {
    */
   public void onEvent(LCIMMessageResendEvent resendEvent) {
     if (null != imConversation && null != resendEvent &&
-      null != resendEvent.message && imConversation.getConversationId().equals(resendEvent.message.getConversationId())) {
+            null != resendEvent.message && imConversation.getConversationId().equals(resendEvent.message.getConversationId())) {
       if (AVIMMessage.AVIMMessageStatus.AVIMMessageStatusFailed == resendEvent.message.getMessageStatus()
-        && imConversation.getConversationId().equals(resendEvent.message.getConversationId())) {
+              && imConversation.getConversationId().equals(resendEvent.message.getConversationId())) {
         sendMessage(resendEvent.message, false);
       }
     }
@@ -296,7 +304,7 @@ public class LCIMConversationFragment extends Fragment {
           break;
         case LCIMInputBottomBarEvent.INPUTBOTTOMBAR_LOCATION_ACTION:
           dispatchLocateIntent();
-            break;
+          break;
         default:
           break;
       }
@@ -310,8 +318,8 @@ public class LCIMConversationFragment extends Fragment {
    */
   public void onEvent(LCIMInputBottomBarRecordEvent recordEvent) {
     if (null != imConversation && null != recordEvent &&
-      !TextUtils.isEmpty(recordEvent.audioPath) &&
-      imConversation.getConversationId().equals(recordEvent.tag)) {
+            !TextUtils.isEmpty(recordEvent.audioPath) &&
+            imConversation.getConversationId().equals(recordEvent.tag)) {
       if (recordEvent.audioDuration > 0)
         sendAudio(recordEvent.audioPath);
     }
@@ -323,16 +331,16 @@ public class LCIMConversationFragment extends Fragment {
    */
   public void onEvent(LCIMConversationReadStatusEvent readEvent) {
     if (null != imConversation && null != readEvent &&
-      imConversation.getConversationId().equals(readEvent.conversationId)) {
+            imConversation.getConversationId().equals(readEvent.conversationId)) {
       itemAdapter.setDeliveredAndReadMark(imConversation.getLastDeliveredAt(),
-        imConversation.getLastReadAt());
+              imConversation.getLastReadAt());
       itemAdapter.notifyDataSetChanged();
     }
   }
 
   public void onEvent(final LCIMMessageUpdateEvent event) {
     if (null != imConversation && null != event &&
-      null != event.message && imConversation.getConversationId().equals(event.message.getConversationId())) {
+            null != event.message && imConversation.getConversationId().equals(event.message.getConversationId())) {
       AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
       builder.setTitle("操作").setItems(new String[]{"撤回", "修改消息内容"}, new DialogInterface.OnClickListener() {
         @Override
@@ -350,7 +358,7 @@ public class LCIMConversationFragment extends Fragment {
 
   public void onEvent(final LCIMMessageUpdatedEvent event) {
     if (null != imConversation && null != event &&
-      null != event.message && imConversation.getConversationId().equals(event.message.getConversationId())) {
+            null != event.message && imConversation.getConversationId().equals(event.message.getConversationId())) {
       itemAdapter.updateMessage(event.message);
     }
   }
@@ -379,7 +387,7 @@ public class LCIMConversationFragment extends Fragment {
         if (null != e) {
           return;
         }
-        for (AVIMMessage m: list) {
+        for (AVIMMessage m : list) {
           itemAdapter.addMessage(m);
         }
         itemAdapter.notifyDataSetChanged();
@@ -427,15 +435,15 @@ public class LCIMConversationFragment extends Fragment {
     AVIMTextMessage textMessage = new AVIMTextMessage();
     textMessage.setText(newContent);
     imConversation.updateMessage(message, textMessage, new AVIMMessageUpdatedCallback() {
-        @Override
-        public void done(AVIMMessage message, AVException e) {
-          if (null == e) {
-            itemAdapter.updateMessage(message);
-          } else {
-            Toast.makeText(getActivity(), "更新失败", Toast.LENGTH_SHORT).show();
-          }
+      @Override
+      public void done(AVIMMessage message, AVException e) {
+        if (null == e) {
+          itemAdapter.updateMessage(message);
+        } else {
+          Toast.makeText(getActivity(), "更新失败", Toast.LENGTH_SHORT).show();
         }
-      });
+      }
+    });
   }
 
   /**
@@ -451,13 +459,13 @@ public class LCIMConversationFragment extends Fragment {
       takePictureIntent.putExtra("return-data", false);
       takePictureIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri);
     } else {
-      localCameraPath = Environment.getExternalStorageDirectory() + "/images/" + System.currentTimeMillis()+".jpg";
+      localCameraPath = Environment.getExternalStorageDirectory() + "/images/" + System.currentTimeMillis() + ".jpg";
       File photoFile = new File(localCameraPath);
 
       Uri photoURI = FileProvider.getUriForFile(this.getContext(),
-          this.getContext().getPackageName()+ ".provider", photoFile);
+              this.getContext().getPackageName() + ".provider", photoFile);
       takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-          photoURI);
+              photoURI);
     }
     if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
       startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -473,12 +481,27 @@ public class LCIMConversationFragment extends Fragment {
     startActivityForResult(photoPickerIntent, REQUEST_IMAGE_PICK);
   }
 
-  private void dispatchLocateIntent(){
+  private void dispatchLocateIntent() {
     //TODO 地理位置
+    String serviceName = Context.LOCATION_SERVICE;
+// 调用getSystemService()方法来获取LocationManager对象
+    LocationManager locationManager = (LocationManager) getContext().getSystemService(serviceName);
+    String provider = LocationManager.GPS_PROVIDER;
+// 调用getLastKnownLocation()方法获取当前的位置信息
+    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+    {
+      judgePermission();
+      return;
+    }
+    Location location = locationManager.getLastKnownLocation(provider);
 
+    double lat = location.getLatitude();
+//获取经度
+    double lng = location.getLongitude();
 
     AVIMLocationMessage message = new AVIMLocationMessage();
-    message.setLocation(new AVGeoPoint(0,0));
+    message.setLocation(new AVGeoPoint(lat,lng));
     message.setText("我的位置");
     sendMessage(message);
   }
@@ -628,4 +651,34 @@ public class LCIMConversationFragment extends Fragment {
       imConversation.read();
     }
   }
+
+  protected void judgePermission() {
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      // 检查该权限是否已经获取
+      // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
+
+      // sd卡权限
+      //定位权限
+      String[] locationPermission = {Manifest.permission.ACCESS_FINE_LOCATION};
+      if (ContextCompat.checkSelfPermission(getContext(), locationPermission[0]) != PackageManager.PERMISSION_GRANTED) {
+        // 如果没有授予该权限，就去提示用户请求
+        ActivityCompat.requestPermissions(getActivity(), locationPermission, 300);
+      }
+
+      String[] ACCESS_COARSE_LOCATION = {Manifest.permission.ACCESS_COARSE_LOCATION};
+      if (ContextCompat.checkSelfPermission(getContext(), ACCESS_COARSE_LOCATION[0]) != PackageManager.PERMISSION_GRANTED) {
+        // 如果没有授予该权限，就去提示用户请求
+        ActivityCompat.requestPermissions(getActivity(), ACCESS_COARSE_LOCATION, 400);
+      }
+
+      String[] ACCESS_FINE_LOCATION = {Manifest.permission.ACCESS_FINE_LOCATION};
+      if (ContextCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION[0]) != PackageManager.PERMISSION_GRANTED) {
+        // 如果没有授予该权限，就去提示用户请求
+        ActivityCompat.requestPermissions(getActivity(), ACCESS_FINE_LOCATION, 700);
+      }
+    }
+    //LocationClient.reStart();
+  }
 }
+
