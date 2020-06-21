@@ -33,6 +33,8 @@ public class LCIMChatItemLocationHolder extends LCIMChatItemHolder {
     contentView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        //TODO play baiduMap
+        System.out.println("clicked map");
         LCIMLocationItemClickEvent event = new LCIMLocationItemClickEvent();
         event.message = message;
         EventBus.getDefault().post(event);

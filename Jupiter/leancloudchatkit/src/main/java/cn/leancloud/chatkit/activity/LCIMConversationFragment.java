@@ -38,6 +38,7 @@ import cn.leancloud.im.v2.callback.AVIMMessageRecalledCallback;
 import cn.leancloud.im.v2.callback.AVIMMessageUpdatedCallback;
 import cn.leancloud.im.v2.messages.AVIMAudioMessage;
 import cn.leancloud.im.v2.messages.AVIMImageMessage;
+import cn.leancloud.im.v2.messages.AVIMLocationMessage;
 import cn.leancloud.im.v2.messages.AVIMTextMessage;
 import cn.leancloud.im.v2.messages.AVIMRecalledMessage;
 
@@ -62,6 +63,7 @@ import cn.leancloud.chatkit.utils.LCIMLogUtils;
 import cn.leancloud.chatkit.utils.LCIMNotificationUtils;
 import cn.leancloud.chatkit.utils.LCIMPathUtils;
 import cn.leancloud.chatkit.view.LCIMInputBottomBar;
+import cn.leancloud.types.AVGeoPoint;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -292,6 +294,9 @@ public class LCIMConversationFragment extends Fragment {
         case LCIMInputBottomBarEvent.INPUTBOTTOMBAR_CAMERA_ACTION:
           dispatchTakePictureIntent();
           break;
+        case LCIMInputBottomBarEvent.INPUTBOTTOMBAR_LOCATION_ACTION:
+          dispatchLocateIntent();
+            break;
         default:
           break;
       }
@@ -466,6 +471,16 @@ public class LCIMConversationFragment extends Fragment {
     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, null);
     photoPickerIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
     startActivityForResult(photoPickerIntent, REQUEST_IMAGE_PICK);
+  }
+
+  private void dispatchLocateIntent(){
+    //TODO 地理位置
+//    Intent locateIntent = new Intent(Intent)
+
+    AVIMLocationMessage message = new AVIMLocationMessage();
+    message.setLocation(new AVGeoPoint(0,0));
+    message.setText("我的位置");
+    sendMessage(message);
   }
 
   @Override

@@ -49,6 +49,11 @@ public class LCIMInputBottomBar extends LinearLayout {
   private View voiceBtn;
 
   /**
+   * 位置Button
+   */
+  private View locationBtn;
+
+  /**
    * 切换到文本输入的 Button
    */
   private View keyboardBtn;
@@ -107,6 +112,7 @@ public class LCIMInputBottomBar extends LinearLayout {
     actionLayout = (LinearLayout) findViewById(R.id.input_bar_layout_action);
     cameraBtn = findViewById(R.id.input_bar_btn_camera);
     pictureBtn = findViewById(R.id.input_bar_btn_picture);
+    locationBtn = findViewById(R.id.input_bar_btn_location);
 
     setEditTextChangeListener();
     initRecordBtn();
@@ -180,6 +186,15 @@ public class LCIMInputBottomBar extends LinearLayout {
       public void onClick(View v) {
         EventBus.getDefault().post(new LCIMInputBottomBarEvent(
           LCIMInputBottomBarEvent.INPUTBOTTOMBAR_CAMERA_ACTION, getTag()));
+      }
+    });
+
+    locationBtn.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        EventBus.getDefault().post(new LCIMInputBottomBarEvent(
+                LCIMInputBottomBarEvent.INPUTBOTTOMBAR_LOCATION_ACTION, getTag()
+        ));
       }
     });
   }
