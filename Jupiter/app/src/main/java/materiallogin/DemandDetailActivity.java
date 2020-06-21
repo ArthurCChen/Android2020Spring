@@ -24,7 +24,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSON;
 import com.thu.qinghuaquan.R;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -72,7 +75,8 @@ public class DemandDetailActivity extends AppCompatActivity {
         String objectId;
         String message = intent.getStringExtra("com.avoscloud.Data");
         if(message != null){
-            objectId = intent.getStringExtra(message);
+            DetailObject object = JSON.parseObject(message, DetailObject.class);
+            objectId = object.objectId;
         }else{
             objectId = intent.getStringExtra("objectId");
         }

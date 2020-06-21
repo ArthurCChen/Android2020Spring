@@ -11,12 +11,16 @@ import com.baidu.mapapi.SDKInitializer;
 
 import androidx.annotation.RequiresApi;
 import cn.bmob.v3.Bmob;
+import cn.leancloud.AVInstallation;
 import cn.leancloud.AVLogger;
 import cn.leancloud.AVOSCloud;
+import cn.leancloud.AVObject;
 import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.im.AVIMOptions;
 
 import cn.leancloud.push.PushService;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import materiallogin.CustomUserProvider;
 
 
@@ -51,6 +55,28 @@ public class App extends Application {
         PushService.setDefaultChannelId(this, "enroll");
         PushService.subscribe(this, "enroll", DemandDetailActivity.class);
         sContext = getApplicationContext();
+
+        AVInstallation.getCurrentInstallation().saveInBackground().subscribe(new Observer<AVObject>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(AVObject avObject) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        })
 
         SDKInitializer.initialize(this);
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
