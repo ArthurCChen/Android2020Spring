@@ -159,18 +159,18 @@ public class MainActivity extends AppCompatActivity {
 
                         //下面是聊天窗口启动代码
 //                        LCChatKit.getInstance().open(un , new AVIMClientCallback() {
-//                            @Override
-//                            public void done(AVIMClient avimClient, AVIMException e) {
-//                                if (null == e) {
-//                                    Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
-//                                    //这里填写对方clientId
-//                                    intent.putExtra(LCIMConstants.PEER_ID, "chen-yn17@mails.tsinghua.edu.cn");
-//                                    startActivity(intent);
-//                                } else {
-//                                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                        });
+////                            @Override
+////                            public void done(AVIMClient avimClient, AVIMException e) {
+////                                if (null == e) {
+////                                    Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
+////                                    //这里填写对方clientId
+////                                    intent.putExtra(LCIMConstants.PEER_ID, "chen-yn17@mails.tsinghua.edu.cn");
+////                                    startActivity(intent);
+////                                } else {
+////                                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+////                                }
+////                            }
+////                        });
                     }
                     public void onError(Throwable e) {
                         // 登录失败（可能是密码错误）
