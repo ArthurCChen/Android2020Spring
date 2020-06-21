@@ -27,7 +27,6 @@ import java.util.Calendar;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.leancloud.AVObject;
-import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import materiallogin.ui.issued.IssuedFragment;
@@ -114,9 +113,10 @@ public class BottomMenu extends AppCompatActivity {
 
                 final String title = demand_title.getText().toString();
                 final String content = demand_content.getText().toString();
-                final String username = (String) AVUser.getCurrentUser().getServerData().get("email");
+                final String username = "lisiyu201695@gmail.com";
                 final String end_time = deadline.getText().toString();
                 final String type = demand_type.getSelectedItem().toString();
+
                 // check title and content
                 if (title.equals("") || content.equals("")) {
                     if (demand_title.getText().toString().equals("")) {
@@ -180,7 +180,6 @@ public class BottomMenu extends AppCompatActivity {
                 demand.setEnd_time(c.getTime());
                 demand.setReward(reward_number);
                 demand.setType(type);
-                demand.put("demander", AVUser.getCurrentUser());
 
                 demand.saveInBackground().subscribe(new Observer<AVObject>() {
                     @Override
