@@ -454,6 +454,14 @@ public class LCIMConversationFragment extends Fragment {
    */
   private void dispatchTakePictureIntent() {
 
+    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+    {
+      Toast.makeText(getContext(), "请打开摄像机和读取权限", Toast.LENGTH_SHORT).show();
+      judgePermission();
+      return;
+    }
+
     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
@@ -479,6 +487,14 @@ public class LCIMConversationFragment extends Fragment {
    * 发送 Intent 跳转到系统图库页面
    */
   private void dispatchPickPictureIntent() {
+    if (
+            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+    {
+      Toast.makeText(getContext(), "请打开读取权限", Toast.LENGTH_SHORT).show();
+      judgePermission();
+      return;
+    }
+
     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, null);
     photoPickerIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
     startActivityForResult(photoPickerIntent, REQUEST_IMAGE_PICK);
@@ -495,13 +511,14 @@ public class LCIMConversationFragment extends Fragment {
     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
     {
+      Toast.makeText(getContext(), "请打开定位权限", Toast.LENGTH_SHORT).show();
       judgePermission();
       return;
     }
     Location location = locationManager.getLastKnownLocation(provider);
 
     if(location == null){
-      Toast.makeText(getContext(), "请打开定位", Toast.LENGTH_SHORT).show();
+      Toast.makeText(getContext(), "定位信号弱/请开启定位", Toast.LENGTH_SHORT).show();
       return;
     }
     double lat = location.getLatitude();
@@ -520,6 +537,7 @@ public class LCIMConversationFragment extends Fragment {
     if (Activity.RESULT_OK == resultCode) {
       switch (requestCode) {
         case REQUEST_IMAGE_CAPTURE:
+          System.out.println(localCameraPath);
           sendImage(localCameraPath);
           break;
         case REQUEST_IMAGE_PICK:
@@ -682,6 +700,7 @@ public class LCIMConversationFragment extends Fragment {
     imConversation.sendMessage(message, option, new AVIMConversationCallback() {
       @Override
       public void done(AVIMException e) {
+        fetchMessages();
         itemAdapter.notifyDataSetChanged();
         if (null != e) {
           LCIMLogUtils.logException(e);
@@ -710,6 +729,37 @@ public class LCIMConversationFragment extends Fragment {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       // 检查该权限是否已经获取
       // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
+
+      String[] CAMERA = {Manifest.permission.CAMERA};
+      if (ContextCompat.checkSelfPermission(getContext(), CAMERA[0]) != PackageManager.PERMISSION_GRANTED) {
+        // 如果没有授予该权限，就去提示用户请求
+        ActivityCompat.requestPermissions(getActivity(), CAMERA, 800);
+      }
+
+      String[] READ_EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE};
+      if (ContextCompat.checkSelfPermission(getContext(), READ_EXTERNAL_STORAGE[0]) != PackageManager.PERMISSION_GRANTED) {
+        // 如果没有授予该权限，就去提示用户请求
+        ActivityCompat.requestPermissions(getActivity(), READ_EXTERNAL_STORAGE, 500);
+      }
+
+      String[] WRITE_EXTERNAL_STORAGE = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+      if (ContextCompat.checkSelfPermission(getContext(), WRITE_EXTERNAL_STORAGE[0]) != PackageManager.PERMISSION_GRANTED) {
+        // 如果没有授予该权限，就去提示用户请求
+        ActivityCompat.requestPermissions(getActivity(), WRITE_EXTERNAL_STORAGE, 600);
+      }
+
+      String[] SdCardPermission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+      if (ContextCompat.checkSelfPermission(getContext(), SdCardPermission[0]) != PackageManager.PERMISSION_GRANTED) {
+        // 如果没有授予该权限，就去提示用户请求
+        ActivityCompat.requestPermissions(getActivity(), SdCardPermission, 100);
+      }
+
+      //手机状态权限
+      String[] readPhoneStatePermission = {Manifest.permission.READ_PHONE_STATE};
+      if (ContextCompat.checkSelfPermission(getContext(), readPhoneStatePermission[0]) != PackageManager.PERMISSION_GRANTED) {
+        // 如果没有授予该权限，就去提示用户请求
+        ActivityCompat.requestPermissions(getActivity(), readPhoneStatePermission, 200);
+      }
 
       // sd卡权限
       //定位权限

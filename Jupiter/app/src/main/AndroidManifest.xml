@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thu.qinghuaquan">
 
+
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
