@@ -132,11 +132,11 @@ public class MeFragment extends Fragment {
         //?
         imageViewAvatar.setImageURI(avatarUrl);
 
-        AlertDialog alertDialog = null;
         btEditMe.setOnClickListener(new View.OnClickListener() {
+            AlertDialog alertDialog = null;
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final LayoutInflater inflater = getLayoutInflater();
                 final View layout = inflater.inflate(R.layout.me_change_table, null);
                 builder.setView(layout);
@@ -151,7 +151,7 @@ public class MeFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         //关闭小弹窗
-                        Intent intent = new Intent(MeFragment.this, BottomMenu.class);
+                        Intent intent = new Intent(getActivity(), BottomMenu.class);
                         intent.putExtra("username", email);
                         startActivity(intent);
                     }
@@ -206,7 +206,7 @@ public class MeFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         final LayoutInflater inflater = getLayoutInflater();
                         final View layout = inflater.inflate(R.layout.password_change, null);
                         builder.setView(layout);
@@ -224,7 +224,7 @@ public class MeFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 //关闭小弹窗
-                                Intent intent = new Intent(MeFragment.this, BottomMenu.class);
+                                Intent intent = new Intent(getActivity(), BottomMenu.class);
                                 intent.putExtra("username", email);
                                 startActivity(intent);
                             }
@@ -238,7 +238,7 @@ public class MeFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         AVUser.logOut();
-                        Intent intent = new Intent(MeFragment.this, RegisterActivity.class);
+                        Intent intent = new Intent(getActivity(), RegisterActivity.class);
                         startActivity(intent);
                     }
                 });
