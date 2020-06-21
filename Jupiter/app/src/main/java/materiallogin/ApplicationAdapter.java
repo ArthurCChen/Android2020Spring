@@ -105,8 +105,6 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
                 notifyItemRemoved(position);
             });
         }
-
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -3,6 +3,8 @@
     package="com.thu.qinghuaquan">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="materiallogin.App"
@@ -15,6 +17,14 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/tab_color" />
+
+        <receiver android:name="cn.leancloud.push.AVBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name="materiallogin.BottomMenu"
@@ -48,6 +58,7 @@
         <activity android:name="materiallogin.ShangjiaFBActivity" />
         <activity android:name="materiallogin.ShangjiaPRActivity" />
         <activity android:name="materiallogin.XsActivity" />
+        <service android:name="cn.leancloud.push.PushService" />
     </application>
 
 </manifest>

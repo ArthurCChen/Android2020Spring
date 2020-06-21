@@ -26,6 +26,7 @@ import java.util.Calendar;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import cn.leancloud.AVInstallation;
 import cn.leancloud.AVObject;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -113,7 +114,7 @@ public class BottomMenu extends AppCompatActivity {
 
                 final String title = demand_title.getText().toString();
                 final String content = demand_content.getText().toString();
-                final String username = "lisiyu201695@gmail.com";
+                final String username = getIntent().getStringExtra("username");
                 final String end_time = deadline.getText().toString();
                 final String type = demand_type.getSelectedItem().toString();
 
@@ -180,6 +181,7 @@ public class BottomMenu extends AppCompatActivity {
                 demand.setEnd_time(c.getTime());
                 demand.setReward(reward_number);
                 demand.setType(type);
+                demand.put("installation_id", AVInstallation.getCurrentInstallation().getInstallationId());
 
                 demand.saveInBackground().subscribe(new Observer<AVObject>() {
                     @Override

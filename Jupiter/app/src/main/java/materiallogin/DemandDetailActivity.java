@@ -24,16 +24,21 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.thu.qinghuaquan.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import cn.leancloud.AVInstallation;
 import cn.leancloud.AVObject;
+import cn.leancloud.AVPush;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import io.reactivex.Observer;
@@ -271,6 +276,46 @@ public class DemandDetailActivity extends AppCompatActivity {
                     relationship.put("demander_id", demand.getString("username"));
                     relationship.put("enroller_id", email);
                     relationship.put("enroller_state", "pending_review_for_enroll_demand");
+
+                    String installation_id = demand.getString("installation_id");
+                    if (installation_id != null && !installation_id.equals("")) {
+                        AVQuery pushQuery = AVInstallation.getQuery();
+//                        pushQuery.whereEqualTo("installationId", demand.getString("installation_id"));
+                        pushQuery.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
+                        System.out.println("hahahahaha: " + AVInstallation.getCurrentInstallation().getInstallationId());;
+                        AVPush push = new AVPush();
+                        push.setPushToAndroid(true);
+                        push.setChannel("enrollment");
+                        String message = demand.getString("username") + "申请了您的请求：" + demand.getString("title") + "，请及时受理。";
+                        Map<String, Object> pushData = new HashMap<String, Object>();
+                        pushData.put("alert", message);
+                        pushData.put("_notificationChannel", "enrollment");
+                        push.setData(pushData);
+//                        push.setMessage(message);
+                        push.setQuery(pushQuery);
+                        push.setPushToAndroid(true);
+                        push.sendInBackground().subscribe(new Observer<JSONObject>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+                                System.out.println("here");
+                            }
+                            @Override
+                            public void onNext(JSONObject jsonObject) {
+                                System.out.println("推送成功" + jsonObject);
+                            }
+                            @Override
+                            public void onError(Throwable e) {
+                                System.out.println("推送失败，错误信息：" + e.getMessage());
+                            }
+                            @Override
+                            public void onComplete() {
+                                System.out.println("there");
+                            }
+                        });
+                    }
+                    else {
+
+                    }
                     relationship.saveInBackground().subscribe(new Observer<AVObject>() {
                         @Override
                         public void onSubscribe(Disposable d) { }

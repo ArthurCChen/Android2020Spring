@@ -28,6 +28,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import cn.leancloud.AVInstallation;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVUser;
 import cn.leancloud.AVQuery;
@@ -38,6 +39,7 @@ import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.im.v2.AVIMClient;
 import cn.leancloud.im.v2.AVIMException;
 import cn.leancloud.im.v2.callback.AVIMClientCallback;
+import cn.leancloud.push.PushService;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -81,6 +83,27 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //            finish();
 //        }
+
+        PushService.setDefaultPushCallback(this, MainActivity.class);
+        PushService.subscribe(this, "enrollment", MainActivity.class);
+        AVInstallation.getCurrentInstallation().saveInBackground().subscribe(new Observer<AVObject>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+            }
+            @Override
+            public void onNext(AVObject avObject) {
+                // 关联 installationId 到用户表等操作。
+                String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+                System.out.println("保存成功：" + installationId );
+            }
+            @Override
+            public void onError(Throwable e) {
+                System.out.println("保存失败，错误信息：" + e.getMessage());
+            }
+            @Override
+            public void onComplete() {
+            }
+        });
     }
 
     // 加号和叉号点击事件
@@ -119,26 +142,26 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
 
                         //要回到原安排，恢复下面4行，注释再下面12行
-//                        Intent intent = new Intent(MainActivity.this, BottomMenu.class);
-//                        intent.putExtra("username", un);
-//                        startActivity(intent);
-//                        finish();
+                        Intent intent = new Intent(MainActivity.this, BottomMenu.class);
+                        intent.putExtra("username", un);
+                        startActivity(intent);
+                        finish();
 
 
                         //这里填写本人的clientId
-                        LCChatKit.getInstance().open("Jerry", new AVIMClientCallback() {
-                            @Override
-                            public void done(AVIMClient avimClient, AVIMException e) {
-                                if (null == e) {
-                                    Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
-                                    //这里填写对方clientId
-                                    intent.putExtra(LCIMConstants.PEER_ID, "Tom");
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+//                        LCChatKit.getInstance().open("Jerry", new AVIMClientCallback() {
+//                            @Override
+//                            public void done(AVIMClient avimClient, AVIMException e) {
+//                                if (null == e) {
+//                                    Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
+//                                    //这里填写对方clientId
+//                                    intent.putExtra(LCIMConstants.PEER_ID, "Tom");
+//                                    startActivity(intent);
+//                                } else {
+//                                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
                     }
                     public void onError(Throwable e) {
                         // 登录失败（可能是密码错误）
