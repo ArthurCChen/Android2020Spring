@@ -28,6 +28,7 @@ import com.thu.qinghuaquan.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,12 @@ import java.util.Objects;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
+import cn.leancloud.im.v2.AVIMConversation;
+import cn.leancloud.im.v2.AVIMException;
+import cn.leancloud.im.v2.AVIMMessage;
+import cn.leancloud.im.v2.callback.AVIMConversationCallback;
+import cn.leancloud.im.v2.callback.AVIMConversationCreatedCallback;
+import cn.leancloud.im.v2.messages.AVIMTextMessage;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import materiallogin.ui.accepted.AcceptedFragment;
@@ -51,6 +58,10 @@ public class DemandDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    private AVUser curUser;
+    private AVUser peerUser;
+    private String demandId;
 
     @SuppressLint("Assert")
     @Override
@@ -69,8 +80,8 @@ public class DemandDetailActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         assert intent != null : "intent is null in demand detail activity";
-        String role = intent.getStringExtra("role");
-        assert role != null : "you forget to pass 'role' to intent";
+//        String role = intent.getStringExtra("role");
+//        assert role != null : "you forget to pass 'role' to intent";
 
         demand_detail = (TextView) findViewById(R.id.demand_description);
         demand_user = (TextView) findViewById(R.id.user_info);
@@ -100,8 +111,14 @@ public class DemandDetailActivity extends AppCompatActivity {
     }
 
     private void get_user_and_then_set_content(AVObject demand) {
-        AVUser currentUser = AVUser.getCurrentUser();
-        String email = (String) currentUser.getServerData().get("email");
+
+        curUser = AVUser.getCurrentUser();
+        demandId = demand.getString("demand_id");
+        AVUser user = demand.getAVObject("demander");
+        if(user != curUser)
+            peerUser = user;
+
+        String email = (String) curUser.getServerData().get("email");
         // to accelerate debug process
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
 //        String email = "lisiyu201695@gmail.com";
@@ -282,6 +299,22 @@ public class DemandDetailActivity extends AppCompatActivity {
                                 public void onSubscribe(Disposable d) { }
                                 @Override
                                 public void onNext(AVObject avObject) {
+
+                                    AVIMMessage msg = new AVIMTextMessage();
+                                    msg.setContent(demandId);
+                                    SPUtils.getMe().createConversation(Arrays.asList("lisiyu201695@gmail.com"),
+                                            null,
+                                            new AVIMConversationCreatedCallback() {
+                                                @Override
+                                                public void done(AVIMConversation conversation, AVIMException e) {
+                                                    conversation.sendMessage(msg, new AVIMConversationCallback() {
+                                                        @Override
+                                                        public void done(AVIMException e) {
+                                                            Toast.makeText(DemandDetailActivity.this, "以提醒对方", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                            });
                                     Toast.makeText(DemandDetailActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
                                     set_hint("您的推出申请正在审核中，请稍加等候。");
                                     right_button.setVisibility(View.GONE);
