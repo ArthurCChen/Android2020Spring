@@ -26,11 +26,17 @@ import materiallogin.CustomUserProvider;
 
 public class App extends Application {
 
+
+    public static Context getContext(){
+        return sContext;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
+    private static Context sContext;
     @Override
     // bmob初始化
     public void onCreate() {
-        Context sContext;
+
 
         super.onCreate();
 //        Bmob.initialize(this,"18656acfe1e57560c20094eaaf425968");

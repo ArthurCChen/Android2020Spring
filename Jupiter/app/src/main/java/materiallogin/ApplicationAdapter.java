@@ -39,7 +39,17 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         }
 
         public void set(AVObject relationship) {
-            String hint = String.format("<br><p>%s向您发来申请</p>", relationship.getString("enroller_id"));
+            String hint = "";
+            if (relationship.getString("enroller_state").equals("accepted")) {
+                hint = String.format("<br><p>您已接受%s的申请</p>", relationship.getString("enroller_id"));
+                reject.setVisibility(View.GONE);
+                accpet.setText("聊天");
+            }
+            else {
+                hint = String.format("<br><p>%s向您发来申请</p>", relationship.getString("enroller_id"));
+                reject.setVisibility(View.VISIBLE);
+                accpet.setText("接受");
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 textView.setText(Html.fromHtml(hint, Html.FROM_HTML_MODE_COMPACT));
             } else {
@@ -48,7 +58,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    // Provi`de a suitable constructor (depends on the kind of dataset)
     public ApplicationAdapter(List<AVObject> mDataset) {
         this.mDataset = mDataset;
     }
@@ -67,24 +77,35 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.set(mDataset.get(position));
-        holder.accpet.setOnClickListener(v -> {
-            AVObject p = mDataset.get(position);
-            p.put("enroller_state", "accepted");
-            p.saveInBackground().subscribe();
-            mDataset.remove(position);
-            notifyItemRemoved(position);
-        });
-        holder.reject.setOnClickListener(v -> {
-            AVObject p = mDataset.get(position);
-            p.put("enroller_state", "rejected");
-            p.saveInBackground().subscribe();
-            AVObject demand = (AVObject) p.get("demand");
-            demand.increment("confirmed_number");
-            demand.saveInBackground().subscribe();
-            mDataset.remove(position);
-            notifyItemRemoved(position);
-        });
+        AVObject p = mDataset.get(position);
+        holder.set(p);
+        if (p.getString("enroller_state").equals("accepted")) {
+            holder.accpet.setOnClickListener(v -> {
+                // TODO: 2020621chat
+                p.getString("enroller_id");
+                p.getString("demander_id");
+            });
+        }
+        else {
+            holder.accpet.setOnClickListener(v -> {
+                p.put("enroller_state", "accepted");
+                p.saveInBackground().subscribe();
+                mDataset.remove(position);
+                mDataset.add(p);
+                notifyItemMoved(position, mDataset.size() - 1);
+                notifyItemChanged(mDataset.size() - 1);
+            });
+            holder.reject.setOnClickListener(v -> {
+                p.put("enroller_state", "rejected");
+                p.saveInBackground().subscribe();
+                AVObject demand = (AVObject) p.get("demand");
+                demand.increment("confirmed_number");
+                demand.saveInBackground().subscribe();
+                mDataset.remove(position);
+                notifyItemRemoved(position);
+            });
+        }
+
 
     }
 

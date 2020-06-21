@@ -37,6 +37,7 @@ import cn.leancloud.chatkit.activity.LCIMConversationActivity;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.im.v2.AVIMClient;
 import cn.leancloud.im.v2.AVIMException;
+import cn.leancloud.im.v2.AVIMMessageManager;
 import cn.leancloud.im.v2.callback.AVIMClientCallback;
 import cn.leancloud.push.PushService;
 import io.reactivex.Observer;

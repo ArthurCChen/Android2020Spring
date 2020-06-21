@@ -30,6 +30,8 @@ import com.thu.qinghuaquan.R;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -118,8 +120,15 @@ public class DemandDetailActivity extends AppCompatActivity {
     }
 
     private void get_user_and_then_set_content(AVObject demand) {
-        AVUser currentUser = AVUser.getCurrentUser();
-        String email = (String) currentUser.getServerData().get("email");
+
+        curUser = AVUser.getCurrentUser();
+        demandId = String.valueOf(demand.getNumber("demand_id"));
+        AVUser user = demand.getAVObject("demander");
+
+        if(user != curUser)
+            peerName = user.getObjectId();
+
+        String email = (String) curUser.getServerData().get("email");
         // to accelerate debug process
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
 //        String email = "lisiyu201695@gmail.com";
@@ -196,6 +205,10 @@ public class DemandDetailActivity extends AppCompatActivity {
                     // query the data
                     AVQuery<AVObject> query = new AVQuery<>("demand_relationship");
                     query.whereEqualTo("demand", demand);
+                    List<String> states = new ArrayList<>();
+                    states.add("pending_review_for_enroll_demand");
+                    states.add("accepted");
+                    query.whereContainedIn("enroller_state", states);
                     query.findInBackground().subscribe(new Observer<List<AVObject>>() {
                         @Override
                         public void onSubscribe(Disposable d) { }
@@ -328,7 +341,9 @@ public class DemandDetailActivity extends AppCompatActivity {
                                     right_button.setVisibility(View.GONE);
                                 }
                                 @Override
-                                public void onError(Throwable e) { }
+                                public void onError(Throwable e) {
+                                    e.printStackTrace();
+                                }
                                 @Override
                                 public void onComplete() { }
                             });
