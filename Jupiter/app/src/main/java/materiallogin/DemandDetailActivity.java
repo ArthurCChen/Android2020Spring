@@ -302,7 +302,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                                     DetailObject detailObject = new DetailObject("新提交", objectId, "0");
                                     String pushStr = JSON.toJSONString(detailObject);
                                     AVQuery pushQuery = AVInstallation.getQuery();
-                                    pushQuery.whereEqualTo("channels", pushStr);
+                                    pushQuery.whereEqualTo("channels", demandId);
                                     AVPush push = new AVPush();
                                     push.setQuery(pushQuery);
                                     push.setMessage(pushStr);
