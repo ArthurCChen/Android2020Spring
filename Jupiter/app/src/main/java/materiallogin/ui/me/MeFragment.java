@@ -216,52 +216,6 @@ public class MeFragment extends Fragment {
 
 
 
-                btChangePassword.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        final LayoutInflater inflater = getLayoutInflater();
-                        final View layout = inflater.inflate(R.layout.password_change, null);
-                        builder.setView(layout);
-                        final EditText emailCheck = (EditText) layout.findViewById(R.id.email_check);
-                        final Button mailSend = (Button) layout.findViewById(R.id.mail_send);
-                        final Button backMe = (Button) layout.findViewById(R.id.back_me);
-                        mailSend.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String textEmail = emailCheck.getText().toString();
-                                if (textEmail.equals(AVUser.getCurrentUser().getServerData().get("email"))) {
-                                    AVUser.requestPasswordResetInBackground(textEmail);
-                                    Toast.makeText(getActivity(), "邮件已发送", Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    Toast.makeText(getActivity(), "邮箱输入错误", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                        backMe.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //关闭小弹窗
-                                if (alertDialog != null)
-                                    alertDialog.dismiss();
-                                alertDialog = null;
-                            }
-                        });
-                        alertDialog = builder.create();
-                        alertDialog.show();
-                    }
-                });
-
-                btLogout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AVUser.logOut();
-                        Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                        startActivity(intent);
-                    }
-                });
 
 //        final TextView textView = root.findViewById(R.id.text_nickname);
 //        meViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -279,6 +233,55 @@ public class MeFragment extends Fragment {
             }
 
         });
+
+        btChangePassword.setOnClickListener(new View.OnClickListener() {
+            AlertDialog alertDialog = null;
+            @Override
+            public void onClick(View v) {
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final LayoutInflater inflater = getLayoutInflater();
+                final View layout = inflater.inflate(R.layout.password_change, null);
+                builder.setView(layout);
+                final EditText emailCheck = (EditText) layout.findViewById(R.id.email_check);
+                final Button mailSend = (Button) layout.findViewById(R.id.mail_send);
+                final Button backMe = (Button) layout.findViewById(R.id.back_me);
+                mailSend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String textEmail = emailCheck.getText().toString();
+                        if (textEmail.equals(AVUser.getCurrentUser().getServerData().get("email"))) {
+                            AVUser.requestPasswordResetInBackground(textEmail);
+                            Toast.makeText(getActivity(), "邮件已发送", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "邮箱输入错误", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                backMe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //关闭小弹窗
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                        alertDialog = null;
+                    }
+                });
+                alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        btLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AVUser.logOut();
+                Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return root;
     }
 }
