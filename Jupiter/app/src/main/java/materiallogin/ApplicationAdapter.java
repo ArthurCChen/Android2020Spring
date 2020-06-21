@@ -1,5 +1,6 @@
 package materiallogin;
 
+import android.content.Intent;
 import android.os.Build;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +20,12 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 import cn.leancloud.AVObject;
+import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.activity.LCIMConversationActivity;
+import cn.leancloud.chatkit.utils.LCIMConstants;
+import cn.leancloud.im.v2.AVIMClient;
+import cn.leancloud.im.v2.AVIMException;
+import cn.leancloud.im.v2.callback.AVIMClientCallback;
 
 public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.MyViewHolder> {
 
@@ -82,8 +90,24 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         if (p.getString("enroller_state").equals("accepted")) {
             holder.accpet.setOnClickListener(v -> {
                 // TODO: 2020621chat
-                p.getString("enroller_id");
-                p.getString("demander_id");
+                String un = p.getString("enroller_id");
+                String peer = p.getString("demander_id");
+
+
+                //下面是聊天窗口启动代码
+                        LCChatKit.getInstance().open(un , new AVIMClientCallback() {
+                            @Override
+                            public void done(AVIMClient avimClient, AVIMException e) {
+                                if (null == e) {
+                                    Intent intent = new Intent(App.getContext(), LCIMConversationActivity.class);
+                                    //这里填写对方clientId
+                                    intent.putExtra(LCIMConstants.PEER_ID, peer);
+                                    App.getContext().startActivity(intent);
+                                } else {
+                                    Toast.makeText( App.getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             });
         }
         else {
