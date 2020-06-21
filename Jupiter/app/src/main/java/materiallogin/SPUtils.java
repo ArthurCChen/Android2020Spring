@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import cn.leancloud.im.v2.AVIMClient;
+
 /**
  * must call init at your application level or equiv, before you use any other methods
  */
@@ -16,6 +18,7 @@ public class SPUtils {
 
     private static SharedPreferences sharedPreferences;
     private static SPUtils prefsInstance;
+    private static AVIMClient me;
 
     private static final String preferencesName = "preferences";
     private static final String LENGTH = "_length";
@@ -48,6 +51,15 @@ public class SPUtils {
     }
 
     // String related methods
+
+    public static  void setMe(AVIMClient me){
+        SPUtils.me = me;
+    }
+
+
+    public static AVIMClient getMe(){
+        return me;
+    }
 
     /**
      * @param what

@@ -37,6 +37,7 @@ import cn.leancloud.chatkit.activity.LCIMConversationActivity;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.im.v2.AVIMClient;
 import cn.leancloud.im.v2.AVIMException;
+import cn.leancloud.im.v2.AVIMMessageManager;
 import cn.leancloud.im.v2.callback.AVIMClientCallback;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -117,6 +118,20 @@ public class MainActivity extends AppCompatActivity {
                     public void onNext(AVUser user) {
                         // 登录成功
                         Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+
+                        AVIMClient me = AVIMClient.getInstance(user);
+                        me.open(new AVIMClientCallback() {
+                            @Override
+                            public void done(AVIMClient client, AVIMException e) {
+                                if(e==null){
+                                    SPUtils.setMe(me);
+                                    AVIMMessageManager.setConversationEventHandler(new MyPush.CustomConversationEventHandler());
+                                    AVIMMessageManager.registerDefaultMessageHandler(new MyPush.CustomMessageHandler());
+                                }else{
+                                    Toast.makeText(MainActivity.this, "推送建立失败", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
 
                         //要回到原安排，恢复下面4行，注释再下面12行
                         Intent intent = new Intent(MainActivity.this, BottomMenu.class);
