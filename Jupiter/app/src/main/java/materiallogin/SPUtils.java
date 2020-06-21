@@ -51,15 +51,6 @@ public class SPUtils {
 
     // String related methods
 
-    public static  void setMe(AVIMClient me){
-        SPUtils.me = me;
-    }
-
-
-    public static AVIMClient getMe(){
-        return me;
-    }
-
     /**
      * @param what
      * @return Returns the stored value of 'what'

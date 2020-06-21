@@ -59,6 +59,7 @@ public class DemandDetailActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+
     private String demandId;
     private  String objectId;
 
@@ -121,14 +122,11 @@ public class DemandDetailActivity extends AppCompatActivity {
 
     private void get_user_and_then_set_content(AVObject demand) {
 
-        curUser = AVUser.getCurrentUser();
         demandId = String.valueOf(demand.getNumber("demand_id"));
         AVUser user = demand.getAVObject("demander");
 
-        if(user != curUser)
-            peerName = user.getObjectId();
 
-        String email = (String) curUser.getServerData().get("email");
+        String email = (String) AVUser.getCurrentUser().get("email");
         // to accelerate debug process
 //        String email = "wuxs16@mails.tsinghua.edu.cn";
 //        String email = "lisiyu201695@gmail.com";
