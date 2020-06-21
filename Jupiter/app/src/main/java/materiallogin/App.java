@@ -35,7 +35,7 @@ public class App extends Application {
         LCChatKit.getInstance().init(getApplicationContext(),
                 "pfwsHNbdElTmkBxq8TJ3vSnQ-MdYXbMMI",
                 "7W0RtWNJkful7NQiBvTpB8HP",
-                "https://console.leancloud.app");//国际版不用域名，我查到论坛有人用这个访问控制台
+                "");                  //国际版不用域名，空着即可，用控制台的链接也不会出bug
         sContext = getApplicationContext();
 
         SDKInitializer.initialize(this);

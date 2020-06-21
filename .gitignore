@@ -28,3 +28,8 @@ Jupiter/.settings
 Jupiter/leancloudchatkit/build
 *.so
 *.jar
+Jupiter/mappage/libs
+Jupiter/app/libs
+Jupiter/mappage/build
+
+Jupiter/mymap/.idea/workspace.xml

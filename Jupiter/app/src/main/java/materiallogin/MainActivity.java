@@ -124,8 +124,10 @@ public class MainActivity extends AppCompatActivity {
 //                        startActivity(intent);
 //                        finish();
 
+//                        //这里的client即为当前用户的AVIMClient实例
+//                        AVIMClient client = AVIMClient.getInstance(user);
+//                        client.open( new AVIMClientCallback() {});
 
-                        //这里填写本人的clientId
                         LCChatKit.getInstance().open(un , new AVIMClientCallback() {
                             @Override
                             public void done(AVIMClient avimClient, AVIMException e) {
