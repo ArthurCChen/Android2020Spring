@@ -5,28 +5,258 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="materiallogin.ui.me.MeFragment">
-
-    <TextView
-        android:id="@+id/text_me"
+    <LinearLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
+        android:clipToPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/thu_purple"
+            android:elevation="16dp">
+
+            <ImageView
+                android:id="@+id/img_avatar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:src="@drawable/ic_avatar"
+                android:contentDescription="@string/add_descriptor" />
+
+            <FrameLayout
+                android:id="@+id/frame_container1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:clipToPadding="true"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="top"
+                    android:elevation="16dp">
+
+                    <TextView
+                        android:id="@+id/text_nickname"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="3"
+                        android:textColor="#FFFFFF"
+                        android:textSize="28sp" />
+
+                    <TextView
+                        android:id="@+id/text_sex"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/add_descriptor"
+                        android:onClick="editMe"
+                        android:padding="0dp"
+                        android:src="@drawable/ic_edit_me" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_email"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_issued_num"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:background="@color/thu_purple"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text_received_num"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
+            android:background="@color/thu_purple"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:elevation="20dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:src="@drawable/ic_brief"
+                android:contentDescription="@string/add_descriptor" />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:id="@+id/text_brief"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:textSize="20sp" />
 
 
+        </LinearLayout>
 
-    </androidx.viewpager.widget.ViewPager>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:elevation="0dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="20dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:padding="0dp"
+                    android:src="@drawable/ic_address"
+                    android:contentDescription="@string/add_descriptor" />
+
+                <TextView
+                    android:id="@+id/text_address"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="20dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:padding="0dp"
+                    android:src="@drawable/ic_telephone"
+                    android:contentDescription="@string/add_descriptor" />
+
+                <TextView
+                    android:id="@+id/text_telephone"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="20dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/add_descriptor"
+                    android:padding="0dp"
+                    android:src="@drawable/ic_realname" />
+
+                <TextView
+                    android:id="@+id/text_realname"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:elevation="20dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:padding="0dp"
+                    android:src="@drawable/ic_credit"
+                    android:contentDescription="@string/add_descriptor" />
+
+                <TextView
+                    android:id="@+id/text_credit"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/bt_go_2"
+            android:background="@drawable/bt_shape_2"
+            android:stateListAnimator="@drawable/state_list_animator_z"
+            android:layout_width="200dp"
+            android:onClick="changePassword"
+            android:layout_marginBottom="10dp"
+            android:layout_height="50dp"
+            android:text="修改密码"
+            android:textColor="#4F4F4F"
+            />
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/bt_go_3"
+            android:background="@drawable/bt_shape_2"
+            android:stateListAnimator="@drawable/state_list_animator_z"
+            android:layout_width="200dp"
+            android:onClick="logout"
+            android:layout_marginBottom="10dp"
+            android:layout_height="50dp"
+            android:text="退出此账号"
+            android:textColor="#FF0000"
+            />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

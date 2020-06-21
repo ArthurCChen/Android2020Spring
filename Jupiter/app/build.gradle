@@ -59,4 +59,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'com.github.arimorty:floatingsearchview:2.0.3'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    compile project(":leancloudchatkit")
 }

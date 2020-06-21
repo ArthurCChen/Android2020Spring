@@ -169,6 +169,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                     left_button.setVisibility(View.GONE);
                     right_button.setVisibility(View.GONE);
 
+
                     recyclerView = (RecyclerView) findViewById(R.id.application_list);
                     layoutManager = new LinearLayoutManager(this);
                     recyclerView.setLayoutManager(layoutManager);
@@ -194,6 +195,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                         @Override
                         public void onComplete() { }
                     });
+
 
                     break;
                 case "done":
