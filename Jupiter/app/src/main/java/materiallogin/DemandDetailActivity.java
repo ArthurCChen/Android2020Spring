@@ -254,7 +254,15 @@ public class DemandDetailActivity extends AppCompatActivity {
                             break;
                         case "accepted":
                             hint = "您的申请已经通过，请按时完成~";
-                            left_button.setVisibility(View.GONE);
+//                            left_button.setVisibility(View.GONE);
+                            left_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // TODO:2020622chat
+                                    relationship.getString("enroller_id");
+                                    relationship.getString("demander_id");
+                                }
+                            });
                             right_button.setVisibility(View.GONE);
                             break;
                         case "rejected":
