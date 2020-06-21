@@ -32,6 +32,12 @@ import cn.leancloud.AVObject;
 import cn.leancloud.AVUser;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
+import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.activity.LCIMConversationActivity;
+import cn.leancloud.chatkit.utils.LCIMConstants;
+import cn.leancloud.im.v2.AVIMClient;
+import cn.leancloud.im.v2.AVIMException;
+import cn.leancloud.im.v2.callback.AVIMClientCallback;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -111,10 +117,28 @@ public class MainActivity extends AppCompatActivity {
                     public void onNext(AVUser user) {
                         // 登录成功
                         Toast.makeText(MainActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, BottomMenu.class);
-                        intent.putExtra("username", un);
-                        startActivity(intent);
-                        finish();
+
+                        //要回到原安排，恢复下面4行，注释再下面12行
+//                        Intent intent = new Intent(MainActivity.this, BottomMenu.class);
+//                        intent.putExtra("username", un);
+//                        startActivity(intent);
+//                        finish();
+
+
+                        //这里填写本人的clientId
+                        LCChatKit.getInstance().open("Jerry", new AVIMClientCallback() {
+                            @Override
+                            public void done(AVIMClient avimClient, AVIMException e) {
+                                if (null == e) {
+                                    Intent intent = new Intent(MainActivity.this, LCIMConversationActivity.class);
+                                    //这里填写对方clientId
+                                    intent.putExtra(LCIMConstants.PEER_ID, "Tom");
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                     public void onError(Throwable e) {
                         // 登录失败（可能是密码错误）
