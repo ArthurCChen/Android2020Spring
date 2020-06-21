@@ -75,7 +75,6 @@ public class MapActivity extends AppCompatActivity {
         mBaiduMap.setMyLocationEnabled(false);
         mMapView.onDestroy();
         mMapView = null;
-        super.onDestroy();
     }
 
     public class MyLocationListener extends BDAbstractLocationListener {
