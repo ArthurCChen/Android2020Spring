@@ -90,8 +90,10 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
         if (p.getString("enroller_state").equals("accepted")) {
             holder.accpet.setOnClickListener(v -> {
                 // TODO: 2020621chat
-                String un = p.getString("enroller_id");
-                String peer = p.getString("demander_id");
+                String peer = p.getString("enroller_id");
+                String un = p.getString("demander_id");
+                String demand = p.getString("demand");
+
 
 
                 //下面是聊天窗口启动代码

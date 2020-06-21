@@ -42,6 +42,12 @@ import cn.leancloud.AVObject;
 import cn.leancloud.AVPush;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
+import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.activity.LCIMConversationActivity;
+import cn.leancloud.chatkit.utils.LCIMConstants;
+import cn.leancloud.im.v2.AVIMClient;
+import cn.leancloud.im.v2.AVIMException;
+import cn.leancloud.im.v2.callback.AVIMClientCallback;
 import cn.leancloud.push.PushService;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -255,12 +261,26 @@ public class DemandDetailActivity extends AppCompatActivity {
                         case "accepted":
                             hint = "您的申请已经通过，请按时完成~";
 //                            left_button.setVisibility(View.GONE);
+                            left_button.setText("开始聊天");
                             left_button.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     // TODO:2020622chat
-                                    relationship.getString("enroller_id");
-                                    relationship.getString("demander_id");
+                                    String un = relationship.getString("enroller_id");
+                                    String peer = relationship.getString("demander_id");
+                                    LCChatKit.getInstance().open(un , new AVIMClientCallback() {
+                                        @Override
+                                        public void done(AVIMClient avimClient, AVIMException e) {
+                                            if (null == e) {
+                                                Intent intent = new Intent(App.getContext(), LCIMConversationActivity.class);
+                                                //这里填写对方clientId
+                                                intent.putExtra(LCIMConstants.PEER_ID, peer);
+                                                App.getContext().startActivity(intent);
+                                            } else {
+                                                Toast.makeText( App.getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                 }
                             });
                             right_button.setVisibility(View.GONE);
