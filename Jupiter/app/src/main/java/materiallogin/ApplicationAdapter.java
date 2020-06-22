@@ -1,5 +1,6 @@
 package materiallogin;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Build;
 import android.text.Html;
@@ -25,6 +26,7 @@ import cn.leancloud.AVInstallation;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVPush;
 import cn.leancloud.AVQuery;
+import cn.leancloud.AVUser;
 import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.chatkit.activity.LCIMConversationActivity;
 import cn.leancloud.chatkit.utils.LCIMConstants;
@@ -58,13 +60,45 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
             String hint = "";
             if (relationship.getString("enroller_state").equals("accepted")) {
                 hint = String.format("<br><p>您已接受%s的申请</p>", relationship.getString("enroller_id"));
-                reject.setVisibility(View.GONE);
                 accpet.setText("聊天");
+                reject.setText("完成");
+                reject.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        relationship.put("enroller_state", "done");
+                        relationship.saveInBackground().subscribe(new Observer<AVObject>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(AVObject avObject) {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                System.out.println(e.getMessage());
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+                    }
+                });
             }
-            else {
+            else if (!relationship.getString("enroller_state").equals("done")){
                 hint = String.format("<br><p>%s向您发来申请</p>", relationship.getString("enroller_id"));
                 reject.setVisibility(View.VISIBLE);
                 accpet.setText("接受");
+            }
+            else {
+                hint = String.format("<br><p>%s已完成任务</p>", relationship.getString("enroller_id"));
+                reject.setVisibility(View.GONE);
+                accpet.setVisibility(View.GONE);
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 textView.setText(Html.fromHtml(hint, Html.FROM_HTML_MODE_COMPACT));
