@@ -2,6 +2,7 @@ package materiallogin;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,11 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = edit_email.getText().toString();
         if (TextUtils.isEmpty(username)
                 || TextUtils.isEmpty(password)
-                || TextUtils.isEmpty(nickname)
-                || TextUtils.isEmpty(realname)
-                || TextUtils.isEmpty(telephone)
-                || TextUtils.isEmpty(email)
-                || TextUtils.isEmpty(address)) {
+                || TextUtils.isEmpty(nickname)) {
             Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -167,11 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = edit_email.getText().toString();
         if (TextUtils.isEmpty(username)
                 || TextUtils.isEmpty(password)
-                || TextUtils.isEmpty(nickname)
-                || TextUtils.isEmpty(realname)
-                || TextUtils.isEmpty(telephone)
-                || TextUtils.isEmpty(email)
-                || TextUtils.isEmpty(address)) {
+                || TextUtils.isEmpty(nickname)) {
             Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -180,9 +173,12 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "请先验证邮箱", Toast.LENGTH_SHORT).show();
             return;
         }
-        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
         //这里跳转到内部界面
-
+        Intent intent = new Intent(RegisterActivity.this, BottomMenu.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
+        finish();
             //以下是原实现，AVObject类
 //            final AVOUser user = new AVOUser(username, password, email, xh, xm, bj, sushe);
 //            user.saveInBackground().subscribe(new Observer<AVObject>() {
