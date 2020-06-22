@@ -24,11 +24,10 @@ public class CustomUserProvider implements LCChatProfileProvider {
     private static List<LCChatKitUser> partUsers = new ArrayList<LCChatKitUser>();
 
     static {
-        partUsers.add(new LCChatKitUser("Tom", "Tom", "http://www.avatarsdb.com/avatars/tom_and_jerry2.jpg"));
-        partUsers.add(new LCChatKitUser("Jerry", "Jerry", "http://www.avatarsdb.com/avatars/jerry.jpg"));
-        partUsers.add(new LCChatKitUser("Harry", "Harry", "http://www.avatarsdb.com/avatars/young_harry.jpg"));
-        partUsers.add(new LCChatKitUser("William", "William", "http://www.avatarsdb.com/avatars/william_shakespeare.jpg"));
-        partUsers.add(new LCChatKitUser("Bob", "Bob", "http://www.avatarsdb.com/avatars/bath_bob.jpg"));
+        partUsers.add(new LCChatKitUser("lisiyu16@mails.tsinghua.edu.cn", "楚虫", "https://lc-gluttony.s3.amazonaws.com/pfwsHNbdElTm/s30ZERQFEcJd234q63v9thn9DNdy1KFii4x72k3v.jpg"));
+        partUsers.add(new LCChatKitUser("lisiyu201695@gmail.com", "楚虫", "https://lc-gluttony.s3.amazonaws.com/pfwsHNbdElTm/s30ZERQFEcJd234q63v9thn9DNdy1KFii4x72k3v.jpg"));
+        partUsers.add(new LCChatKitUser("wuxs16@mails.tsinghua.edu.cn", "wxs", "https://lc-gluttony.s3.amazonaws.com/pfwsHNbdElTm/s30ZERQFEcJd234q63v9thn9DNdy1KFii4x72k3v.jpg"));
+        partUsers.add(new LCChatKitUser("chen-yn17@mails.tsinghua.edu.cn", "陈语凝", "https://lc-gluttony.s3.amazonaws.com/pfwsHNbdElTm/s30ZERQFEcJd234q63v9thn9DNdy1KFii4x72k3v.jpg"));
     }
 
     @Override
