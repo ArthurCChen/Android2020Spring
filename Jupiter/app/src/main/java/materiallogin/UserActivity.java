@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ust.jupiter.jupiter.R;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.thu.qinghuaquan.R;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -17,8 +21,10 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homed);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ins = this;
     }
 

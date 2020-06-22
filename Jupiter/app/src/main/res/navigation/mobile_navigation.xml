@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_wanted">
+
+    <fragment
+        android:id="@+id/navigation_wanted"
+        android:name="materiallogin.ui.wanted.WantedFragment"
+        android:label="@string/title_wanted"
+        tools:layout="@layout/fragment_wanted" >
+        <action
+            android:id="@+id/action_navigation_wanted_to_navigation_issued2"
+            app:destination="@id/navigation_issued" />
+        <action
+            android:id="@+id/action_navigation_wanted_to_navigation_accepted"
+            app:destination="@id/navigation_accepted" />
+        <action
+            android:id="@+id/action_navigation_wanted_to_navigation_me"
+            app:destination="@id/navigation_me" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_accepted"
+        android:name="materiallogin.ui.accepted.AcceptedFragment"
+        android:label="@string/title_accepted"
+        tools:layout="@layout/fragment_accepted" />
+
+    <fragment
+        android:id="@+id/navigation_issued"
+        android:name="materiallogin.ui.issued.IssuedFragment"
+        android:label="@string/title_issued"
+        tools:layout="@layout/fragment_issued" />
+    <fragment
+        android:id="@+id/navigation_me"
+        android:name="materiallogin.ui.me.MeFragment"
+        android:label="@string/title_me"
+        tools:layout="@layout/fragment_me" />
+
+</navigation>

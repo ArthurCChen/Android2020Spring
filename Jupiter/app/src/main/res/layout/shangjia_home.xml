@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <RadioGroup
-        android:id="@+id/rg"
+        android:id="@+id/service_type"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="45dp"
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btn"
-        android:layout_below="@+id/rg"></ListView>
+        android:layout_below="@+id/service_type"></ListView>
 
     <LinearLayout
         android:id="@+id/btn"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">校园跑腿</string>
+    <string name="app_name">清华帮帮忙</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,4 +14,55 @@
 
     <string name="login_success">login success</string>
     <string name="go">GO</string>
+    <string name="title_activity_bottom_menu">BottomMenu</string>
+    <string name="title_wanted">需求总览</string>
+    <string name="title_accepted">我接受的</string>
+    <string name="title_issued">我发布的</string>
+    <string name="title_me">我的主页</string>
+
+    <string name="search_hint">搜索需求...</string>
+    <!-- contentDescriptor -->
+    <string name="add_descriptor">发布新需求</string>
+
+
+    <string name="type_other">其他</string>
+    <string name="type_express">取快递</string>
+    <string name="type_deal">二手交易</string>
+    <string name="type_experiment">被试招募</string>
+    <string name="type_ask">问答咨询</string>
+
+    <string name="sort_begin_date">创建日期</string>
+    <string name="sort_money">金额</string>
+    <string name="sort_end_date">截至日期</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- common -->
+    <string name="cancel">取消</string>
+    
+    <!--demand issue-->
+    <string name="service_type">服务类型</string>
+    <string name="pick_up_package">取快递</string>
+    <string name="used_goods">二手交易</string>
+    <string name="participant_hiring">被试招募</string>
+    <string name="ask_info">问答咨询</string>
+    <string name="other">其他</string>
+
+    <string-array name="service_type">
+        <item>@string/pick_up_package</item>
+        <item>@string/used_goods</item>
+        <item>@string/participant_hiring</item>
+        <item>@string/ask_info</item>
+        <item>@string/other</item>
+    </string-array>
+
+    <string name="demand_title">需求标题</string>
+    <string name="demand_content">需求内容</string>
+    <string name="wanted_number">需求人数</string>
+    <string name="deadline">任务时长</string>
+    <string name="reward">报酬金额</string>
+    <string name="issue">发布</string>
+
+    <string name="accept">接受</string>
+    <string name="reject">拒绝</string>
 </resources>

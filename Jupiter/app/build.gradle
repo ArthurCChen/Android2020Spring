@@ -5,20 +5,28 @@ android {
     buildToolsVersion "26.0.3"
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "com.ust.jupiter.jupiter"
+        applicationId "com.thu.qinghuaquan"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 26
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     sourceSets {
         main.jniLibs.srcDirs = ['libs']
@@ -27,6 +35,10 @@ android {
 }
 
 dependencies {
+    //    implementation 'cn.leancloud:mixpush-android:6.5.6'
+    implementation 'cn.leancloud:realtime-android:6.5.6'
+    implementation 'cn.leancloud:storage-android:6.5.6'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -42,4 +54,11 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.24'
     implementation files('libs')
     implementation files('libs/bmob-sdk-3.4.6.jar')
+    implementation 'androidx.navigation:navigation-fragment:2.0.0'
+    implementation 'androidx.navigation:navigation-ui:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'com.github.arimorty:floatingsearchview:2.0.3'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    compile project(":leancloudchatkit")
+    implementation files('libs/BaiduLBS_Android.jar')
 }

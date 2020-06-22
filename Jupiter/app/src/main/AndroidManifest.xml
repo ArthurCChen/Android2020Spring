@@ -1,22 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ust.jupiter.jupiter">
+    package="com.thu.qinghuaquan">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 读取外置存储。如果开发者使用了so动态加载功能并且把so文件放在了外置存储区域，则需要申请该权限，否则不需要 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 写外置存储。如果开发者使用了离线地图，并且数据写在外置存储区域，则需要申请该权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="materiallogin.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic"
         android:label="@string/app_name"
-        android:name="materiallogin.App"
         android:roundIcon="@mipmap/ic"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
-        <activity android:name="materiallogin.RegisterActivity"
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@drawable/tab_color" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="Qw6xRvehGNCvhTRV6xRTq2SXsWpzlkHH" />
+        <activity
+            android:name="materiallogin.BottomMenu"
+            android:label="@string/title_activity_bottom_menu" >
+
+        </activity>
+        <activity android:name="cn.leancloud.chatkit.activity.LCIMConversationActivity">
+            <intent-filter>
+                <action android:name="cn.leancloud.chatkit.chat_notification_action"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name="materiallogin.RegisterActivity"
             android:theme="@style/Translucent" />
-        <activity android:name="materiallogin.LoginSuccessActivity"></activity>
-        <activity android:name="materiallogin.RegSuccessActivity"></activity>
+        <activity android:name="materiallogin.LoginSuccessActivity" />
+        <activity android:name="materiallogin.RegSuccessActivity" />
+        <activity android:name="materiallogin.DemandDetailActivity" />
         <activity
             android:name="materiallogin.MainActivity"
             android:label="@string/app_name">
@@ -26,16 +64,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="materiallogin.ChatsActivity"/>
-        <activity android:name="materiallogin.ChatActivity"/>
-        <activity android:name="materiallogin.UserActivity"/>
-        <activity android:name="materiallogin.ShangjiaActivity"/>
-        <activity android:name="materiallogin.ShangjiaFBActivity"/>
-        <activity android:name="materiallogin.ShangjiaPRActivity"/>
-        <activity android:name="materiallogin.XsActivity"/>
-<!--        <activity-->
-<!--            android:name=".activity.LoginActivity"-->
-<!--            android:label="@string/title_activity_login"></activity>-->
-    </application>
+        <activity android:name="materiallogin.ChatsActivity" />
+        <activity android:name="materiallogin.ChatActivity" />
+        <activity android:name="materiallogin.UserActivity" />
+        <activity android:name="materiallogin.ShangjiaActivity" />
+        <activity android:name="materiallogin.ShangjiaFBActivity" />
+        <activity android:name="materiallogin.ShangjiaPRActivity" />
+
+        <service android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"/>    </application>
 
 </manifest>

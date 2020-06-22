@@ -7,7 +7,7 @@
     android:background="#00CCCC">
 
     <RadioGroup
-        android:id="@+id/rg"
+        android:id="@+id/service_type"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_marginTop="85dp"
@@ -78,12 +78,12 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:textSize="13sp"
-                        android:hint="手机号"
-                        android:textColor="#CCFFFF"
+                        android:hint="您的邮箱"
+                        android:textColor="#00CCFF"
                         android:id="@+id/et_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="phone"
+                        android:inputType="textEmailAddress"
                         android:background="@drawable/selector_bg_edit"
                         android:textCursorDrawable="@drawable/bg_input_cursor"
                         android:paddingBottom="2dp"
@@ -102,8 +102,8 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:textSize="13sp"
-                        android:hint="密码"
-                        android:textColor="#CCFFFF"
+                        android:hint="您的密码"
+                        android:textColor="#00CCFF"
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

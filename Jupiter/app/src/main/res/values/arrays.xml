@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category">
+        <item>全部</item>
+        <item>@string/type_ask</item>
+        <item>@string/type_deal</item>
+        <item>@string/type_experiment</item>
+        <item>@string/type_express</item>
+        <item>@string/type_other</item>
+    </string-array>
+
+    <string-array name="sorting">
+        <item>无</item>
+        <item>@string/sort_begin_date</item>
+        <item>@string/sort_money</item>
+        <item>@string/sort_end_date</item>
+    </string-array>
+</resources>

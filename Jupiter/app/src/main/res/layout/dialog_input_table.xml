@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="245dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -14,57 +16,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tip0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:text="发布公司"
+                android:text="@string/service_type"
                 android:textColor="#333"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/gsmc"
+            <Spinner
+                android:id="@+id/service_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="6.5dp"
                 android:layout_weight="1"
-                android:hint="公司名称"
-                android:textSize="15sp" />
-
+                android:entries="@array/service_type" />
         </LinearLayout>
-
-        <RadioGroup
-            android:id="@+id/rg"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="45dp">
-
-            <RadioButton
-                android:id="@+id/rb_kd"
-                android:text="快递"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <RadioButton
-                android:id="@+id/rb_wm"
-                android:text="外卖"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <RadioButton
-                android:id="@+id/rb_sp"
-                android:text="商品"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,23 +50,23 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:text="快递单号"
+                android:text="@string/demand_title"
                 android:textColor="#333"
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/kddh"
+                android:id="@+id/demand_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:hint="如：1234567890" />
+                android:inputType="text" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="90dp"
             android:orientation="horizontal">
 
             <TextView
@@ -104,17 +76,18 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:text="快递公司"
+                android:text="@string/demand_content"
                 android:textColor="#333"
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/kdgs"
+                android:id="@+id/demand_content"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="如：顺丰快递" />
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
 
         </LinearLayout>
 
@@ -124,22 +97,23 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tip3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:text="取物地址"
+                android:text="@string/wanted_number"
                 android:textColor="#333"
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/qsdz"
+                android:id="@+id/wanted_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:hint="如：学校北门超市" />
+                android:inputType="number" />
 
         </LinearLayout>
 
@@ -149,22 +123,24 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tip4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:text="送物地址"
+                android:text="@string/deadline"
                 android:textColor="#333"
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/swdz"
+                android:id="@+id/deadline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:hint="如：A宿舍605" />
+                android:hint="单位：天"
+                android:inputType="number" />
 
         </LinearLayout>
 
@@ -174,17 +150,18 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tip5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:text="代取费用"
+                android:text="@string/reward"
                 android:textColor="#333"
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/fy"
+                android:id="@+id/reward"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -207,7 +184,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="取消"
+                android:text="@string/cancel"
                 android:textColor="#333"
                 android:textSize="15sp" />
 
@@ -218,7 +195,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="发布"
+                android:text="@string/issue"
                 android:textColor="#333"
                 android:textSize="15sp" />
 
