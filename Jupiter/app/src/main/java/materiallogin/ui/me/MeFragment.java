@@ -20,7 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.List;
+
 import cn.leancloud.AVObject;
+import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -106,16 +109,41 @@ public class MeFragment extends Fragment {
         textViewTelephone.setText("联系电话：" + telephone);
 
         final TextView textViewCreateNum = root.findViewById(R.id.text_issued_num);
-        String issued = " 已发布 " + Integer.toString(createNumber) + " 单";
-        textViewCreateNum.setText(issued);
 
         final TextView textViewCompleteNum = root.findViewById(R.id.text_received_num);
-        String accepted = " 已完成 " + Integer.toString(completeNumber) + " 单";
-        textViewCompleteNum.setText(accepted);
 
         final TextView textViewCredit = root.findViewById(R.id.text_credit);
-        String creditText = "当前积分：" + Integer.toString(credit);
-        textViewCredit.setText(creditText);
+
+        AVQuery query = new AVQuery("demand_relationship");
+        query.whereEqualTo("enroller_id", (String)AVUser.getCurrentUser().getServerData().get("username"));
+        query.findInBackground().subscribe(new Observer<List<AVObject>>() {
+            @Override
+            public void onSubscribe(Disposable d) { }
+            @Override
+            public void onNext(List<AVObject> objects) {
+                textViewCompleteNum.setText(" 已完成 " + objects.size() + " 单");
+                textViewCredit.setText("当前积分：" + 10 * objects.size());
+            }
+            @Override
+            public void onError(Throwable e) { }
+            @Override
+            public void onComplete() { }
+        });
+
+        AVQuery query_ = new AVQuery("demand");
+        query_.whereEqualTo("username", (String)AVUser.getCurrentUser().getServerData().get("username"));
+        query_.findInBackground().subscribe(new Observer<List<AVObject>>() {
+            @Override
+            public void onSubscribe(Disposable d) { }
+            @Override
+            public void onNext(List<AVObject> objects) {
+                textViewCreateNum.setText(" 已发布 " + objects.size() + " 单");
+            }
+            @Override
+            public void onError(Throwable e) { }
+            @Override
+            public void onComplete() { }
+        });
 
         final ImageView imageViewAvatar = root.findViewById(R.id.img_avatar);
         //?

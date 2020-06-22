@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onNext(AVUser user) {
                 // 注册成功
                 System.out.println("注册成功。objectId：" + user.getObjectId());
-                AVUser.requestEmailVerifyInBackground(email).blockingSubscribe();
+                AVUser.requestEmailVerifyInBackground(email).subscribe();
                 Toast.makeText(RegisterActivity.this, "已发送验证邮件", Toast.LENGTH_SHORT).show();
             }
             public void onError(Throwable e) {

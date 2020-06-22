@@ -212,6 +212,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                     List<String> states = new ArrayList<>();
                     states.add("pending_review_for_enroll_demand");
                     states.add("accepted");
+                    states.add("done");
                     query.whereContainedIn("enroller_state", states);
                     query.findInBackground().subscribe(new Observer<List<AVObject>>() {
                         @Override
@@ -328,6 +329,10 @@ public class DemandDetailActivity extends AppCompatActivity {
                             left_button.setVisibility(View.GONE);
                             right_button.setText("删除任务");
                             break;
+                        case "done":
+                            hint = "任务已完成";
+                            left_button.setVisibility(View.GONE);
+                            right_button.setVisibility(View.GONE);
                         default:
                             assert false : "wrong state";
                     }
