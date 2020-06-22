@@ -62,13 +62,13 @@
                     <Button
                         android:id="@+id/bt_edit_me"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="27dp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_marginEnd="25dp"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/ic_edit_me"
                         android:contentDescription="@string/add_descriptor"
-                        android:onClick="editMe"
-                        android:padding="0dp"
-                        android:background="@drawable/ic_edit_me" />
+                        android:padding="0dp" />
 
                 </LinearLayout>
 
@@ -112,9 +112,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:contentDescription="@string/add_descriptor"
                 android:padding="0dp"
-                android:src="@drawable/ic_brief"
-                android:contentDescription="@string/add_descriptor" />
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_brief" />
 
             <TextView
                 android:layout_marginTop="15dp"
@@ -143,9 +144,10 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:contentDescription="@string/add_descriptor"
                     android:padding="0dp"
-                    android:src="@drawable/ic_address"
-                    android:contentDescription="@string/add_descriptor" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_address" />
 
                 <TextView
                     android:id="@+id/text_address"
@@ -167,9 +169,10 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:contentDescription="@string/add_descriptor"
                     android:padding="0dp"
-                    android:src="@drawable/ic_telephone"
-                    android:contentDescription="@string/add_descriptor" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_telephone" />
 
                 <TextView
                     android:id="@+id/text_telephone"
@@ -193,6 +196,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/add_descriptor"
                     android:padding="0dp"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_realname" />
 
                 <TextView
@@ -215,9 +219,10 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:contentDescription="@string/add_descriptor"
                     android:padding="0dp"
-                    android:src="@drawable/ic_credit"
-                    android:contentDescription="@string/add_descriptor" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_credit" />
 
                 <TextView
                     android:id="@+id/text_credit"
@@ -232,32 +237,26 @@
         </LinearLayout>
 
         <Button
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/bt_change_password"
-            android:background="@drawable/bt_shape_2"
-            android:stateListAnimator="@drawable/state_list_animator_z"
             android:layout_width="200dp"
-            android:onClick="changePassword"
-            android:layout_marginBottom="10dp"
             android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bt_shape_2"
             android:text="修改密码"
-            android:textColor="#4F4F4F"
-            />
+            android:textColor="#4F4F4F" />
 
         <Button
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
             android:id="@+id/bt_logout"
-            android:background="@drawable/bt_shape_2"
-            android:stateListAnimator="@drawable/state_list_animator_z"
             android:layout_width="200dp"
-            android:onClick="logout"
-            android:layout_marginBottom="10dp"
             android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bt_shape_2"
             android:text="退出此账号"
-            android:textColor="#FF0000"
-            />
+            android:textColor="#FF0000" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,7 @@ import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import materiallogin.BottomMenu;
+import materiallogin.MainActivity;
 import materiallogin.RegisterActivity;
 
 public class MeFragment extends Fragment {
@@ -305,8 +306,11 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AVUser.logOut();
-                Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
             }
         });
 
