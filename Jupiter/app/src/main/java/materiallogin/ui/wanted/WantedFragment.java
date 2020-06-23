@@ -280,21 +280,21 @@ public class WantedFragment extends Fragment {
             curCategory.equals(getResources().getString(R.string.type_express)) ||
             curCategory.equals(getResources().getString(R.string.type_deal))) {
             if (curSearch.length() != 0) {
-                query.setQueryString(String.format("\"%s\" AND type:\"%s\" AND demand_state:(active OR inactive)", curSearch, curCategory));
+                query.setQueryString(String.format("\"%s\" AND type:\"%s\" AND end_time.iso:>%s AND NOT type:done", curSearch, curCategory, now));
             }else{
-                query.setQueryString(String.format("type:\"%s\" AND demand_state:(active OR inactive)", curCategory));
+                query.setQueryString(String.format("type:\"%s\" AND end_time.iso:>%s AND NOT type:done", curCategory, now));
             }
         }else{
             if (curSearch.length() != 0) {
-                query.setQueryString(String.format("\"%s\" AND demand_state:(active OR inactive)", curSearch));
+                query.setQueryString(String.format("\"%s\" AND end_time.iso:>%s AND NOT type:done", curSearch, now));
             }else{
-                query.setQueryString(String.format("end_time.iso:>%s", now));
+                query.setQueryString(String.format("end_time.iso:>%s AND NOT type:done", now));
             }
         }
         if(curSort.equals(getResources().getString(R.string.sort_begin_date))){
             query.orderByAscending("createdAt");
         }else if(curSort.equals(getResources().getString(R.string.sort_money))){
-            query.orderByAscending("reward");
+            query.orderByDescending("reward");
         }else if(curSort.equals(getResources().getString(R.string.sort_end_date))){
             query.orderByAscending("end_time");
         }

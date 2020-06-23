@@ -9,8 +9,9 @@
     android:layout_gravity="center">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="@dimen/want_image_size"
-        android:layout_height="@dimen/want_image_size"
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         app:cardCornerRadius="20dp">
 
