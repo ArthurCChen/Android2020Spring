@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.thu.qinghuaquan.R;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +42,7 @@ public class WantedFragment extends Fragment {
     private PagerTabStrip tabStrip;
 
 
+    AVSearchQuery query;
     int currentPosition;
     int curLoadPages;
 
@@ -71,7 +75,15 @@ public class WantedFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_wanted, container, false);
 
-
+        SmartRefreshLayout refreshLayout;
+        refreshLayout = root.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initNewQuery();
+                refreshLayout.finishRefresh();
+            }
+        });
         viewPager  = (ViewPager) root.findViewById(R.id.wants_pager);
 
         tabStrip = root.findViewById(R.id.want_pager_header);
@@ -169,7 +181,6 @@ public class WantedFragment extends Fragment {
         curLoadPages += 1;
     }
 
-    AVSearchQuery query;
 
     public boolean initNewQuery(){
         query = new AVSearchQuery();
@@ -292,7 +303,7 @@ public class WantedFragment extends Fragment {
             }
         }
         if(curSort.equals(getResources().getString(R.string.sort_begin_date))){
-            query.orderByAscending("createdAt");
+            query.orderByDescending("createdAt");
         }else if(curSort.equals(getResources().getString(R.string.sort_money))){
             query.orderByDescending("reward");
         }else if(curSort.equals(getResources().getString(R.string.sort_end_date))){

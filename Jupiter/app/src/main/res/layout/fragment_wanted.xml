@@ -101,29 +101,37 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:clipChildren="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/want_linear_layout">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/wants_pager"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.viewpager.widget.PagerTabStrip
+            android:layout_height="0dp"
+            android:clipChildren="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/want_linear_layout">
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/want_pager_header"
-                android:background="@color/thu_purple"
-                android:textColor = "#FFFFFF"
-                />
-        </androidx.viewpager.widget.ViewPager>
+                android:id="@+id/refreshLayout"
+                android:layout_height="match_parent"
+                >
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/wants_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.viewpager.widget.PagerTabStrip
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/want_pager_header"
+                    android:background="@color/thu_purple"
+                    android:textColor = "#FFFFFF"
+                    />
+            </androidx.viewpager.widget.ViewPager>
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </RelativeLayout>
 
 
-    </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
