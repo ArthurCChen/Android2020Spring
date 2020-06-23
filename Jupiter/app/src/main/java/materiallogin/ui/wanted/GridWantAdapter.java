@@ -89,8 +89,16 @@ public class GridWantAdapter extends BaseAdapter {
         TextView tvMoney = (TextView) view.findViewById(R.id.money);
         ImageView imageView = (ImageView) view.findViewById(R.id.want_image);
 
-        tvTitle.setText(title);
-        tvContent.setText(content);
+        if(title.length() > 6){
+            tvTitle.setText(String.format("%s...", title.substring(0, 6)));
+        }else {
+            tvTitle.setText(title);
+        }
+        if(content.length() > 10){
+            tvContent.setText(String.format("%s...", content.substring(0, 10)));
+        }else {
+            tvContent.setText(content);
+        }
         tvMoney.setText(money + "元");
         if(type.equals(context.getResources().getString(R.string.type_other))){
             imageView.setImageResource(R.drawable.other);
