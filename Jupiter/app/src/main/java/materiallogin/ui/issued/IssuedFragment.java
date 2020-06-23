@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 import cn.leancloud.AVObject;
+import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import cn.leancloud.search.AVSearchQuery;
 import io.reactivex.Observer;
@@ -106,10 +107,9 @@ public class IssuedFragment extends Fragment {
     }
 
     private void queryPages(final CountDownLatch latch){
-        AVSearchQuery query = new AVSearchQuery();
+        AVQuery<AVObject> query = new AVQuery<>("demand");
         String userAccount = (String) AVUser.getCurrentUser().getServerData().get("email");
-        query.setQueryString(String.format("username:\"%s\"", userAccount));
-        query.setClassName("demand");
+        query.whereEqualTo("username", userAccount);
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -118,7 +118,7 @@ public class IssuedFragment extends Fragment {
 
             @Override
             public void onNext(List<AVObject> avObjects) {
-                items = query.getHits();
+                items = avObjects.size();
                 newTitles = new ArrayList<>();
                 newTypes = new ArrayList<>();
                 newMoneys = new ArrayList<>();

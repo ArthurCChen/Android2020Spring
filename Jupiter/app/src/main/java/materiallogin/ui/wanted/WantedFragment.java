@@ -16,7 +16,9 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.thu.qinghuaquan.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -268,21 +270,25 @@ public class WantedFragment extends Fragment {
     }
 
     void limitedQuery(AVSearchQuery query){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String now = df.format(new Date());
+        System.out.println(now);
+
         if (curCategory.equals(getResources().getString(R.string.type_ask)) ||
             curCategory.equals(getResources().getString(R.string.type_other)) ||
             curCategory.equals(getResources().getString(R.string.type_experiment)) ||
             curCategory.equals(getResources().getString(R.string.type_express)) ||
             curCategory.equals(getResources().getString(R.string.type_deal))) {
             if (curSearch.length() != 0) {
-                query.setQueryString(String.format("\"%s\" AND type:\"%s\"", curSearch, curCategory));
+                query.setQueryString(String.format("\"%s\" AND type:\"%s\" AND demand_state:(active OR inactive)", curSearch, curCategory));
             }else{
-                query.setQueryString(String.format("type:\"%s\"", curCategory));
+                query.setQueryString(String.format("type:\"%s\" AND demand_state:(active OR inactive)", curCategory));
             }
         }else{
             if (curSearch.length() != 0) {
-                query.setQueryString(String.format("\"%s\"", curSearch));
+                query.setQueryString(String.format("\"%s\" AND demand_state:(active OR inactive)", curSearch));
             }else{
-                query.setQueryString("_exists_:title");
+                query.setQueryString(String.format("end_time.iso:>%s", now));
             }
         }
         if(curSort.equals(getResources().getString(R.string.sort_begin_date))){
