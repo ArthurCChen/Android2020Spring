@@ -193,7 +193,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                     right_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            demand.delete();
+                            demand.deleteInBackground().subscribe();
                         }
                     });
                     break;

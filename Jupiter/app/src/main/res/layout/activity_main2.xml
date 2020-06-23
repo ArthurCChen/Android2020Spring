@@ -74,7 +74,8 @@
                 android:layout_height="50dp">
                 <com.google.android.material.textfield.TextInputLayout
                     android:textColorHint="#c5c5c5"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content">
                     <EditText
                         android:textSize="13sp"
@@ -89,6 +90,15 @@
                         android:paddingBottom="2dp"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/tsinghua_end"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text=".tsinghua.edu.cn"
+                    android:textColor="#00CCFF"
+                    android:textSize="13sp" />
             </LinearLayout>
             <LinearLayout
                 android:paddingStart="50dp"
@@ -101,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:hint="您的密码"
                         android:textColor="#00CCFF"
                         android:id="@+id/et_password"

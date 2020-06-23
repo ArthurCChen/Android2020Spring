@@ -58,13 +58,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     // 发送验证邮件按钮事件
     public void validation(View view) {
-        final String username = edit_email.getText().toString();
+        final String username = edit_email.getText().toString() + ".tsinghua.edu.cn";
         final String nickname = edit_nickname.getText().toString();
         final String password = this.password.getText().toString();
         final String realname = edit_realname.getText().toString();
         final String telephone = edit_telephone.getText().toString();
         final String address = edit_address.getText().toString();
-        final String email = edit_email.getText().toString();
+        final String email = edit_email.getText().toString() + ".tsinghua.edu.cn";
         if (TextUtils.isEmpty(username)
                 || TextUtils.isEmpty(password)
                 || TextUtils.isEmpty(nickname)) {
@@ -158,13 +158,13 @@ public class RegisterActivity extends AppCompatActivity {
 //                        }
 //                    });
 //        } else { 下方行缩进-1
-        final String username = edit_email.getText().toString();
+        final String username = edit_email.getText().toString() + ".tsinghua.edu.cn";
         final String nickname = edit_nickname.getText().toString();
         final String password = this.password.getText().toString();
         final String realname = edit_realname.getText().toString();
         final String telephone = edit_telephone.getText().toString();
         final String address = edit_address.getText().toString();
-        final String email = edit_email.getText().toString();
+        final String email = edit_email.getText().toString() + ".tsinghua.edu.cn";
         if (TextUtils.isEmpty(username)
                 || TextUtils.isEmpty(password)) {
             Toast.makeText(this, "请保证发送邮件后所填信息未变", Toast.LENGTH_SHORT).show();
