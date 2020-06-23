@@ -42,6 +42,7 @@ public class WantedFragment extends Fragment {
     private PagerTabStrip tabStrip;
 
 
+    AVSearchQuery query;
     int currentPosition;
     int curLoadPages;
 
@@ -180,7 +181,6 @@ public class WantedFragment extends Fragment {
         curLoadPages += 1;
     }
 
-    AVSearchQuery query;
 
     public boolean initNewQuery(){
         query = new AVSearchQuery();
@@ -303,7 +303,7 @@ public class WantedFragment extends Fragment {
             }
         }
         if(curSort.equals(getResources().getString(R.string.sort_begin_date))){
-            query.orderByAscending("createdAt");
+            query.orderByDescending("createdAt");
         }else if(curSort.equals(getResources().getString(R.string.sort_money))){
             query.orderByDescending("reward");
         }else if(curSort.equals(getResources().getString(R.string.sort_end_date))){
