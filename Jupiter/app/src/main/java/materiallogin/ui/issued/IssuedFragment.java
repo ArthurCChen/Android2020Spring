@@ -95,7 +95,7 @@ public class IssuedFragment extends Fragment {
             if(items == 0) {
                 tabStrip.setVisibility(View.INVISIBLE);
                 suggestion.setVisibility(View.VISIBLE);
-                suggestion.setText("目前还没有,来接受一个?");
+                suggestion.setText("目前还没有,来发起一个订单?");
             }else{
                 tabStrip.setVisibility(View.VISIBLE);
                 suggestion.setVisibility(View.INVISIBLE);
