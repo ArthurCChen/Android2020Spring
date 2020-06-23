@@ -61,4 +61,5 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     compile project(":leancloudchatkit")
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
 }

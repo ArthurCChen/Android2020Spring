@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -131,6 +132,7 @@ public class AcceptedFragment extends Fragment {
 
             @Override
             public void onNext(List<AVObject> avObjects) {
+                Date now = new Date();
                 items = avObjects.size();
                 newTitles = new ArrayList<>();
                 newTypes = new ArrayList<>();
@@ -140,7 +142,12 @@ public class AcceptedFragment extends Fragment {
                 for (AVObject ralation : avObjects){
                     AVObject avObject = ralation.getAVObject("demand");
                     newContents.add((String)avObject.getString("content"));
-                    newTypes.add((String)avObject.getString("type"));
+                    Date date = avObject.getDate("end_time");
+                    if(date.before(now)){
+                        newTypes.add("已过期");
+                    }else {
+                        newTypes.add((String) avObject.getString("type"));
+                    }
                     newMoneys.add(String.valueOf(avObject.getNumber("reward")));
                     newTitles.add((String)avObject.getString("title"));
                     ids.add(avObject.getString("objectId"));

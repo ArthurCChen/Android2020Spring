@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.thu.qinghuaquan.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -22,8 +24,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 import cn.leancloud.AVObject;
+import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import cn.leancloud.search.AVSearchQuery;
+import cn.leancloud.types.AVDate;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import materiallogin.ui.wanted.WantPagerAdapter;
@@ -95,7 +99,7 @@ public class IssuedFragment extends Fragment {
             if(items == 0) {
                 tabStrip.setVisibility(View.INVISIBLE);
                 suggestion.setVisibility(View.VISIBLE);
-                suggestion.setText("目前还没有,来接受一个?");
+                suggestion.setText("目前还没有,来发起一个订单?");
             }else{
                 tabStrip.setVisibility(View.VISIBLE);
                 suggestion.setVisibility(View.INVISIBLE);
@@ -106,10 +110,9 @@ public class IssuedFragment extends Fragment {
     }
 
     private void queryPages(final CountDownLatch latch){
-        AVSearchQuery query = new AVSearchQuery();
+        AVQuery<AVObject> query = new AVQuery<>("demand");
         String userAccount = (String) AVUser.getCurrentUser().getServerData().get("email");
-        query.setQueryString(String.format("username:\"%s\"", userAccount));
-        query.setClassName("demand");
+        query.whereEqualTo("username", userAccount);
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -118,7 +121,8 @@ public class IssuedFragment extends Fragment {
 
             @Override
             public void onNext(List<AVObject> avObjects) {
-                items = query.getHits();
+                Date now = new Date();
+                items = avObjects.size();
                 newTitles = new ArrayList<>();
                 newTypes = new ArrayList<>();
                 newMoneys = new ArrayList<>();
@@ -126,7 +130,12 @@ public class IssuedFragment extends Fragment {
                 ids = new ArrayList<>();
                 for (AVObject avObject : avObjects){
                     newContents.add((String)avObject.getString("content"));
-                    newTypes.add((String)avObject.getString("type"));
+                    Date date = avObject.getDate("end_time");
+                    if(date.before(now)){
+                        newTypes.add("已过期");
+                    }else {
+                        newTypes.add((String) avObject.getString("type"));
+                    }
                     newMoneys.add(String.valueOf(avObject.getNumber("reward")));
                     newTitles.add((String)avObject.getString("title"));
                     ids.add(avObject.getString("objectId"));

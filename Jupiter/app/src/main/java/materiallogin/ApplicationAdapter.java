@@ -74,7 +74,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
 
                             @Override
                             public void onNext(AVObject avObject) {
-
+                                set(relationship);
                             }
 
                             @Override

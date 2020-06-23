@@ -2,6 +2,7 @@ package materiallogin;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +25,7 @@ import com.thu.qinghuaquan.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -52,22 +54,20 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etEmail;
     private Button btGo;
 
+    AVUser currentUser = new AVUser();
+
     // 发送验证邮件按钮事件
     public void validation(View view) {
-        final String username = edit_email.getText().toString();
+        final String username = edit_email.getText().toString() + ".tsinghua.edu.cn";
         final String nickname = edit_nickname.getText().toString();
         final String password = this.password.getText().toString();
         final String realname = edit_realname.getText().toString();
         final String telephone = edit_telephone.getText().toString();
         final String address = edit_address.getText().toString();
-        final String email = edit_email.getText().toString();
+        final String email = edit_email.getText().toString() + ".tsinghua.edu.cn";
         if (TextUtils.isEmpty(username)
                 || TextUtils.isEmpty(password)
-                || TextUtils.isEmpty(nickname)
-                || TextUtils.isEmpty(realname)
-                || TextUtils.isEmpty(telephone)
-                || TextUtils.isEmpty(email)
-                || TextUtils.isEmpty(address)) {
+                || TextUtils.isEmpty(nickname)) {
             Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -158,31 +158,68 @@ public class RegisterActivity extends AppCompatActivity {
 //                        }
 //                    });
 //        } else { 下方行缩进-1
-        final String username = edit_email.getText().toString();
+        final String username = edit_email.getText().toString() + ".tsinghua.edu.cn";
         final String nickname = edit_nickname.getText().toString();
         final String password = this.password.getText().toString();
         final String realname = edit_realname.getText().toString();
         final String telephone = edit_telephone.getText().toString();
         final String address = edit_address.getText().toString();
-        final String email = edit_email.getText().toString();
+        final String email = edit_email.getText().toString() + ".tsinghua.edu.cn";
         if (TextUtils.isEmpty(username)
-                || TextUtils.isEmpty(password)
-                || TextUtils.isEmpty(nickname)
-                || TextUtils.isEmpty(realname)
-                || TextUtils.isEmpty(telephone)
-                || TextUtils.isEmpty(email)
-                || TextUtils.isEmpty(address)) {
-            Toast.makeText(this, "请输入完整信息", Toast.LENGTH_SHORT).show();
+                || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "请保证发送邮件后所填信息未变", Toast.LENGTH_SHORT).show();
             return;
         }
-        final AVUser user = new AVUser();
-        if (!user.getBoolean("emailVerified")) {
-            Toast.makeText(this, "请先验证邮箱", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-        //这里跳转到内部界面
 
+//        AVQuery<AVUser> query = new AVQuery<>("_User");
+//        System.out.println("jueshi");
+//        System.out.println(query);
+
+//        query.getInBackground(currentUser.getObjectId()).subscribe(new Observer<AVUser>() {
+//            public void onSubscribe(Disposable disposable) {}
+//            public void onNext(AVUser unauthenticatedUser) {
+//                unauthenticatedUser.put("username", "Toodle");
+//                // 会出错，因为用户未鉴权
+//                unauthenticatedUser.save();
+//            }
+//        });
+
+
+//        if (currentUser != null) {
+//            // 跳到首页
+//            System.out.println("不是null，查验：" + currentUser.getEmail());
+//            System.out.println("查验：" + currentUser.getBoolean("emailVerified"));
+//            return;
+//
+//        } else {
+//            // 显示注册或登录页面
+//            System.out.println("是null");
+//            return;
+////            if (!currentUser.getBoolean("emailVerified")) {
+////                Toast.makeText(this, "请先验证邮箱", Toast.LENGTH_SHORT).show();
+////                return;
+////            }
+//        }
+
+
+//        Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+        //这里跳转到内部界面
+        AVUser.logIn(username, password).subscribe(new Observer<AVUser>() {
+            public void onSubscribe(Disposable disposable) {}
+            public void onNext(AVUser user) {
+                // 登录成功
+                Toast.makeText(RegisterActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RegisterActivity.this, BottomMenu.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+                finish();
+            }
+            public void onError(Throwable e) {
+                // 登录失败（可能是密码错误）
+                Toast.makeText(RegisterActivity.this, "未进入邮件验证或上方密码有改动", Toast.LENGTH_SHORT).show();
+            }
+            public void onComplete() {}
+        });
             //以下是原实现，AVObject类
 //            final AVOUser user = new AVOUser(username, password, email, xh, xm, bj, sushe);
 //            user.saveInBackground().subscribe(new Observer<AVObject>() {

@@ -28,6 +28,7 @@ import cn.leancloud.AVUser;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import materiallogin.BottomMenu;
+import materiallogin.MainActivity;
 import materiallogin.RegisterActivity;
 
 public class MeFragment extends Fragment {
@@ -145,9 +146,9 @@ public class MeFragment extends Fragment {
             public void onComplete() { }
         });
 
-        final ImageView imageViewAvatar = root.findViewById(R.id.img_avatar);
-        //?
-        imageViewAvatar.setImageURI(avatarUrl);
+//        final ImageView imageViewAvatar = root.findViewById(R.id.img_avatar);
+//        //?
+//        imageViewAvatar.setImageURI(avatarUrl);
 
         btEditMe.setOnClickListener(new View.OnClickListener() {
             AlertDialog alertDialog = null;
@@ -156,6 +157,7 @@ public class MeFragment extends Fragment {
             EditText textBrief = null;
             EditText textTelephone = null;
             EditText textRealname = null;
+            EditText textNickname = null;
             EditText textAddress = null;
             Button cancelChange = null;
             Button saveChange = null;
@@ -164,6 +166,7 @@ public class MeFragment extends Fragment {
             private void renew(AVUser user) {
                 textBrief.setText((String)user.getServerData().get("brief"));
                 textTelephone.setText((String)user.getServerData().get("telephone"));
+                textNickname.setText((String)user.getServerData().get("nickname"));
                 textRealname.setText((String)user.getServerData().get("realname"));
                 textAddress.setText((String)user.getServerData().get("address"));
             }
@@ -174,6 +177,7 @@ public class MeFragment extends Fragment {
                 final LayoutInflater inflater = getLayoutInflater();
                 layout = inflater.inflate(R.layout.me_change_table, null);
                 builder.setView(layout);
+                textNickname = (EditText) layout.findViewById(R.id.text_nickname);
                 textBrief = (EditText) layout.findViewById(R.id.text_brief);
                 textTelephone = (EditText) layout.findViewById(R.id.text_telephone_change);
                 textRealname = (EditText) layout.findViewById(R.id.text_realname);
@@ -205,8 +209,10 @@ public class MeFragment extends Fragment {
                         final String brief = textBrief.getText().toString();
                         final String telephone = textTelephone.getText().toString();
                         final String realname = textRealname.getText().toString();
+                        final String nickname = textNickname.getText().toString();
                         final String address = textAddress.getText().toString();
                         user.put("brief",brief);
+                        user.put("nickname",nickname);
                         user.put("telephone",telephone);
                         user.put("realname",realname);
                         user.put("address",address);
@@ -305,8 +311,11 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AVUser.logOut();
-                Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
             }
         });
 
