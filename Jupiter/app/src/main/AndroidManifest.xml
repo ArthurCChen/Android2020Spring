@@ -64,12 +64,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="materiallogin.ChatsActivity" />
-        <activity android:name="materiallogin.ChatActivity" />
-        <activity android:name="materiallogin.UserActivity" />
-        <activity android:name="materiallogin.ShangjiaActivity" />
-        <activity android:name="materiallogin.ShangjiaFBActivity" />
-        <activity android:name="materiallogin.ShangjiaPRActivity" />
+<!--        <activity android:name="materiallogin.ChatsActivity" />-->
+<!--        <activity android:name="materiallogin.ChatActivity" />-->
+<!--        <activity android:name="materiallogin.UserActivity" />-->
+<!--        <activity android:name="materiallogin.ShangjiaActivity" />-->
+<!--        <activity android:name="materiallogin.ShangjiaFBActivity" />-->
+<!--        <activity android:name="materiallogin.ShangjiaPRActivity" />-->
 
         <service android:name="com.baidu.location.f"
             android:enabled="true"
