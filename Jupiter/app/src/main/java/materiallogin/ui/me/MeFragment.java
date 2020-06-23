@@ -146,9 +146,9 @@ public class MeFragment extends Fragment {
             public void onComplete() { }
         });
 
-        final ImageView imageViewAvatar = root.findViewById(R.id.img_avatar);
-        //?
-        imageViewAvatar.setImageURI(avatarUrl);
+//        final ImageView imageViewAvatar = root.findViewById(R.id.img_avatar);
+//        //?
+//        imageViewAvatar.setImageURI(avatarUrl);
 
         btEditMe.setOnClickListener(new View.OnClickListener() {
             AlertDialog alertDialog = null;
