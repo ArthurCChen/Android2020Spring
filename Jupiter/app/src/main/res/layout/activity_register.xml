@@ -263,7 +263,8 @@
                     android:layout_height="40dp">
                     <com.google.android.material.textfield.TextInputLayout
                         android:textColorHint="#f0f7f4"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:theme="@style/TextLabel"
                         android:layout_height="wrap_content">
                         <EditText
@@ -279,6 +280,15 @@
                             android:paddingBottom="2dp"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/tsinghua_end"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text=".tsinghua.edu.cn"
+                        android:textColor="#f0f7f4"
+                        android:textSize="14sp" />
                 </LinearLayout>
                 <LinearLayout
                     android:paddingStart="50dp"

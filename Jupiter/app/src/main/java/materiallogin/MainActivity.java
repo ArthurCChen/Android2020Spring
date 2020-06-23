@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.bt_go:
                 final SPutil sp = new SPutil(MainActivity.this);
-                final String un = etUsername.getText().toString();
+                final String un = etUsername.getText().toString() + ".tsinghua.edu.cn";
                 final String pw = etPassword.getText().toString();
                 if(TextUtils.isEmpty(un)){
                     Toast.makeText(this, "请输入邮箱", Toast.LENGTH_SHORT).show();
