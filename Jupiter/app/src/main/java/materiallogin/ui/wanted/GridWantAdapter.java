@@ -2,17 +2,25 @@ package materiallogin.ui.wanted;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thu.qinghuaquan.R;
 
 import java.util.ArrayList;
 
+import androidx.cardview.widget.CardView;
+import materiallogin.App;
 import materiallogin.DemandDetailActivity;
 
 public class GridWantAdapter extends BaseAdapter {
@@ -62,7 +70,25 @@ public class GridWantAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null){
             final LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+
             convertView = layoutInflater.inflate(R.layout.fragment_wants, null);
+            CardView cardView = convertView.findViewById(R.id.card);
+
+            WindowManager wm = (WindowManager) context
+                    .getSystemService(Context.WINDOW_SERVICE);
+            Point cnm = new Point(); //google ntm why depreciate getWidth
+            wm.getDefaultDisplay().getSize(cnm);
+
+            LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0
+            );
+            l.width = (int)(cnm.x / 2.5);
+            l.height = (int)(cnm.x / 2.5);
+            l.gravity = Gravity.CENTER;
+
+            cardView.setLayoutParams(l);
         }
 
 
