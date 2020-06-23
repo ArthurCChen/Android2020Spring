@@ -280,15 +280,15 @@ public class WantedFragment extends Fragment {
             curCategory.equals(getResources().getString(R.string.type_express)) ||
             curCategory.equals(getResources().getString(R.string.type_deal))) {
             if (curSearch.length() != 0) {
-                query.setQueryString(String.format("\"%s\" AND type:\"%s\" AND end_time.iso:>%s", curSearch, curCategory));
+                query.setQueryString(String.format("\"%s\" AND type:\"%s\" AND end_time.iso:>%s AND NOT type:done", curSearch, curCategory, now));
             }else{
-                query.setQueryString(String.format("type:\"%s\" AND end_time.iso:>%s", curCategory));
+                query.setQueryString(String.format("type:\"%s\" AND end_time.iso:>%s AND NOT type:done", curCategory, now));
             }
         }else{
             if (curSearch.length() != 0) {
-                query.setQueryString(String.format("\"%s\" AND end_time.iso:>%s", curSearch));
+                query.setQueryString(String.format("\"%s\" AND end_time.iso:>%s AND NOT type:done", curSearch, now));
             }else{
-                query.setQueryString(String.format("end_time.iso:>%s AND NOT type:已完成", now));
+                query.setQueryString(String.format("end_time.iso:>%s AND NOT type:done", now));
             }
         }
         if(curSort.equals(getResources().getString(R.string.sort_begin_date))){
