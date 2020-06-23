@@ -288,7 +288,7 @@ public class WantedFragment extends Fragment {
             if (curSearch.length() != 0) {
                 query.setQueryString(String.format("\"%s\" AND end_time.iso:>%s", curSearch));
             }else{
-                query.setQueryString(String.format("end_time.iso:>%s", now));
+                query.setQueryString(String.format("end_time.iso:>%s AND NOT type:已完成", now));
             }
         }
         if(curSort.equals(getResources().getString(R.string.sort_begin_date))){

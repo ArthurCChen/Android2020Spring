@@ -102,8 +102,12 @@ public class GridWantAdapter extends BaseAdapter {
             imageView.setImageResource(R.drawable.deal);
         }else if(type.equals(context.getResources().getString(R.string.type_ask))){
             imageView.setImageResource(R.drawable.ask);
+        }else if(type.equals("已过期")){
+            imageView.setImageResource(R.drawable.outdate);
+        }else if(type.equals("done")){
+            imageView.setImageResource(R.drawable.done);
         }else{
-            throw new RuntimeException("not valid type string");
+            throw new RuntimeException("not valid type string" + type);
         }
         return view;
 
