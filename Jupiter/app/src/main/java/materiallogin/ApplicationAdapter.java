@@ -75,6 +75,27 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
                             @Override
                             public void onNext(AVObject avObject) {
                                 set(relationship);
+                                AVObject object = (AVObject)relationship.get("demand");
+                                object.getServerData();
+                                AVQuery query = new AVQuery("demand_relationship");
+                                query.whereEqualTo("demand", object);
+                                query.whereEqualTo("enroller_state", "done");
+                                query.findInBackground().subscribe(new Observer<List<AVObject>>() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) { }
+                                    @Override
+                                    public void onNext(List<AVObject> objects) {
+                                        if (objects.size() == object.getInt("wanted_number")) {
+                                            object.put("type", "done");
+                                            object.put("demand_state", "done");
+                                            object.saveInBackground().subscribe();
+                                        }
+                                    }
+                                    @Override
+                                    public void onError(Throwable e) { }
+                                    @Override
+                                    public void onComplete() { }
+                                });
                             }
 
                             @Override

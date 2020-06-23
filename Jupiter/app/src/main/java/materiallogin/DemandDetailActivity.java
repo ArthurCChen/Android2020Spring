@@ -214,6 +214,7 @@ public class DemandDetailActivity extends AppCompatActivity {
                     states.add("accepted");
                     states.add("done");
                     query.whereContainedIn("enroller_state", states);
+                    query.include("demand");
                     query.findInBackground().subscribe(new Observer<List<AVObject>>() {
                         @Override
                         public void onSubscribe(Disposable d) { }
